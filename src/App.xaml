@@ -1,0 +1,23 @@
+<Application x:Class="CursorTestApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:CursorTestApp"
+             xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+             StartupUri="ShellWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemesDictionary Theme="Dark" />
+                <ui:ControlsDictionary />
+            </ResourceDictionary.MergedDictionaries>
+            <!-- 預設字型：依序 Segoe UI、Meiryo UI、Microsoft JhengHei UI、Leelawadee UI -->
+            <FontFamily x:Key="DefaultFontFamily">Segoe UI, Meiryo UI, Microsoft JhengHei UI, Leelawadee UI</FontFamily>
+            <Style TargetType="TextElement">
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
+            </Style>
+            <Style TargetType="Control">
+                <Setter Property="FontFamily" Value="{StaticResource DefaultFontFamily}" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

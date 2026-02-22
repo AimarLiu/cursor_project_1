@@ -1,0 +1,16 @@
+<UserControl x:Class="CursorTestApp.Views.Shared.LogPanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ListBox x:Name="LogListBox"
+             ItemsSource="{Binding LogMessages}"
+             IsHitTestVisible="True"
+             FontFamily="Courier New"
+             FontSize="12"
+             Background="#CC1a1a2e"
+             Foreground="#FFE0E0E0"
+             Padding="8"
+             BorderThickness="1"
+             BorderBrush="#33000000"
+             ScrollViewer.VerticalScrollBarVisibility="Auto"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled" />
+</UserControl>

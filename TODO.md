@@ -69,6 +69,7 @@
 
 ### 多國語系（i18n）
 - [ ] 支援語系：**ja**（日）、**zh-TW**（繁中）、**pt**（葡）、**en**（英）、**th**（泰）
+- [ ] **預設語系**：系統目前語系，可隨時動態切換
 - [ ] 使用 RESX 資源檔：`Resources.resx`（預設）、`Resources.ja.resx`、`Resources.zh-TW.resx`、`Resources.pt.resx`、`Resources.th.resx`
 - [ ] 或使用 `ResourceDictionary` + 語系切換（如 `xml:lang` + 動態載入）
 - [ ] 實作 `ILocalizationService` / `CultureInfo` 切換
@@ -94,10 +95,10 @@
 ## Phase 0：環境設定
 
 ### 0.1 必要軟體安裝
-- [ ] 安裝 **.NET 8 SDK**
+- [x] 安裝 **.NET 8 SDK**
   - 下載：https://dotnet.microsoft.com/download/dotnet/8.0
   - 驗證：`dotnet --version`
-- [ ] 安裝 **Visual Studio 2022**
+- [x] 安裝 **Visual Studio 2026 community**
   - 選「.NET 桌面開發」
   - 勾選「Windows 桌面應用程式」工作負載
 - [ ] （可選）安裝 **Visual Studio Code** + C# Dev Kit
@@ -108,18 +109,18 @@
 - [ ] 使用者端須已安裝 **.NET 8 Desktop Runtime**（見上方 Distribution 套件）
 
 ### 0.3 Fluent Design 套件
-- [ ] 安裝 **WPF-UI**
+- [x] 安裝 **WPF-UI**
   - NuGet：`dotnet add package WPF-UI`
   - 官網：https://github.com/lepoco/wpfui
   - 視覺降級可接受（Acrylic 等在 Win 8.1 可能退化為純色）
-- [ ] （可選）**FluentIcons.Wpf**
+- [x] （可選）**FluentIcons.Wpf**
   - NuGet：`dotnet add package FluentIcons.Wpf`
-- [ ] 在 `App.xaml` 中引入 WPF-UI 資源字典與主題
+- [x] 在 `App.xaml` 中引入 WPF-UI 資源字典與主題
 
 ### 0.4 資料庫與其他套件
-- [ ] 安裝 **Microsoft.Data.Sqlite**
+- [x] 安裝 **Microsoft.Data.Sqlite**
   - NuGet：`dotnet add package Microsoft.Data.Sqlite`
-- [ ] （可選）**CommunityToolkit.Mvvm**
+- [x] （可選）**CommunityToolkit.Mvvm**
   - NuGet：`dotnet add package CommunityToolkit.Mvvm`
 
 ---
@@ -127,9 +128,9 @@
 ## Phase 1：專案建立與架構
 
 ### 1.1 建立專案
-- [ ] 建立 WPF 專案：`dotnet new wpf -n CursorTestApp -o src`
-- [ ] 設定目標框架：`<TargetFramework>net8.0-windows</TargetFramework>`
-- [ ] 建立解決方案結構
+- [x] 建立 WPF 專案：`dotnet new wpf -n CursorTestApp -o src`
+- [x] 設定目標框架：`<TargetFramework>net8.0-windows</TargetFramework>`
+- [x] 建立解決方案結構
   ```
   CursorTestApp.sln
   src/
@@ -139,86 +140,102 @@
   ```
 
 ### 1.2 MVVM 架構
-- [ ] 建立 ViewModel 基底（`ViewModelBase`）與 `INotifyPropertyChanged`
-- [ ] 考慮使用 **CommunityToolkit.Mvvm** 或手寫 ViewModel
-- [ ] 定義專案資料夾：`Views`、`ViewModels`、`Models`、`Services`、`Helpers`
+- [x] 建立 ViewModel 基底（`ViewModelBase`）與 `INotifyPropertyChanged`
+- [x] 考慮使用 **CommunityToolkit.Mvvm** 或手寫 ViewModel
+- [x] 定義專案資料夾：`Views`、`ViewModels`、`Models`、`Services`、`Helpers`
 
 ### 1.3 多國語系結構
-- [ ] 建立 `Resources.resx`（預設語系，建議英文）
-- [ ] 建立 `Resources.ja.resx`（日語）、`Resources.zh-TW.resx`（繁中）、`Resources.pt.resx`（葡）、`Resources.th.resx`（泰）
-- [ ] 實作 `ILocalizationService`，支援 `CultureInfo` 切換
-- [ ] 字串一律使用 `Resources.XXX`，勿寫死在 XAML / Code
+- [x] 建立 `Resources.resx`（預設語系，建議英文）
+- [x] 建立 `Resources.ja.resx`（日語）、`Resources.zh-TW.resx`（繁中）、`Resources.pt.resx`（葡）、`Resources.th.resx`（泰）
+- [x] 實作 `ILocalizationService`，支援 `CultureInfo` 切換
+- [x] 字串一律使用 `Resources.XXX`，勿寫死在 XAML / Code
+
+### 1.5 Ignore 檔建立
+- [x] 建立 `.gitignore`，忽略 `bin/`、`obj/`
+- [x] 建立 `.cursorignore`，忽略 `bin/`、`obj/`
 
 ---
 
 ## Phase 2：資料庫
 
 ### 2.1 SQLite 設定
-- [ ] 設計使用者表 `Users`：Id, Username, Password（**明文**即可，本專案為測試用）
-- [ ] 實作 `IDatabaseService` / `IAuthService` 介面
-- [ ] 實作密碼比對邏輯（直接字串比對）
-- [ ] 提供初始化與建表腳本
+- [x] 設計使用者表 `Users`：Id, Username, Password（**明文**即可，本專案為測試用）
+- [x] 實作 `IDatabaseService` / `IAuthService` 介面
+- [x] 實作密碼比對邏輯（直接字串比對）
+- [x] 提供初始化與建表腳本（`Scripts/CreateUsersTable.sql`）
 
 ### 2.2 初始資料
-- [ ] 建立至少一筆測試帳號供登入驗證
+- [x] 建立至少一筆測試帳號供登入驗證（0001 / aimarliu / aimarliu）
 
 ---
 
 ## Phase 3：登入畫面（Login View）
 
 ### 3.1 整體佈局
-- [ ] 建立 `LoginView.xaml`，使用 WPF-UI 的 `ui:UiWindow` 或 `ui:FluentWindow`
-- [ ] 視窗符合螢幕大小：`WindowState="Maximized"`
-- [ ] **右下角 Log 區域**（所有頁面共用）：
-  - [ ] 固定於視窗右下角，約 25% 寬 × 15% 高（可調整）
-  - [ ] 使用 `TextBox` 或 `RichTextBox`，設為 `IsReadOnly`，`ScrollViewer.VerticalScrollBarVisibility="Auto"`
-  - [ ] 半透明深色背景、淺色字、等寬字型 **Courier New**（Win 8.1 內建）
-  - [ ] 實作 `ILogService` / `ILogOutput`，透過 ViewModel 綁定 `LogMessages` 集合
-  - [ ] 所有關鍵操作（登入嘗試、驗證結果、導航等）寫入 Log
+- [x] 建立 `LoginView.xaml`，使用 WPF-UI 的 `ui:UiWindow` 或 `ui:FluentWindow`
+- [x] 視窗符合螢幕大小：`WindowState="Maximized"`
+- [x] **右下角 Log 區域**（所有頁面共用）：
+  - [x] 固定於視窗右下角，約 25% 寬 × 15% 高（可調整）
+  - [x] 使用 `ListBox` 綁定 `LogMessages`，`ScrollViewer.VerticalScrollBarVisibility="Auto"`
+  - [x] 半透明深色背景、淺色字、等寬字型 **Courier New**（Win 8.1 內建）
+  - [x] 實作 `ILogService`，透過 ViewModel 綁定 `LogMessages` 集合
+  - [x] 所有關鍵操作（登入嘗試、驗證結果、導航等）寫入 Log
+  - [x] `IsHitTestVisible="True"` 以允許捲動（滾輪、捲軸）
+  - [x] 新增訊息時自動捲到底（訂閱 `CollectionChanged`，呼叫 `ScrollIntoView`）
 
 ### 3.2 中央登入區塊
-- [ ] 使用 WPF-UI 的 `ui:TextBox`、`ui:PasswordBox`、`ui:Button` 達成 Fluent 風格
-- [ ] 畫面正中央包含：
-  - [ ] 密碼輸入（`PasswordBox`）
-  - [ ] Enter 按鈕
-  - [ ] Cancel 按鈕（清除密碼）
-- [ ] 視覺排版：垂直堆疊、居中、適當間距
+- [x] 使用 WPF-UI 的 `ui:PasswordBox`、`ui:Button` 達成 Fluent 風格
+- [x] 畫面正中央包含：
+  - [x] 密碼輸入（`PasswordBox`）
+  - [x] Enter 按鈕
+  - [x] Cancel 按鈕（清除密碼）
+- [x] 視覺排版：垂直堆疊、居中、適當間距
+
+### 3.2.1 語系切換（Login 方框下方）
+- [x] 在 Login 方框**下方**放置語系切換 ComboBox
+- [x] 支援語系：ja、zh-TW、pt、en、th
+- [x] **預設語系**：系統目前語系（`SupportedCultures.ResolveFromSystem()`）
+- [x] 使用者選擇後**立即動態切換**介面語系（呼叫 `ILocalizationService.SetCulture`）
+- [x] **動態切換**：使用 `LocalizedString` 包裝類，訂閱 `CultureChanged`，控制項以 Binding 綁定 `.Value`
+- [x] 選項顯示：以該語系顯示名稱（日本語、繁體中文、Português、English、ไทย）
+
+### 3.2.2 右上角離開按鈕
+- [x] 登入畫面**右上角**放置 **X** 圖示按鈕
+- [x] 點擊後關閉並結束應用程式（`Application.Current.Shutdown()`）
 
 ### 3.3 背景設計
-- [ ] **主背景**：深色漸層（例如 #1a1a2e → #16213e → #0f3460）
-- [ ] **裝飾層**：半透明圓形或柔和形狀（Blur + Opacity）
-  - 左上角大圓、右下角中圓，製造景深
-- [ ] 或採用 **WPF-UI Acrylic**（若支援）：毛玻璃效果（Win 8.1 上可能降級為純色）
-- [ ] **中央卡片**：登入區塊外層加圓角矩形、半透明白/深色背景，與背景形成層次
+- [x] **主背景**：深色漸層（#1a1a2e → #16213e → #0f3460）
+- [x] **裝飾層**：半透明圓形或柔和形狀（Blur + Opacity）
+  - [x] 左上角大圓、右下角中圓，製造景深
+- [x] **中央卡片**：登入區塊外層加圓角矩形、半透明白色背景，與背景形成層次
 
 ### 3.4 ViewModel
-- [ ] `LoginViewModel`
-  - [ ] `Password`（綁定至 PasswordBox）
-  - [ ] `LoginCommand`（Enter）
-  - [ ] `CancelCommand`（清除密碼）
-  - [ ] 注入 `ILogService`，記錄「正在驗證…」「登入成功/失敗」
-  - [ ] 登入成功時觸發導航；失敗時寫入 Log 並可選顯示 Snackbar
+- [x] `LoginViewModel`
+  - [x] `Password`（綁定至 PasswordBox）
+  - [x] `LoginCommand`（Enter）
+  - [x] `CancelCommand`（清除密碼）
+  - [x] 注入 `ILogService`，記錄「正在驗證…」「登入成功/失敗」
+  - [x] 登入成功時觸發導航；失敗時寫入 Log
 
 ### 3.5 Cancel 功能
-- [ ] Cancel 按鈕執行後清空密碼輸入欄位，並於 Log 輸出「已清除輸入」
+- [x] Cancel 按鈕執行後清空密碼輸入欄位，並於 Log 輸出「已清除輸入」
 
 ---
 
 ## Phase 4：主畫面與導航
 
-### 4.1 空白主畫面
-- [ ] 建立 `MainView.xaml`（登入成功後的空白頁面）
-- [ ] 沿用與登入頁相同的背景風格，保持一致性
-- [ ] **右下角 Log 區域**：與登入頁共用同一區塊，持續顯示 Log
-  - [ ] 建議將 Log 區抽出為 `UserControl`（如 `LogPanel.xaml`），於各 View 中重複使用
-- [ ] 中央可放簡單標題或歡迎文字
+### 4.1 主畫面
+- [x] 建立 `MainView.xaml`（登入成功後），依作法一置於 `Views/Main/`
+- [x] 沿用與登入頁相同的背景風格，保持一致性
+- [x] **主畫面不需 Log 區域**（NavigateToMain 時隱藏 LogPanel）
+- [x] **中央區域**：顯示「This is main page」文字，依當下所選語系動態切換（`LocalizedString` / RESX `MainPageTitle`）
+- [x] **左下角返回按鈕**：Unicode 字元 **⬅** 返回登入頁面（`NavigateBackCommand`）
 
 ### 4.2 導航機制
-- [ ] 實作導航服務（`INavigationService`）
-  - [ ] `NavigateTo<TView>()` 或 `NavigateTo(string viewName)`
-- [ ] 使用 `Frame`、`ContentControl` + DataTemplate，或 `Window` 切換
-- [ ] 登入成功 → 寫入 Log「導航至主畫面」→ 切換至 MainView
-- [ ] 決定是否可返回登入頁（例如登出後）
+- [x] 實作導航服務（`INavigationService`）
+- [x] 使用 `ContentControl` 切換 View
+- [x] 登入成功 → 寫入 Log「導航至主畫面」→ 切換至 MainView
+- [x] 左下角 ⬅ 按鈕 → 返回登入頁（呼叫 `INavigationService.NavigateToLogin`）
 
 ---
 
@@ -246,17 +263,28 @@
 - [ ] 基本程式碼整理與註解
 
 ### 5.5 多國語系與字型
-- [ ] 所有 UI 字串使用 RESX 綁定
+- [x] Login 畫面字串使用 RESX 綁定（`LocalizedString` 實現動態切換）
+- [ ] 其餘 UI 字串使用 RESX 綁定
 - [ ] 預設字型設為 `Segoe UI, Meiryo UI, Microsoft JhengHei, Leelawadee UI`
 - [ ] 驗證五種語系（ja, zh-TW, pt, en, th）顯示正常
 
-### 5.6 發佈與 Distribution 套件
+### 5.6 應用程式圖示
+- [x] 使用 `Resources/icons8-app-48.png` 作為應用程式圖示來源
+- [x] 設定視窗 Icon（pack URI 綁定 PNG）
+- [x] 設定發佈後 exe 圖示（建置前自動將 PNG 轉為 ICO）
+
+### 5.7 發佈與 Distribution 套件
 - [ ] 執行 `dotnet publish -c Release`
 - [ ] 撰寫安裝指引，列出使用者須安裝的套件（.NET 8 Desktop Runtime、VC++ Redistributable）
 
-### 5.7 Windows 8.1 模擬測試
+### 5.8 Windows 8.1 模擬測試
 - [ ] 依上方「Windows 8.1 模擬測試」章節進行 VM 測試
 - [ ] 驗證在 Win 8.1 上安裝必要 Distribution 套件後可正常執行
+
+### 5.9 SQLite 資料庫檢視小工具
+- [ ] 使用 **Microsoft.Data.Sqlite** 撰寫小工具，可檢視資料庫內的資料
+- [ ] 指定 `.db` 檔路徑後，瀏覽其表與資料（列出所有表、選取表後顯示內容）
+- [ ] 程式碼放置於 `tools/` 資料夾
 
 ---
 
@@ -267,15 +295,19 @@
 | .NET 8 SDK 安裝 | ⬜ |
 | 使用者端 Distribution 套件清單 | ⬜ |
 | 預設字型（Win 8.1 相容） | ⬜ |
-| 多國語系（ja, zh-TW, pt, en, th） | ⬜ |
-| WPF-UI（Fluent Design）套件 | ⬜ |
-| SQLite 與資料表（明文密碼） | ⬜ |
-| 專案建立與 MVVM 架構 | ⬜ |
-| 登入畫面 UI + 背景設計 | ⬜ |
-| 右下角 Log 區域 | ⬜ |
-| 登入邏輯與資料庫驗證 | ⬜ |
-| Cancel 清除密碼 | ⬜ |
-| 導航至主畫面 | ⬜ |
+| 多國語系（ja, zh-TW, pt, en, th） | 🟨 結構完成，待 Phase 5.5 整合 |
+| WPF-UI（Fluent Design）套件 | ✅ |
+| SQLite 與資料表（明文密碼） | ✅ |
+| 專案建立（Phase 1.1） | ✅ |
+| MVVM 架構（Phase 1.2） | ✅ |
+| 登入畫面 UI + 背景設計 | ✅ |
+| 右下角 Log 區域 | ✅ |
+| 登入邏輯與資料庫驗證 | ✅ |
+| Cancel 清除密碼 | ✅ |
+| 導航至主畫面 | ✅ |
+| 登入畫面語系切換（Login 下方） | ✅ |
+| 登入畫面右上角 X 離開按鈕 | ✅ |
+| 應用程式圖示（icons8-app-48.png） | ✅ |
 | Windows 8.1 模擬測試（VM） | ⬜ |
 | 端對端測試 | ⬜ |
 

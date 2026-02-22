@@ -1,0 +1,17 @@
+# Build outputs
+bin/
+obj/
+
+# 建置時由 PNG 產生的 ICO（單一來源為 PNG）
+**/Resources/icons8-app-48.ico
+
+# User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# IDE
+.vs/
+.idea/
+*.rsuser

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\icons8-app-48.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <!-- 建置前將 PNG 轉為 ICO（exe 圖示需 .ico 格式） -->
+  <Target Name="ConvertPngToIco" BeforeTargets="BeforeBuild"
+          Inputs="Resources\icons8-app-48.png"
+          Outputs="Resources\icons8-app-48.ico">
+    <Exec Command="powershell -NoProfile -ExecutionPolicy Bypass -Command &quot;Add-Type -AssemblyName System.Drawing; $png='$(ProjectDir)Resources\icons8-app-48.png'; $ico='$(ProjectDir)Resources\icons8-app-48.ico'; $bmp=[System.Drawing.Bitmap]::FromFile($png); $icon=[System.Drawing.Icon]::FromHandle($bmp.GetHicon()); $clone=[System.Drawing.Icon]::new($icon, $icon.Size); $fs=[System.IO.File]::Create($ico); $clone.Save($fs); $fs.Close(); $bmp.Dispose(); $clone.Dispose();&quot;" />
+  </Target>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="FluentIcons.Wpf" Version="2.0.319" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.3" />
+    <PackageReference Include="WPF-UI" Version="4.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\icons8-app-48.png" />
+  </ItemGroup>
+
+</Project>

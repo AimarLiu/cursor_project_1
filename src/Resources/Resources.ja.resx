@@ -90,4 +90,12 @@
     <value>ログインに戻る</value>
     <comment>Main page back button tooltip (Japanese)</comment>
   </data>
+  <data name="LoginErrorWrongPassword" xml:space="preserve">
+    <value>パスワードが正しくありません。</value>
+    <comment>Login error (Japanese)</comment>
+  </data>
+  <data name="LoginErrorEmptyPassword" xml:space="preserve">
+    <value>パスワードを入力してください。</value>
+    <comment>Login error when empty (Japanese)</comment>
+  </data>
 </root>

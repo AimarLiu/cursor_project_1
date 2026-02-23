@@ -90,4 +90,12 @@
     <value>กลับไปหน้าเข้าสู่ระบบ</value>
     <comment>Main page back button tooltip (Thai)</comment>
   </data>
+  <data name="LoginErrorWrongPassword" xml:space="preserve">
+    <value>รหัสผ่านไม่ถูกต้อง</value>
+    <comment>Login error (Thai)</comment>
+  </data>
+  <data name="LoginErrorEmptyPassword" xml:space="preserve">
+    <value>กรอกรหัสผ่าน</value>
+    <comment>Login error when empty (Thai)</comment>
+  </data>
 </root>

@@ -1,6 +1,6 @@
 # 實作摘要 (Implementation Summary)
 
-本文件記錄 Phase 1.2、Phase 1.3、Phase 2、Phase 3 與 Phase 4 的完成實作，供後續開發參考。
+本文件記錄 Phase 1.2、Phase 1.3、Phase 2、Phase 3、Phase 4 與 Phase 5.1–5.5 的完成實作，供後續開發參考。
 
 ---
 
@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS Users (
 
 ### 初始化流程
 
-1. `App.OnStartup` 建立 `DatabaseService` 並呼叫 `Initialize()`
+1. `App.OnStartup` 建立 `DatabaseService` 並呼叫 `Initialize()`（含 try/catch，失敗時 MessageBox 後 Shutdown）
 2. 若 `app.db` 不存在，建立於應用程式目錄
 3. 執行建表 SQL
 4. 若 Users 表為空，自動插入測試帳號
@@ -141,9 +141,9 @@ User? u = authService.GetUserByUsername("aimarliu");
 | 項目 | 說明 | 檔案路徑 |
 |------|------|----------|
 | ShellWindow | FluentWindow 主殼，承載 ContentControl 與 LogPanel | `src/ShellWindow.xaml` |
-| LoginView | 登入畫面，中央卡片 + PasswordBox + Enter/Cancel | `src/Views/LoginView.xaml` |
-| MainView | 主畫面（登入成功後，目前為空白歡迎頁） | `src/Views/MainView.xaml` |
-| LogPanel | 右下角 Log 區域，綁定 LogMessages | `src/Views/LogPanel.xaml` |
+| LoginView | 登入畫面，中央卡片 + PasswordBox + Enter/Cancel | `src/Views/Login/LoginView.xaml` |
+| MainView | 主畫面（登入成功後） | `src/Views/Main/MainView.xaml` |
+| LogPanel | 右下角 Log 區域，綁定 LogMessages | `src/Views/Shared/LogPanel.xaml` |
 | ILogService | `LogMessages`、`Append` | `src/Services/ILogService.cs` |
 | LogService | 格式 `[HH:mm:ss] 訊息內容` | `src/Services/LogService.cs` |
 | INavigationService | `NavigateToMain`、`NavigateToLogin` | `src/Services/INavigationService.cs` |
@@ -164,6 +164,8 @@ User? u = authService.GetUserByUsername("aimarliu");
 | EnterButton | 登入按鈕 | en: Enter, pt: Entrar |
 | CancelButton | 取消按鈕 | en: Cancel, th: ยกเลิก |
 | ExitToolTip | 離開按鈕提示 | en: Exit, ja: 終了 |
+| LoginErrorWrongPassword | 登入失敗（密碼錯誤） | en: Wrong password., zh-TW: 密碼錯誤。 |
+| LoginErrorEmptyPassword | 登入失敗（未輸入密碼） | en: Please enter password., zh-TW: 請輸入密碼。 |
 
 ### 3.2.1 語系切換（Login 方框下方）
 
@@ -230,7 +232,7 @@ if (user != null)
 ### 後續整合
 
 - **Phase 4**：已完成（見下）
-- **Phase 5.5**：LoginView / MainView 字串已改為 RESX 綁定
+- **Phase 5**：5.1–5.5 已完成（見下）
 
 ---
 
@@ -271,6 +273,45 @@ Views/
 
 ---
 
+## Phase 5：整合與收尾（5.1–5.5 已完成）
+
+### 5.1 綁定與流程
+| 項目 | 說明 |
+|------|------|
+| 啟動畫面 | ShellWindow 啟動後 `NavigateToLogin()` 顯示 LoginView |
+| DataContext | ShellWindow.CreateLoginView 將 LoginViewModel 設為 LoginView.DataContext |
+| 流程 | 輸入密碼 → Enter → 比對資料庫 → 成功則 NavigateToMain() |
+
+### 5.2 錯誤處理
+| 項目 | 說明 | 檔案 |
+|------|------|------|
+| 資料庫連線失敗 | App.OnStartup 內 try/catch `Initialize()`，失敗時 MessageBox 後 `Shutdown(1)` | `App.xaml.cs` |
+| 密碼錯誤提示 | LoginViewModel.LoginErrorMessage（RESX `LoginErrorWrongPassword`），LoginView 紅色 TextBlock 顯示 | `LoginViewModel.cs`、`LoginView.xaml` |
+| 輸入為空提示 | 登入前檢查 `string.IsNullOrWhiteSpace(Password)`，顯示 RESX `LoginErrorEmptyPassword` | `LoginViewModel.cs` |
+| Converter | 字串非空 → Visible，空 → Collapsed | `Converters/StringNotEmptyToVisibilityConverter.cs`、`App.xaml` |
+
+### 5.3 Log 服務整合
+| 項目 | 說明 |
+|------|------|
+| 初始化時機 | ShellWindow 建構時建立 `LogService`，並注入 LoginViewModel / MainViewModel |
+| 共用實例 | 同一 `_logService` 傳入各 ViewModel |
+| 格式 | `[HH:mm:ss] 訊息內容`（LogService 已實作） |
+
+### 5.4 程式品質
+- 專案內無 `Console.WriteLine`
+- 密碼以明文儲存於 SQLite（測試用）
+- 註解與結構已整理
+
+### 5.5 多國語系與字型
+| 項目 | 說明 |
+|------|------|
+| Login / Main | 字串已使用 RESX + LocalizedString |
+| 登入錯誤訊息 | LoginErrorWrongPassword、LoginErrorEmptyPassword 已加入五語系 RESX |
+| 預設字型 | App.xaml 設定 DefaultFontFamily + TextElement / Control Style |
+| 驗證 | 五種語系（ja, zh-TW, pt, en, th）需手動驗證顯示 |
+
+---
+
 ## 專案結構總覽
 
 ```
@@ -304,6 +345,8 @@ src/
 ├── Helpers/
 │   ├── SupportedCultures.cs
 │   └── LocalizedString.cs
+├── Converters/
+│   └── StringNotEmptyToVisibilityConverter.cs
 └── Scripts/
     └── CreateUsersTable.sql
 ```
@@ -313,9 +356,10 @@ src/
 ## 後續 Phase 整合提示
 
 - **Phase 4 主畫面**：已完成，MainView 共用 `ILocalizationService`，返回按鈕 ToolTip 已綁定 RESX
-- **Phase 5.3 Log**：已整合，`ILogService` 於 ShellWindow 建立並注入 LoginViewModel
-- **Phase 5.5 多國語系**：已完成，LoginView / MainView 字串已改為 RESX 綁定，App.xaml 已設定預設 FontFamily
+- **Phase 5.1–5.5**：已完成；含綁定與流程、錯誤處理（DB/密碼/空輸入）、Log 整合、程式品質、多國語系與字型
+- **Phase 5.6 以後**：發佈、Win 8.1 測試、SqliteViewer 小工具等見 TODO.md
 
 ---
 
 *建立日期：2025-02-22*
+*更新：Phase 5.1–5.5 實作摘要*

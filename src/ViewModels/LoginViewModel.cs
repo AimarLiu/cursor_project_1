@@ -25,6 +25,12 @@ public sealed partial class LoginViewModel : ViewModelBase
     private LanguageOption? _selectedLanguage;
 
     /// <summary>
+    /// 登入錯誤訊息（密碼錯誤或請輸入密碼），空白時不顯示。
+    /// </summary>
+    [ObservableProperty]
+    private string _loginErrorMessage = string.Empty;
+
+    /// <summary>
     /// 支援的語系清單。
     /// </summary>
     public ObservableCollection<LanguageOption> SupportedLanguages { get; } = new(SupportedCultures.Options);
@@ -80,7 +86,15 @@ public sealed partial class LoginViewModel : ViewModelBase
     [RelayCommand]
     private void Login()
     {
+        LoginErrorMessage = string.Empty;
         _logService.Append("正在驗證…");
+
+        if (string.IsNullOrWhiteSpace(Password))
+        {
+            LoginErrorMessage = _localizationService.GetString("LoginErrorEmptyPassword") ?? "請輸入密碼。";
+            _logService.Append(LoginErrorMessage);
+            return;
+        }
 
         var user = _authService.ValidatePassword(Password);
         if (user != null)
@@ -91,7 +105,8 @@ public sealed partial class LoginViewModel : ViewModelBase
         }
         else
         {
-            _logService.Append("登入失敗：密碼錯誤");
+            LoginErrorMessage = _localizationService.GetString("LoginErrorWrongPassword") ?? "密碼錯誤。";
+            _logService.Append($"登入失敗：{LoginErrorMessage}");
         }
     }
 
@@ -99,7 +114,14 @@ public sealed partial class LoginViewModel : ViewModelBase
     private void Cancel()
     {
         Password = string.Empty;
+        LoginErrorMessage = string.Empty;
         _logService.Append("已清除輸入");
+    }
+
+    partial void OnPasswordChanged(string value)
+    {
+        if (!string.IsNullOrEmpty(LoginErrorMessage))
+            LoginErrorMessage = string.Empty;
     }
 
     [RelayCommand]

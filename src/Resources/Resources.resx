@@ -90,4 +90,12 @@
     <value>Back to login</value>
     <comment>Main page back button tooltip</comment>
   </data>
+  <data name="LoginErrorWrongPassword" xml:space="preserve">
+    <value>Wrong password.</value>
+    <comment>Login error when password does not match</comment>
+  </data>
+  <data name="LoginErrorEmptyPassword" xml:space="preserve">
+    <value>Please enter password.</value>
+    <comment>Login error when password is empty</comment>
+  </data>
 </root>

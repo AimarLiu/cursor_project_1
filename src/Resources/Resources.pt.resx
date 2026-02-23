@@ -90,4 +90,12 @@
     <value>Voltar ao login</value>
     <comment>Main page back button tooltip (Portuguese)</comment>
   </data>
+  <data name="LoginErrorWrongPassword" xml:space="preserve">
+    <value>Senha incorreta.</value>
+    <comment>Login error (Portuguese)</comment>
+  </data>
+  <data name="LoginErrorEmptyPassword" xml:space="preserve">
+    <value>Digite a senha.</value>
+    <comment>Login error when empty (Portuguese)</comment>
+  </data>
 </root>

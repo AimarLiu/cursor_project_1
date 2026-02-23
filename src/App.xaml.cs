@@ -13,8 +13,20 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        IDatabaseService databaseService = new DatabaseService();
-        databaseService.Initialize();
+        try
+        {
+            IDatabaseService databaseService = new DatabaseService();
+            databaseService.Initialize();
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show(
+                $"資料庫初始化失敗：{ex.Message}",
+                "錯誤",
+                MessageBoxButton.OK,
+                MessageBoxImage.Error);
+            Shutdown(1);
+        }
     }
 }
 

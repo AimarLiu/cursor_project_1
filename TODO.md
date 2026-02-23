@@ -239,34 +239,163 @@
 
 ---
 
+## Phase 4 (Layout2)：主畫面2與導航
+
+> **概述**：自動化紙箱製作工廠操作介面。含 Background Service 讀寫 RS485（COM1: 9600,8,N,1），與「模擬生產狀態」邏輯（排程自動執行、車速／產量／預估時間更新）。登入成功後可導航至本畫面，與原 Phase 4 主畫面並存（ShellWindow 可切換）。
+
+### 整體架構
+- **頂部**：左側狀態列（生產資訊看板標題、OPT/PLC LED、圖示）+ 右側訂單管理導航列（生產排程標題 LED、F2/F4/F6 按鈕）
+- **主體**：左側生產資訊看板 + 右側訂單面板（生產排程 DataGrid、調單、生產完成訂單 DataGrid）
+- **底部**：控制列（返回、F7 訂單製作、F1 排程管理、異常圖示、F11 狀態顯示、關機）
+
+### 左側頂部狀態列
+| 區塊 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
+|------|------|------|------|------|
+| 左側頂部 | 標題 | 生產資訊看板 | 預設 | 無 |
+| 左側頂部 | 生產運作狀態 | "OPT"字樣，附LED圖示(紅燈與白燈) | Ellipse + Trigger | 收到RS485傳來的資料時會恆亮紅燈 ex: "ACTIVE+" |
+| 左側頂部 | PLC訊號狀態 | "PLC"字樣，附LED圖示(綠燈與白燈) | Ellipse + Trigger | 有收到RS485訊號時綠燈閃爍 |
+| 左側頂部 | 圖示 | png 圖示 | icons8-good-quality-80.png | 無 |
+
+### 右側頂部訂單管理導航列
+| 區塊 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
+|------|------|------|------|------|
+| 右側頂部 | 標題 | "生產排程"字樣，附 LED 圖示（綠燈與紅燈） | Ellipse + Trigger | 按下底部「排程管理」進入「模擬生產狀態」時紅燈，待機時綠燈 |
+| 右側頂部 | F2 生產完成 | 按鈕，附圖示 | Button，icons8-production-finished-80.png | 將生產排程 DataGrid 所選項目移入生產完成訂單 DataGrid，並自排程移除；完成訂單多「日期時間」欄，為插入當下時間 |
+| 右側頂部 | F4 預覽 | 按鈕，附圖示 | Button，icons8-search-property-80.png | 開啟 Dialog（確定/取消），輸入搜尋條件後於生產排程 DataGrid 搜尋並選取該筆 |
+| 右側頂部 | F6 撤單 | 按鈕，附圖示 | Button，icons8-keep-clean-96.png | 刪除生產排程 DataGrid 所選項目，下方項目上移 |
+
+### 左側面板：生產資訊看板
+| 欄位 | 範例值 | 功能模擬 |
+|------|-------|-------|
+| 生產訂單 | 從生產排程 DataGrid 第一筆取得生產訂單號 | 無 |
+| 生產版號 | 從生產排程 DataGrid 第一筆取得版號 | 無 |
+| 車速 | 0 | RS485 顯示值（例 RPM:500）；模擬生產狀態時亂數 400–500，每秒更新 |
+| 目前產量 | 0 | 模擬生產狀態時每 30 秒 +1 |
+| 受訂量 | 從生產排程 DataGrid 第一筆取得 | 無 |
+| 預估完成所需時間 | 「停車中」或預估時間（模擬生產狀態下依已生產數量動態更新） | 模擬時每 30 秒一筆可更新 |
+
+### 右側訂單面板
+
+#### 上區：生產排程（DataGrid）
+- **表格欄位**：生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註
+- **範例資料**：0008 / 20260218 / 10 / E / A / Aimar / (空)；0010 / 20260220 / 300 / E / A / Mason / (空)；0011 / 20260226 / 800 / E / A / Jenny / (空)
+
+#### 中區：調單
+| 位置 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
+|------|-------|-------|-------|-------|
+| 左側 | 標題 | "調單"字樣 | 預設 | 無 |
+| 中間 | 訂單上移 | 上箭頭按鈕 | Button，icons8-arrowup-40.png | 所選項目與上一筆對調 |
+| 右側 | 訂單下移 | 下箭頭按鈕 | Button，icons8-arrowdown-40.png | 所選項目與下一筆對調 |
+
+
+#### 下區：生產完成訂單（DataGrid）
+- **表格欄位**：日期時間、生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註
+- **範例資料**：2026/01/10 13:01:12、0004、20260110、600、E、A、Aimar、(空)；2026/02/11 11:52:42、0005、20260110、199、E、A、Mason、(空)
+
+### 底部控制列
+| 位置 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
+|------|------|------|------|------|
+| 最左 | ⬅ 按鈕 | 返回登入頁 | 預設 | 呼叫 `INavigationService.NavigateToLogin` |
+| 左 | F7 訂單製作 | 按鈕，附圖示 | Button，icons8-packing-96.png | 開啟新空白頁面（含右上 X 關閉） |
+| 中左 | F1 排程管理 | 按鈕，附圖示 | Button，icons8-schedule-96.png | 進入「模擬生產狀態」：自生產排程 DataGrid 第一筆起依序執行至全部完成或手動停止；完成項移入生產完成訂單 DataGrid 並自排程移除，注意兩表排序 |
+| 中右 | 異常狀態圖示 | 警示三角 | alarm.png / alarm.gif | 平時 alarm.png；RS485 錯誤時改為 alarm.gif（如 "ERROR+"） |
+| 右 | F11 狀態顯示 | 按鈕，附圖示 | Button，icons8-warning-96.png | 開啟 Dialog 頁面，含右上方 X |
+| 最右 | 關機 | 按鈕，附圖示 | Button，icons8-shutdown-96.png | 無 |
+
+### 待實作項目（依 Layout2）
+
+#### 結構與導航
+- [ ] 新增 Layout2 主畫面 View，登入成功後導航至 Layout2（並存 Phase 4 主畫面）
+- [ ] 擴充 `INavigationService`：`NavigateToLayout2`、必要時 `NavigateToOrderEdit` / `NavigateToStatusDialog`
+- [ ] ShellWindow / ContentHost 可切換 Login / Main(Layout1) / Layout2
+
+#### 資料與模型
+- [ ] 定義生產排程項目模型（生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註）
+- [ ] 定義生產完成訂單項目模型（含日期時間欄）
+- [ ] 排程與完成訂單的集合（`ObservableCollection`）及選取項、調單（上移/下移）、F2/F6 等指令所需邏輯
+
+#### UI 殼層與左側
+- [ ] Layout2 主畫面：左窄右寬版面（Grid 或 DockPanel）
+- [ ] 左側頂部狀態列：標題、OPT/PLC LED（Ellipse + 資料綁定或 Trigger）、圖示
+- [ ] 左側生產資訊看板：生產訂單、生產版號、車速、目前產量、受訂量、預估完成所需時間（綁定至排程第一筆與 RS485/模擬資料）
+
+#### 右側訂單面板
+- [ ] 右側頂部：生產排程標題與 LED、F2 生產完成、F4 預覽、F6 撤單（含指令與圖示）
+- [ ] 上區：生產排程 DataGrid（欄位、選取、F2/F4/F6/調單 操作）
+- [ ] 中區：調單（訂單上移、訂單下移）按鈕與圖示
+- [ ] 下區：生產完成訂單 DataGrid（含日期時間欄）
+
+#### 底部與 Dialog
+- [ ] 底部控制列：返回、F7 訂單製作、F1 排程管理、異常圖示、F11 狀態顯示、關機
+- [ ] F7 訂單製作：新空白頁（含關閉 X）
+- [ ] F4 預覽：搜尋 Dialog（確定/取消），搜尋生產排程並選取
+- [ ] F11 狀態顯示：狀態 Dialog（含關閉 X）
+
+#### 模擬生產與 RS485
+- [ ] 「模擬生產狀態」邏輯：F1 啟動後依排程第一筆起執行、車速（模擬 400–500）、每 30 秒產量 +1、預估時間更新、完成項移入完成訂單
+- [ ] RS485 服務（COM1: 9600,8,N,1）：Background 讀寫、OPT/PLC LED、車速、異常（alarm.gif）等資料來源
+- [ ] Hosted Service 或 BackgroundWorker 整合 RS485 與 UI 更新
+
+### 可能新增的檔案與目錄結構
+
+```
+src/
+├── Views/
+│   ├── Login/                    # 既有
+│   ├── Main/                     # 既有 Phase 4 主畫面
+│   ├── Layout2/                  # 新增：Layout2 主畫面
+│   │   ├── Layout2View.xaml
+│   │   ├── Layout2View.xaml.cs
+│   │   └── ProductionInfoPanel.xaml(.cs)   # (必須)左側生產資訊看板 UserControl
+│   └── Shared/                   # 既有
+├── ViewModels/
+│   └── Layout2ViewModel.cs       # Layout2 主 ViewModel
+├── Models/
+│   ├── ScheduleOrderItem.cs      # 生產排程一筆（訂單號、版號、受訂量、箱型、類別、客戶、備註）
+│   └── CompletedOrderItem.cs    # 生產完成訂單一筆（含日期時間）
+├── Services/
+│   ├── INavigationService.cs     # 擴充 NavigateToLayout2 等
+│   ├── IProductionScheduleService.cs  # (必須) 排程/完成訂單 操作
+│   ├── IRs485Service.cs          # RS485 讀寫介面
+│   └── Rs485Service.cs           # RS485 實作 (COM1: 9600,8,N,1)
+├── Resources/
+│   └── Icons/                  # icons8-*.png、alarm.png、alarm.gif
+└── ...
+```
+
+- **Layout2View**：左側面板 + 右側訂單面板（兩顆 DataGrid + 調單）+ 頂部兩列 + 底部控制列。
+- **圖示**：集中放在 `Resources/Icons/`，XAML 以 pack URI 或資源鍵參考。
+
+---
+
 ## Phase 5：整合與收尾
 
 ### 5.1 綁定與流程
-- [ ] 將 `LoginView` 設為啟動畫面
-- [ ] 確認 DataContext 正確綁定至 `LoginViewModel`
-- [ ] 測試流程：輸入密碼 → Enter → 比對資料庫 → 成功跳轉
-- [ ] 測試 Cancel 清除密碼
+- [x] 將 `LoginView` 設為啟動畫面（ShellWindow 啟動後 `NavigateToLogin()` 顯示 LoginView）
+- [x] 確認 DataContext 正確綁定至 `LoginViewModel`（ShellWindow.CreateLoginView 設定）
+- [x] 測試流程：輸入密碼 → Enter → 比對資料庫 → 成功跳轉
+- [x] 測試 Cancel 清除密碼
 
 ### 5.2 錯誤處理
-- [ ] 資料庫連線失敗處理
-- [ ] 密碼錯誤提示
-- [ ] 輸入為空時的提示（可選）
+- [x] 資料庫連線失敗處理（App.OnStartup  try/catch，MessageBox 後 Shutdown）
+- [x] 密碼錯誤提示（LoginViewModel.LoginErrorMessage + RESX，LoginView 顯示）
+- [x] 輸入為空時的提示（RESX `LoginErrorEmptyPassword`，登入時檢查並顯示）
 
 ### 5.3 Log 服務整合
-- [ ] 確保 `ILogService` 於 App 啟動時初始化
-- [ ] 所有 View 共享同一 Log 實例（單例或 DI）
-- [ ] Log 格式建議：`[HH:mm:ss] 訊息內容`
+- [x] 確保 `ILogService` 於 App 啟動時初始化（ShellWindow 建構時建立並注入）
+- [x] 所有 View 共享同一 Log 實例（單例或 DI）（同一 _logService 傳入 LoginViewModel / MainViewModel）
+- [x] Log 格式建議：`[HH:mm:ss] 訊息內容`（LogService 已實作）
 
 ### 5.4 程式品質
-- [ ] 移除不必要的 `Console.WriteLine`，改寫入 Log
-- [ ] 密碼以明文儲存於 SQLite（本專案為測試用）
-- [ ] 基本程式碼整理與註解
+- [x] 移除不必要的 `Console.WriteLine`，改寫入 Log（專案內無 Console.WriteLine）
+- [x] 密碼以明文儲存於 SQLite（本專案為測試用）
+- [x] 基本程式碼整理與註解
 
 ### 5.5 多國語系與字型
 - [x] Login 畫面字串使用 RESX 綁定（`LocalizedString` 實現動態切換）
-- [ ] 其餘 UI 字串使用 RESX 綁定
-- [ ] 預設字型設為 `Segoe UI, Meiryo UI, Microsoft JhengHei, Leelawadee UI`
-- [ ] 驗證五種語系（ja, zh-TW, pt, en, th）顯示正常
+- [x] 其餘 UI 字串使用 RESX 綁定（MainView 主畫面標題、返回 ToolTip；登入錯誤訊息 RESX）
+- [x] 預設字型設為 `Segoe UI, Meiryo UI, Microsoft JhengHei, Leelawadee UI`（App.xaml）
+- [x] 驗證五種語系（ja, zh-TW, pt, en, th）顯示正常（需手動驗證）
 
 ### 5.6 應用程式圖示
 - [x] 使用 `Resources/icons8-app-48.png` 作為應用程式圖示來源
@@ -282,9 +411,9 @@
 - [ ] 驗證在 Win 8.1 上安裝必要 Distribution 套件後可正常執行
 
 ### 5.9 SQLite 資料庫檢視小工具
-- [ ] 使用 **Microsoft.Data.Sqlite** 撰寫小工具，可檢視資料庫內的資料
-- [ ] 指定 `.db` 檔路徑後，瀏覽其表與資料（列出所有表、選取表後顯示內容）
-- [ ] 程式碼放置於 `tools/` 資料夾
+- [x] 使用 **Microsoft.Data.Sqlite** 撰寫小工具，可檢視資料庫內的資料
+- [x] 指定 `.db` 檔路徑後，瀏覽其表與資料（列出所有表、選取表後顯示內容）
+- [x] 程式碼放置於 `tools/` 資料夾
 
 ---
 

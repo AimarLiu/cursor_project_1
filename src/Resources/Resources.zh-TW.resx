@@ -90,4 +90,12 @@
     <value>返回登入</value>
     <comment>Main page back button tooltip (Traditional Chinese)</comment>
   </data>
+  <data name="LoginErrorWrongPassword" xml:space="preserve">
+    <value>密碼錯誤。</value>
+    <comment>Login error (Traditional Chinese)</comment>
+  </data>
+  <data name="LoginErrorEmptyPassword" xml:space="preserve">
+    <value>請輸入密碼。</value>
+    <comment>Login error when empty (Traditional Chinese)</comment>
+  </data>
 </root>

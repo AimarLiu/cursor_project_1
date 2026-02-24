@@ -5,6 +5,39 @@
              xmlns:layout2="clr-namespace:CursorTestApp.Views.Layout2">
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <!-- DataGrid 標題列：深灰色背景＋白字，字體 18；標題文字於 Loaded 時由 code-behind 自 ViewModel 填入 -->
+        <Style x:Key="Layout2DataGridColumnHeaderStyle" TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#333333" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Padding" Value="6,6" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="MinHeight" Value="28" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+        <!-- DataGrid 儲存格：選取時整列高亮，不要每個格子黑框 -->
+        <Style x:Key="Layout2DataGridCellStyle" TargetType="DataGridCell">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#1976D2" />
+                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="BorderThickness" Value="0" />
+                    <Setter Property="BorderBrush" Value="Transparent" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!-- DataGrid 列樣式：選取時整列背景（與 CellStyle 並用） -->
+        <Style x:Key="Layout2DataGridRowStyle" TargetType="DataGridRow">
+            <Setter Property="Background" Value="Transparent" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#1976D2" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <Grid>
         <Grid.Background>
@@ -25,12 +58,12 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!-- 頂部：左側狀態列 + 右側訂單管理列 -->
+        <!-- 頂部：左側狀態列 + 右側訂單管理列（左欄加寬避免長語系文字遮蓋右側圖示與按鈕） -->
         <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#33000000" Padding="12,8">
             <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="280" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="400" MinWidth="360" />
+                <ColumnDefinition Width="*" MinWidth="420" />
             </Grid.ColumnDefinitions>
             <!-- 左側頂部：標題、OPT、PLC、圖示 -->
             <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
@@ -101,8 +134,8 @@
             </Grid>
         </Border>
 
-        <!-- 主體：左側看板 + 右側訂單面板 -->
-        <Border Grid.Row="1" Grid.Column="0" Background="#22000000" Margin="8">
+        <!-- 主體：左側看板 + 右側訂單面板（左側面板較明亮藍灰） -->
+        <Border Grid.Row="1" Grid.Column="0" Background="#3a4555" Margin="8">
             <layout2:ProductionInfoPanel />
         </Border>
         <Grid Grid.Row="1" Grid.Column="1" Margin="8">
@@ -111,22 +144,33 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <!-- 上區：生產排程 DataGrid -->
-            <DataGrid Grid.Row="0" ItemsSource="{Binding ScheduleOrders}" SelectedItem="{Binding SelectedScheduleItem}"
+            <!-- 上區：生產排程 DataGrid（x:Name 供 Column Header 綁定 DataContext） -->
+            <DataGrid x:Name="ScheduleDataGrid" Grid.Row="0" ItemsSource="{Binding ScheduleOrders}" SelectedItem="{Binding SelectedScheduleItem}"
                       AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
                       CanUserSortColumns="False" HeadersVisibility="Column" Margin="0,0,0,4"
+                      SelectionMode="Single" SelectionUnit="FullRow"
+                      FontSize="18"
                       Background="#40000000" Foreground="White"
                       RowBackground="#33FFFFFF" AlternatingRowBackground="#22FFFFFF"
                       BorderThickness="1" BorderBrush="#44FFFFFF"
-                      VirtualizingStackPanel.IsVirtualizing="True">
+                      ColumnHeaderStyle="{StaticResource Layout2DataGridColumnHeaderStyle}"
+                      RowStyle="{StaticResource Layout2DataGridRowStyle}"
+                      CellStyle="{StaticResource Layout2DataGridCellStyle}"
+                      VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                <DataGrid.Resources>
+                    <!-- 覆寫系統選取色，確保主題不會蓋掉選取視覺 -->
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#1976D2" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding OrderNoHeader.Value}" Binding="{Binding OrderNo}" Width="90" />
-                    <DataGridTextColumn Header="{Binding VersionNoHeader.Value}" Binding="{Binding VersionNo}" Width="90" />
-                    <DataGridTextColumn Header="{Binding OrderQuantityHeader.Value}" Binding="{Binding OrderQuantity}" Width="70" />
-                    <DataGridTextColumn Header="{Binding BoxTypeHeader.Value}" Binding="{Binding BoxType}" Width="50" />
-                    <DataGridTextColumn Header="{Binding CategoryHeader.Value}" Binding="{Binding Category}" Width="50" />
-                    <DataGridTextColumn Header="{Binding CustomerNameHeader.Value}" Binding="{Binding CustomerName}" Width="*" />
-                    <DataGridTextColumn Header="{Binding RemarksHeader.Value}" Binding="{Binding Remarks}" Width="*" />
+                    <!-- 標題於 Loaded 時由 code-behind 自 ViewModel 填入（生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註） -->
+                    <DataGridTextColumn x:Name="ScheduleColOrderNo" Binding="{Binding OrderNo}" Width="135" />
+                    <DataGridTextColumn x:Name="ScheduleColVersionNo" Binding="{Binding VersionNo}" Width="135" />
+                    <DataGridTextColumn x:Name="ScheduleColOrderQuantity" Binding="{Binding OrderQuantity}" Width="105" />
+                    <DataGridTextColumn x:Name="ScheduleColBoxType" Binding="{Binding BoxType}" Width="75" />
+                    <DataGridTextColumn x:Name="ScheduleColCategory" Binding="{Binding Category}" Width="75" />
+                    <DataGridTextColumn x:Name="ScheduleColCustomerName" Binding="{Binding CustomerName}" Width="*" />
+                    <DataGridTextColumn x:Name="ScheduleColRemarks" Binding="{Binding Remarks}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
             <!-- 中區：調單 -->
@@ -156,20 +200,30 @@
                 </Button>
             </StackPanel>
             <!-- 下區：生產完成訂單 DataGrid -->
-            <DataGrid Grid.Row="2" ItemsSource="{Binding CompletedOrders}"
+            <DataGrid x:Name="CompletedDataGrid" Grid.Row="2" ItemsSource="{Binding CompletedOrders}"
                       AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" HeadersVisibility="Column" Margin="0,8,0,0"
+                      SelectionMode="Single" SelectionUnit="FullRow"
+                      FontSize="18"
                       Background="#40000000" Foreground="White" RowBackground="#33FFFFFF" AlternatingRowBackground="#22FFFFFF"
                       BorderThickness="1" BorderBrush="#44FFFFFF"
-                      VirtualizingStackPanel.IsVirtualizing="True">
+                      ColumnHeaderStyle="{StaticResource Layout2DataGridColumnHeaderStyle}"
+                      RowStyle="{StaticResource Layout2DataGridRowStyle}"
+                      CellStyle="{StaticResource Layout2DataGridCellStyle}"
+                      VirtualizingStackPanel.IsVirtualizing="True" VirtualizingStackPanel.VirtualizationMode="Recycling">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#1976D2" />
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
+                </DataGrid.Resources>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="{Binding DateTimeHeader.Value}" Binding="{Binding CompletedAtDisplay}" Width="140" />
-                    <DataGridTextColumn Header="{Binding OrderNoHeader.Value}" Binding="{Binding OrderNo}" Width="90" />
-                    <DataGridTextColumn Header="{Binding VersionNoHeader.Value}" Binding="{Binding VersionNo}" Width="90" />
-                    <DataGridTextColumn Header="{Binding OrderQuantityHeader.Value}" Binding="{Binding OrderQuantity}" Width="70" />
-                    <DataGridTextColumn Header="{Binding BoxTypeHeader.Value}" Binding="{Binding BoxType}" Width="50" />
-                    <DataGridTextColumn Header="{Binding CategoryHeader.Value}" Binding="{Binding Category}" Width="50" />
-                    <DataGridTextColumn Header="{Binding CustomerNameHeader.Value}" Binding="{Binding CustomerName}" Width="*" />
-                    <DataGridTextColumn Header="{Binding RemarksHeader.Value}" Binding="{Binding Remarks}" Width="*" />
+                    <!-- 標題於 Loaded 時由 code-behind 自 ViewModel 填入（日期時間、生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註） -->
+                    <DataGridTextColumn x:Name="CompletedColDateTime" Binding="{Binding CompletedAtDisplay}" Width="210" />
+                    <DataGridTextColumn x:Name="CompletedColOrderNo" Binding="{Binding OrderNo}" Width="135" />
+                    <DataGridTextColumn x:Name="CompletedColVersionNo" Binding="{Binding VersionNo}" Width="135" />
+                    <DataGridTextColumn x:Name="CompletedColOrderQuantity" Binding="{Binding OrderQuantity}" Width="105" />
+                    <DataGridTextColumn x:Name="CompletedColBoxType" Binding="{Binding BoxType}" Width="75" />
+                    <DataGridTextColumn x:Name="CompletedColCategory" Binding="{Binding Category}" Width="75" />
+                    <DataGridTextColumn x:Name="CompletedColCustomerName" Binding="{Binding CustomerName}" Width="*" />
+                    <DataGridTextColumn x:Name="CompletedColRemarks" Binding="{Binding Remarks}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

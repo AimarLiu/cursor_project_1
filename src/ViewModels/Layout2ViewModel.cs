@@ -77,6 +77,9 @@ public sealed partial class Layout2ViewModel : ViewModelBase
     public LocalizedString StatusDialogTitle { get; }
     public LocalizedString StatusDialogContent { get; }
 
+    /// <summary>左側面板字體大小：英文 16、其餘語系 20。</summary>
+    public int LeftPanelFontSize => string.Equals(_localizationService.CurrentCulture.TwoLetterISOLanguageName, "en", StringComparison.OrdinalIgnoreCase) ? 16 : 20;
+
     public Layout2ViewModel(
         INavigationService navigationService,
         ILogService logService,
@@ -124,7 +127,11 @@ public sealed partial class Layout2ViewModel : ViewModelBase
         StatusDialogTitle = new LocalizedString(_localizationService, "Layout2_StatusDialogTitle");
         StatusDialogContent = new LocalizedString(_localizationService, "Layout2_StatusDialogContent");
 
-        _localizationService.CultureChanged += (_, _) => UpdateEstimatedTime();
+        _localizationService.CultureChanged += (_, _) =>
+        {
+            UpdateEstimatedTime();
+            OnPropertyChanged(nameof(LeftPanelFontSize));
+        };
 
         _scheduleService.ScheduleOrders.CollectionChanged += (_, _) => UpdateFirstItemBindings();
         _scheduleService.CompletedOrders.CollectionChanged += (_, _) => { };

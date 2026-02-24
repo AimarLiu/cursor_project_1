@@ -6,7 +6,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{Binding ProductionInfoPanelTitle.Value}" FontSize="18" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,8" />
+        <TextBlock Grid.Row="0" Text="{Binding ProductionInfoPanelTitle.Value}" FontSize="{Binding LeftPanelFontSize}" FontWeight="SemiBold" Foreground="White" Margin="0,0,0,8" />
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -18,20 +18,30 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding ProductionOrderLabel.Value, StringFormat={}{0}:}" FontSize="15" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FirstScheduleItem.OrderNo, FallbackValue=--}" FontSize="15" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding ProductionVersionLabel.Value, StringFormat={}{0}:}" FontSize="15" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FirstScheduleItem.VersionNo, FallbackValue=--}" FontSize="15" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SpeedLabel.Value, StringFormat={}{0}:}" FontSize="15" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Speed, FallbackValue=0}" FontSize="15" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding CurrentQuantityLabel.Value, StringFormat={}{0}:}" FontSize="15" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding CurrentQuantity, FallbackValue=0}" FontSize="15" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding OrderQuantityLabel.Value, StringFormat={}{0}:}" FontSize="15" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding FirstScheduleItem.OrderQuantity, FallbackValue=--}" FontSize="15" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="5" Grid.Column="0" Text="{Binding EstimatedCompleteLabel.Value, StringFormat={}{0}:}" FontSize="15" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
-            <TextBlock Grid.Row="5" Grid.Column="1" Text="{Binding EstimatedTimeDisplay}" FontSize="15" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
+            <!-- 上三列：較亮底；下三列：略深，與左側面板明亮藍灰協調 -->
+            <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#455570" />
+            <Border Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Background="#455570" />
+            <Border Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#455570" />
+            <Border Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Background="#3d4a62" />
+            <Border Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Background="#3d4a62" />
+            <Border Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Background="#3d4a62" />
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding ProductionOrderLabel.Value, StringFormat={}{0}:}" FontSize="{Binding LeftPanelFontSize}" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding FirstScheduleItem.OrderNo, FallbackValue=--}" FontSize="{Binding LeftPanelFontSize}" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding ProductionVersionLabel.Value, StringFormat={}{0}:}" FontSize="{Binding LeftPanelFontSize}" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FirstScheduleItem.VersionNo, FallbackValue=--}" FontSize="{Binding LeftPanelFontSize}" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding SpeedLabel.Value, StringFormat={}{0}:}" FontSize="{Binding LeftPanelFontSize}" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Speed, FallbackValue=0}" FontSize="{Binding LeftPanelFontSize}" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="3" Grid.Column="0" Text="{Binding CurrentQuantityLabel.Value, StringFormat={}{0}:}" FontSize="{Binding LeftPanelFontSize}" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding CurrentQuantity, FallbackValue=0}" FontSize="{Binding LeftPanelFontSize}" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="4" Grid.Column="0" Text="{Binding OrderQuantityLabel.Value, StringFormat={}{0}:}" FontSize="{Binding LeftPanelFontSize}" Foreground="#CCFFFFFF" Margin="0,4" VerticalAlignment="Center" />
+            <TextBlock Grid.Row="4" Grid.Column="1" Text="{Binding FirstScheduleItem.OrderQuantity, FallbackValue=--}" FontSize="{Binding LeftPanelFontSize}" Foreground="White" Margin="0,4" VerticalAlignment="Center" />
+            <!-- 預估完成：標題與估算值分兩行顯示，避免長文字被遮蔽 -->
+            <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Vertical" Margin="0,6">
+                <TextBlock Text="{Binding EstimatedCompleteLabel.Value, StringFormat={}{0}:}" FontSize="{Binding LeftPanelFontSize}" Foreground="#CCFFFFFF" />
+                <TextBlock Text="{Binding EstimatedTimeDisplay}" FontSize="{Binding LeftPanelFontSize}" Foreground="White" Margin="0,2,0,0" TextWrapping="Wrap" />
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

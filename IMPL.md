@@ -314,8 +314,16 @@ Views/
 - `Layout2ViewModel` 注入 `ILocalizationService`，以 `LocalizedString` 暴露上述字串，View / ProductionInfoPanel 綁定 `{Binding XXX.Value}`；語系切換時預估時間字串依 Culture 更新。
 
 ### DataGrid 與左側看板
-- 兩 DataGrid：`CanUserSortColumns="False"`、`VirtualizingStackPanel.IsVirtualizing="True"`。
-- 左側生產資訊看板：外層 Grid、6 列 `Height="*"` 平均分配，欄位字體 15、VerticalAlignment.Center。
+- 兩 DataGrid：`CanUserSortColumns="False"`、`VirtualizingStackPanel.IsVirtualizing="True"`、`VirtualizationMode="Recycling"`；`SelectionMode="Single"`、`SelectionUnit="FullRow"`；**`FontSize="18"`**。
+- **標題欄**：標題文字於 **Layout2View.OnLoaded** 由 code-behind 自 ViewModel 的 `LocalizedString`（RESX Layout2_OrderNo、Layout2_VersionNo 等）填入，避免 XAML 綁定在 Column 上無效。生產排程標題：生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註；生產完成訂單多「日期時間」。
+- **標題列樣式**：`Layout2DataGridColumnHeaderStyle` — Background `#333333`（深灰）、Foreground White、FontSize 18、Padding 6,6、MinHeight 28。
+- **欄寬**：約 1.5 倍 — 生產排程 135/135/105/75/75/*/*，生產完成訂單 210/135/135/105/75/75/*/*。
+- **選取視覺**：`RowStyle` + `CellStyle`（Trigger IsSelected 設 #1976D2/White）；`DataGrid.Resources` 覆寫 `SystemColors.HighlightBrushKey`/`HighlightTextBrushKey`；CellStyle 設 `BorderThickness="0"`、`FocusVisualStyle="{x:Null}"`，僅整列高亮、無格子黑框。
+- **頂部狀態列**：左欄 Width 400、MinWidth 360，右欄 MinWidth 420，避免長語系文字遮蓋右側圖示與 F2/F4/F6 按鈕。
+- **左側生產資訊看板（ProductionInfoPanel）**：
+  - 外層 Border 背景 `#3a4555`（較明亮藍灰）；欄位列上三列 `#455570`、下三列 `#3d4a62` 兩色區分。
+  - 字體依語系：`Layout2ViewModel.LeftPanelFontSize` 綁定，英文 16、其餘 20；CultureChanged 時 OnPropertyChanged。
+  - 「預估完成所需時間」與估算值（停車中／預估時間）拆成兩行顯示（StackPanel 垂直、最後一列 Height Auto），數值設 TextWrapping 避免長文字被遮蔽。
 
 ### Layout2 按鈕版面（Grid、圖左文居中）
 - 頂部 F2/F4/F6、中區訂單上移/下移、底部返回/F7/F1/F11/關機：皆以 `Grid` 為按鈕內容，兩欄（`Auto` + `*`），圖片/圖示靠左、文字綁定 RESX 並置中；`MinWidth`/`Height` 統一適當尺寸（頂部 36、中區 40、底部 48）。

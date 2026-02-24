@@ -19,7 +19,27 @@ public partial class Layout2View : UserControl
 
     private void OnLoaded(object sender, RoutedEventArgs e)
     {
-        if (DataContext is Layout2ViewModel vm && vm.Rs485 != null)
+        if (DataContext is not Layout2ViewModel vm) return;
+
+        // DataGrid 標題由 ViewModel 多語系字串填入（避免 XAML 綁定在 Column 上無效）
+        ScheduleColOrderNo.Header = vm.OrderNoHeader.Value;
+        ScheduleColVersionNo.Header = vm.VersionNoHeader.Value;
+        ScheduleColOrderQuantity.Header = vm.OrderQuantityHeader.Value;
+        ScheduleColBoxType.Header = vm.BoxTypeHeader.Value;
+        ScheduleColCategory.Header = vm.CategoryHeader.Value;
+        ScheduleColCustomerName.Header = vm.CustomerNameHeader.Value;
+        ScheduleColRemarks.Header = vm.RemarksHeader.Value;
+
+        CompletedColDateTime.Header = vm.DateTimeHeader.Value;
+        CompletedColOrderNo.Header = vm.OrderNoHeader.Value;
+        CompletedColVersionNo.Header = vm.VersionNoHeader.Value;
+        CompletedColOrderQuantity.Header = vm.OrderQuantityHeader.Value;
+        CompletedColBoxType.Header = vm.BoxTypeHeader.Value;
+        CompletedColCategory.Header = vm.CategoryHeader.Value;
+        CompletedColCustomerName.Header = vm.CustomerNameHeader.Value;
+        CompletedColRemarks.Header = vm.RemarksHeader.Value;
+
+        if (vm.Rs485 != null)
         {
             vm.Rs485.PropertyChanged += (_, args) =>
             {

@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using CursorTestApp.Services;
 using CursorTestApp.ViewModels;
+using CursorTestApp.Views.Layout2;
 using CursorTestApp.Views.Login;
 using CursorTestApp.Views.Main;
 using Wpf.Ui.Controls;
@@ -9,32 +10,44 @@ using Wpf.Ui.Controls;
 namespace CursorTestApp;
 
 /// <summary>
-/// 主殼視窗，承載登入/主畫面與 Log 區域。
+/// 主殼視窗，承載登入/主畫面/Layout2 與 Log 區域。
 /// </summary>
 public partial class ShellWindow : FluentWindow
 {
     private readonly ILogService _logService;
     private readonly INavigationService _navigationService;
     private readonly ILocalizationService _localizationService;
+    private readonly IProductionScheduleService _scheduleService;
+    private readonly Rs485Service _rs485Service;
+    private readonly Rs485BackgroundService _rs485Background;
 
     public ShellWindow()
     {
         InitializeComponent();
 
         IDatabaseService databaseService = new DatabaseService();
+        databaseService.Initialize();
         IAuthService authService = new AuthService(databaseService);
         _logService = new LogService();
         _localizationService = new LocalizationService();
+        IScheduleOrderRepository scheduleRepo = new ScheduleOrderRepository(databaseService);
+        _scheduleService = new ProductionScheduleService(scheduleRepo);
+        _rs485Service = new Rs485Service();
+        _rs485Background = new Rs485BackgroundService(_rs485Service);
         _navigationService = new NavigationService(
             ContentHost,
             CreateMainView,
-            () => CreateLoginView(authService));
+            () => CreateLoginView(authService),
+            CreateLayout2View);
 
         LogPanel.DataContext = _logService;
         _logService.Append("應用程式已啟動");
 
         _navigationService.LogPanelVisibilityChanged += OnLogPanelVisibilityChanged;
         _navigationService.NavigateToLogin();
+
+        Loaded += (_, _) => _rs485Background.Start();
+        Closed += (_, _) => _rs485Background.Stop();
     }
 
     private UserControl CreateLoginView(IAuthService authService)
@@ -47,6 +60,12 @@ public partial class ShellWindow : FluentWindow
     {
         MainViewModel viewModel = new(_navigationService, _logService, _localizationService);
         return new MainView { DataContext = viewModel };
+    }
+
+    private UserControl CreateLayout2View()
+    {
+        Layout2ViewModel viewModel = new(_navigationService, _logService, _scheduleService, _rs485Service, _localizationService);
+        return new Layout2View { DataContext = viewModel };
     }
 
     private void OnLogPanelVisibilityChanged(object? sender, bool visible)

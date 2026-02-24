@@ -98,4 +98,110 @@
     <value>Please enter password.</value>
     <comment>Login error when password is empty</comment>
   </data>
+  <data name="Layout2_ProductionInfoPanelTitle" xml:space="preserve">
+    <value>Production Info Panel</value>
+    <comment>Layout2 left panel title</comment>
+  </data>
+  <data name="Layout2_OPT" xml:space="preserve">
+    <value>OPT</value>
+  </data>
+  <data name="Layout2_PLC" xml:space="preserve">
+    <value>PLC</value>
+  </data>
+  <data name="Layout2_ScheduleTitle" xml:space="preserve">
+    <value>Production Schedule</value>
+  </data>
+  <data name="Layout2_F2ProductionComplete" xml:space="preserve">
+    <value>F2 Production Complete</value>
+  </data>
+  <data name="Layout2_F4Preview" xml:space="preserve">
+    <value>F4 Preview</value>
+  </data>
+  <data name="Layout2_F6RemoveOrder" xml:space="preserve">
+    <value>F6 Remove Order</value>
+  </data>
+  <data name="Layout2_OrderNo" xml:space="preserve">
+    <value>Order No.</value>
+  </data>
+  <data name="Layout2_VersionNo" xml:space="preserve">
+    <value>Version No.</value>
+  </data>
+  <data name="Layout2_OrderQuantity" xml:space="preserve">
+    <value>Order Qty</value>
+  </data>
+  <data name="Layout2_BoxType" xml:space="preserve">
+    <value>Box Type</value>
+  </data>
+  <data name="Layout2_Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Layout2_CustomerName" xml:space="preserve">
+    <value>Customer</value>
+  </data>
+  <data name="Layout2_Remarks" xml:space="preserve">
+    <value>Remarks</value>
+  </data>
+  <data name="Layout2_DateTime" xml:space="preserve">
+    <value>Date Time</value>
+  </data>
+  <data name="Layout2_AdjustOrder" xml:space="preserve">
+    <value>Adjust Order</value>
+  </data>
+  <data name="Layout2_OrderMoveUp" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="Layout2_OrderMoveDown" xml:space="preserve">
+    <value>Move Down</value>
+  </data>
+  <data name="Layout2_BackToLogin" xml:space="preserve">
+    <value>Back to Login</value>
+  </data>
+  <data name="Layout2_F7OrderMake" xml:space="preserve">
+    <value>F7 Order Make</value>
+  </data>
+  <data name="Layout2_F1ScheduleManage" xml:space="preserve">
+    <value>F1 Schedule Manage</value>
+  </data>
+  <data name="Layout2_F11StatusDisplay" xml:space="preserve">
+    <value>F11 Status Display</value>
+  </data>
+  <data name="Layout2_Shutdown" xml:space="preserve">
+    <value>Shutdown</value>
+  </data>
+  <data name="Layout2_Parking" xml:space="preserve">
+    <value>Parking</value>
+  </data>
+  <data name="Layout2_EstimatedTimeSec" xml:space="preserve">
+    <value>About {0} sec</value>
+  </data>
+  <data name="Layout2_ProductionOrder" xml:space="preserve">
+    <value>Production Order</value>
+  </data>
+  <data name="Layout2_ProductionVersion" xml:space="preserve">
+    <value>Production Version</value>
+  </data>
+  <data name="Layout2_Speed" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="Layout2_CurrentQuantity" xml:space="preserve">
+    <value>Current Qty</value>
+  </data>
+  <data name="Layout2_OrderQuantityLabel" xml:space="preserve">
+    <value>Order Qty</value>
+  </data>
+  <data name="Layout2_EstimatedComplete" xml:space="preserve">
+    <value>Est. Complete</value>
+  </data>
+  <data name="Layout2_OrderMakeWindowTitle" xml:space="preserve">
+    <value>Order Make</value>
+  </data>
+  <data name="Layout2_BlankPage" xml:space="preserve">
+    <value>Blank page</value>
+  </data>
+  <data name="Layout2_StatusDialogTitle" xml:space="preserve">
+    <value>Status Display</value>
+  </data>
+  <data name="Layout2_StatusDialogContent" xml:space="preserve">
+    <value>Status Dialog</value>
+  </data>
 </root>

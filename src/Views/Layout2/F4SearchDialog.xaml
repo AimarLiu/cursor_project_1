@@ -1,0 +1,21 @@
+<Window x:Class="CursorTestApp.Views.Layout2.F4SearchDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="F4 預覽 - 搜尋排程"
+        Width="360" Height="160"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize">
+    <Grid Margin="24">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Text="輸入訂單號、版號或客戶名稱：" Margin="0,0,0,8" />
+        <TextBox x:Name="TbKeyword" Grid.Row="1" Margin="0,0,0,16" Padding="8,6" VerticalContentAlignment="Center" />
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="確定" IsDefault="True" Click="Ok_Click" Width="80" Height="28" Margin="0,0,8,0" />
+            <Button Content="取消" IsCancel="True" Click="Cancel_Click" Width="80" Height="28" />
+        </StackPanel>
+    </Grid>
+</Window>

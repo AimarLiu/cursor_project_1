@@ -98,4 +98,109 @@
     <value>Digite a senha.</value>
     <comment>Login error when empty (Portuguese)</comment>
   </data>
+  <data name="Layout2_ProductionInfoPanelTitle" xml:space="preserve">
+    <value>Painel de Produção</value>
+  </data>
+  <data name="Layout2_OPT" xml:space="preserve">
+    <value>OPT</value>
+  </data>
+  <data name="Layout2_PLC" xml:space="preserve">
+    <value>PLC</value>
+  </data>
+  <data name="Layout2_ScheduleTitle" xml:space="preserve">
+    <value>Agenda de Produção</value>
+  </data>
+  <data name="Layout2_F2ProductionComplete" xml:space="preserve">
+    <value>F2 Concluído</value>
+  </data>
+  <data name="Layout2_F4Preview" xml:space="preserve">
+    <value>F4 Pré-visualizar</value>
+  </data>
+  <data name="Layout2_F6RemoveOrder" xml:space="preserve">
+    <value>F6 Cancelar</value>
+  </data>
+  <data name="Layout2_OrderNo" xml:space="preserve">
+    <value>Nº Pedido</value>
+  </data>
+  <data name="Layout2_VersionNo" xml:space="preserve">
+    <value>Versão</value>
+  </data>
+  <data name="Layout2_OrderQuantity" xml:space="preserve">
+    <value>Qtd.</value>
+  </data>
+  <data name="Layout2_BoxType" xml:space="preserve">
+    <value>Tipo Caixa</value>
+  </data>
+  <data name="Layout2_Category" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="Layout2_CustomerName" xml:space="preserve">
+    <value>Cliente</value>
+  </data>
+  <data name="Layout2_Remarks" xml:space="preserve">
+    <value>Observações</value>
+  </data>
+  <data name="Layout2_DateTime" xml:space="preserve">
+    <value>Data/Hora</value>
+  </data>
+  <data name="Layout2_AdjustOrder" xml:space="preserve">
+    <value>Ajustar Ordem</value>
+  </data>
+  <data name="Layout2_OrderMoveUp" xml:space="preserve">
+    <value>Subir</value>
+  </data>
+  <data name="Layout2_OrderMoveDown" xml:space="preserve">
+    <value>Descer</value>
+  </data>
+  <data name="Layout2_BackToLogin" xml:space="preserve">
+    <value>Voltar ao login</value>
+  </data>
+  <data name="Layout2_F7OrderMake" xml:space="preserve">
+    <value>F7 Criar Pedido</value>
+  </data>
+  <data name="Layout2_F1ScheduleManage" xml:space="preserve">
+    <value>F1 Gerir Agenda</value>
+  </data>
+  <data name="Layout2_F11StatusDisplay" xml:space="preserve">
+    <value>F11 Estado</value>
+  </data>
+  <data name="Layout2_Shutdown" xml:space="preserve">
+    <value>Encerrar</value>
+  </data>
+  <data name="Layout2_Parking" xml:space="preserve">
+    <value>Parado</value>
+  </data>
+  <data name="Layout2_EstimatedTimeSec" xml:space="preserve">
+    <value>~ {0} seg</value>
+  </data>
+  <data name="Layout2_ProductionOrder" xml:space="preserve">
+    <value>Pedido</value>
+  </data>
+  <data name="Layout2_ProductionVersion" xml:space="preserve">
+    <value>Versão</value>
+  </data>
+  <data name="Layout2_Speed" xml:space="preserve">
+    <value>Velocidade</value>
+  </data>
+  <data name="Layout2_CurrentQuantity" xml:space="preserve">
+    <value>Qtd. Atual</value>
+  </data>
+  <data name="Layout2_OrderQuantityLabel" xml:space="preserve">
+    <value>Qtd. Pedido</value>
+  </data>
+  <data name="Layout2_EstimatedComplete" xml:space="preserve">
+    <value>Est. Conclusão</value>
+  </data>
+  <data name="Layout2_OrderMakeWindowTitle" xml:space="preserve">
+    <value>Criar Pedido</value>
+  </data>
+  <data name="Layout2_BlankPage" xml:space="preserve">
+    <value>Página em branco</value>
+  </data>
+  <data name="Layout2_StatusDialogTitle" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="Layout2_StatusDialogContent" xml:space="preserve">
+    <value>Diálogo de estado</value>
+  </data>
 </root>

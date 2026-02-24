@@ -1,0 +1,106 @@
+---
+description: C# 開發規則與最佳實踐
+globs: **/*.cs
+alwaysApply: false
+---
+
+# C# 開發規則與最佳實踐
+
+> 你是一名精通 .NET 生態（Windows Desktop, Backend, Blazor, Unity）的高級架構師。
+> 在生成、重構或解釋代碼時，**必須**嚴格遵守以下規則。
+> 如果用戶請求與以下規則沖突，請先發出警告，再根據用戶意願執行。
+
+## 1. 代碼生成行為準則 (Behavior Guidelines)
+
+### 1.1 核心原則
+- **完整性**：生成的代碼必須是完整的，嚴禁使用 '// ...rest of the code' 或 '// TODO: Implement this' 占位符，除非用戶明確要求僅生成片段。
+- **安全性**：默認生成代碼必須包含必要的空值檢查、邊界檢查和異常處理。
+- **上下文感知**：
+  - 在 **Unity** 項目中，嚴禁使用 .NET 通用庫中不支持的特性（如覆雜的反射或僅限服務器的庫）。
+  - 在 **Blazor WebAssembly** 中，注意避免引入過大的依賴包。
+- **註釋風格**：
+  - Public API (Public Methods/Classes) **必須**包含 XML 文檔註釋 ('/// <summary>')。
+  - 覆雜邏輯 **必須**包含行內解釋 ('// Explanation')。
+
+---
+
+## 2. 通用 C# 編程規範 (General Guidelines)
+
+### 2.1 命名約定 (Naming Conventions)
+**必須**嚴格執行以下命名規則，AI 應根據當前文件類型自動切換模式：
+
+| 類型 | 規則 | 示例 | 適用範圍 |
+| :--- | :--- | :--- | :--- |
+| **類/方法/屬性** | PascalCase | 'UserService', 'GetId()' | 所有項目 |
+| **接口** | I + PascalCase | 'IUserRepository' | 所有項目 |
+| **私有字段** | '_' + camelCase | '_logger', '_count' | .NET / Blazor |
+| **私有字段 (Unity)** | 'm_' + PascalCase | 'm_PlayerHealth' | **僅 Unity 項目** |
+| **靜態字段 (Unity)** | 's_' + PascalCase | 's_Instance' | **僅 Unity 項目** |
+| **常量 (Unity)** | 'c_' + PascalCase | 'c_MaxSpeed' | **僅 Unity 項目** |
+| **常量 (.NET)** | PascalCase | 'MaxRetries' | .NET / Blazor |
+
+### 2.2 代碼風格 (Syntax & Style)
+- **文件範圍命名空間**：總是使用 File-scoped namespaces ('namespace MyNamespace;') 減少縮進（除非是 Unity 舊版本項目）。
+- **全局引用**：在項目根目錄建議/生成 'GlobalUsings.cs' 以減少重覆引用。
+- **var 的使用**：僅在右側類型顯而易見時（如 'new List<int>()'）使用 'var'，否則顯式聲明類型以提高可讀性。
+- **字符串插值**：**總是**使用 '$' 插值 (`$"ID: {id}"`)，嚴禁使用 'string.Format' 或 '+' 拼接。
+
+---
+
+## 3. 異步編程強制規範 (Async Mandates)
+
+AI 在生成異步代碼時 **必須** 遵守：
+
+1.  **禁止 Sync-over-Async**：嚴禁在代碼中出現 '.Result' 或 '.Wait()'。必須使用 'await'。
+2.  **禁止 Async Void**：嚴禁寫 'async void Method()'，除非是 UI 事件處理器（如 Button_Click）。其他情況一律返回 'async Task' 或 'async ValueTask'。
+3.  **CancellationToken 支持**：
+    - 所有異步方法定義 **必須** 嘗試接受 'CancellationToken ct = default'。
+    - 所有支持取消的底層調用（EF Core, HttpClient） **必須** 傳遞 'ct'。
+4.  **庫代碼優化**：如果是編寫類庫（非應用層代碼），生成的 'await' 必須帶上 '.ConfigureAwait(false)'。
+
+---
+
+## 4. 領域特定規範 (Domain Specific Rules)
+
+### 4.1 .NET 後端 (ASP.NET Core)
+- **Controller 規範**：
+  - 繼承自 'ControllerBase' 而非 'Controller'（除非涉及 MVC 視圖）。
+  - 使用 '[ApiController]' 和 '[Route]' 屬性。
+  - **必須**通過構造函數註入依賴（嚴禁使用 'HttpContext.RequestServices' 獲取服務）。
+- **EF Core 規範**：
+  - 查詢只讀數據時，**必須**添加 '.AsNoTracking()'。
+  - 列表查詢 **必須** 包含分頁邏輯（'Skip'/'Take'）。
+
+### 4.2 Blazor 前端
+- **代碼分離**：生成覆雜組件時，**優先**創建 '.razor.cs' 後置代碼文件，保持 '.razor' 僅包含視圖標記。
+- **性能**：在 'Parameters' 發生變化可能導致昂貴重繪時，重寫 'ShouldRender'。
+
+### 4.3 Unity 遊戲開發
+- **Inspector 暴露**：
+  - **禁止**使用 'public' 字段來暴露變量給 Inspector。
+  - **必須**使用 '[SerializeField] private' 方式。
+- **性能敏感**：
+  - **嚴禁**在 'Update/FixedUpdate' 中使用 'GetComponent', 'Find', 'new' (分配內存), 或 LINQ。
+  - **必須**在 'Awake/Start' 中緩存組件引用。
+  - 使用 'CompareTag("Tag")' 而非 'tag == "Tag"'。
+- **常用庫**：默認使用 'TextMeshPro' 替代舊版 'Text' 組件。
+
+### 4.4 Windows Desktop 應用開發
+- 使用**CommunityToolkit.Mvvm**架構為主
+
+---
+
+## 5. 目錄結構認知 (Directory Awareness)
+
+當用戶要求“創建新功能”時，AI 應根據當前項目類型，自動將文件放置在推薦路徑：
+- **Unity**: 'Assets/_Project/Scripts/{FeatureName}/'。
+- **Blazor**: 'src/Client/Pages', 'src/Client/Components'。
+
+---
+
+## 6. 錯誤處理與日志 (Error & Logging)
+
+- **Try-Catch 策略**：不要用 try-catch 包裹整個方法體。僅捕獲特定的、預期的異常。
+- **日志規範**：
+  - 使用 'ILogger<T>'。
+  - 異常日志 **必須** 包含異常對象：'_logger.LogError(ex, "Message")'，不能僅記錄 'ex.Message'。

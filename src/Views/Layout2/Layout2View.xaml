@@ -1,0 +1,246 @@
+<UserControl x:Class="CursorTestApp.Views.Layout2.Layout2View"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             xmlns:layout2="clr-namespace:CursorTestApp.Views.Layout2">
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#1a1a2e" Offset="0" />
+                <GradientStop Color="#16213e" Offset="0.5" />
+                <GradientStop Color="#0f3460" Offset="1" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="280" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 頂部：左側狀態列 + 右側訂單管理列 -->
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#33000000" Padding="12,8">
+            <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="280" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- 左側頂部：標題、OPT、PLC、圖示 -->
+            <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="{Binding ProductionInfoPanelTitle.Value}" Foreground="White" FontSize="14" VerticalAlignment="Center" Margin="0,0,12,0" />
+                <TextBlock Text="{Binding OptLabel.Value}" Foreground="White" VerticalAlignment="Center" Margin="0,0,4,0" />
+                <Ellipse Width="12" Height="12" Margin="0,0,12,0">
+                    <Ellipse.Fill>
+                        <Binding Path="Rs485.IsOptActive" Converter="{StaticResource BoolToLedBrush}" ConverterParameter="Opt" />
+                    </Ellipse.Fill>
+                </Ellipse>
+                <TextBlock Text="{Binding PlcLabel.Value}" Foreground="White" VerticalAlignment="Center" Margin="0,0,4,0" />
+                <Ellipse Width="12" Height="12" Margin="0,0,12,0">
+                    <Ellipse.Fill>
+                        <Binding Path="Rs485.IsPlcActive" Converter="{StaticResource BoolToLedBrush}" ConverterParameter="Plc" />
+                    </Ellipse.Fill>
+                </Ellipse>
+                <Image Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-favorites-shield-5-stars-96.png" Width="48" Height="48" />
+            </StackPanel>
+            <!-- 右側頂部：生產排程標題 LED、F2、F4、F6 -->
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <TextBlock Text="{Binding ScheduleTitle.Value}" Foreground="White" VerticalAlignment="Center" Margin="0,0,8,0" />
+                <Ellipse Width="12" Height="12" Margin="0,0,16,0">
+                    <Ellipse.Style>
+                        <Style TargetType="Ellipse">
+                            <Setter Property="Fill" Value="#444" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsSimulating}" Value="True">
+                                    <Setter Property="Fill" Value="#E53935" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Ellipse.Style>
+                </Ellipse>
+                <Button Command="{Binding F2ProductionCompleteCommand}" ToolTip="{Binding F2ProductionCompleteToolTip.Value}" MinWidth="110" Height="36" Margin="0,0,4,0"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-production-finished-80.png" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding F2ProductionCompleteToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" />
+                    </Grid>
+                </Button>
+                <Button x:Name="BtnF4" ToolTip="{Binding F4PreviewToolTip.Value}" MinWidth="90" Height="36" Margin="0,0,4,0"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand" Click="BtnF4_OnClick">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-search-property-80.png" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding F4PreviewToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" />
+                    </Grid>
+                </Button>
+                <Button Command="{Binding F6RemoveOrderCommand}" ToolTip="{Binding F6RemoveOrderToolTip.Value}" MinWidth="90" Height="36"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-keep-clean-96.png" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding F6RemoveOrderToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" />
+                    </Grid>
+                </Button>
+            </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- 主體：左側看板 + 右側訂單面板 -->
+        <Border Grid.Row="1" Grid.Column="0" Background="#22000000" Margin="8">
+            <layout2:ProductionInfoPanel />
+        </Border>
+        <Grid Grid.Row="1" Grid.Column="1" Margin="8">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <!-- 上區：生產排程 DataGrid -->
+            <DataGrid Grid.Row="0" ItemsSource="{Binding ScheduleOrders}" SelectedItem="{Binding SelectedScheduleItem}"
+                      AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False" CanUserDeleteRows="False"
+                      CanUserSortColumns="False" HeadersVisibility="Column" Margin="0,0,0,4"
+                      Background="#40000000" Foreground="White"
+                      RowBackground="#33FFFFFF" AlternatingRowBackground="#22FFFFFF"
+                      BorderThickness="1" BorderBrush="#44FFFFFF"
+                      VirtualizingStackPanel.IsVirtualizing="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{Binding OrderNoHeader.Value}" Binding="{Binding OrderNo}" Width="90" />
+                    <DataGridTextColumn Header="{Binding VersionNoHeader.Value}" Binding="{Binding VersionNo}" Width="90" />
+                    <DataGridTextColumn Header="{Binding OrderQuantityHeader.Value}" Binding="{Binding OrderQuantity}" Width="70" />
+                    <DataGridTextColumn Header="{Binding BoxTypeHeader.Value}" Binding="{Binding BoxType}" Width="50" />
+                    <DataGridTextColumn Header="{Binding CategoryHeader.Value}" Binding="{Binding Category}" Width="50" />
+                    <DataGridTextColumn Header="{Binding CustomerNameHeader.Value}" Binding="{Binding CustomerName}" Width="*" />
+                    <DataGridTextColumn Header="{Binding RemarksHeader.Value}" Binding="{Binding Remarks}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+            <!-- 中區：調單 -->
+            <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,8">
+                <TextBlock Text="{Binding AdjustOrderLabel.Value}" Foreground="White" VerticalAlignment="Center" Margin="0,0,16,0" />
+                <Button Command="{Binding OrderMoveUpCommand}" ToolTip="{Binding OrderMoveUpToolTip.Value}" MinWidth="100" Height="40" Margin="0,0,8,0"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-arrowup-40.png" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding OrderMoveUpToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" />
+                    </Grid>
+                </Button>
+                <Button Command="{Binding OrderMoveDownCommand}" ToolTip="{Binding OrderMoveDownToolTip.Value}" MinWidth="100" Height="40"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-arrowdown-40.png" Width="24" Height="24" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding OrderMoveDownToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12" />
+                    </Grid>
+                </Button>
+            </StackPanel>
+            <!-- 下區：生產完成訂單 DataGrid -->
+            <DataGrid Grid.Row="2" ItemsSource="{Binding CompletedOrders}"
+                      AutoGenerateColumns="False" IsReadOnly="True" CanUserSortColumns="False" HeadersVisibility="Column" Margin="0,8,0,0"
+                      Background="#40000000" Foreground="White" RowBackground="#33FFFFFF" AlternatingRowBackground="#22FFFFFF"
+                      BorderThickness="1" BorderBrush="#44FFFFFF"
+                      VirtualizingStackPanel.IsVirtualizing="True">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="{Binding DateTimeHeader.Value}" Binding="{Binding CompletedAtDisplay}" Width="140" />
+                    <DataGridTextColumn Header="{Binding OrderNoHeader.Value}" Binding="{Binding OrderNo}" Width="90" />
+                    <DataGridTextColumn Header="{Binding VersionNoHeader.Value}" Binding="{Binding VersionNo}" Width="90" />
+                    <DataGridTextColumn Header="{Binding OrderQuantityHeader.Value}" Binding="{Binding OrderQuantity}" Width="70" />
+                    <DataGridTextColumn Header="{Binding BoxTypeHeader.Value}" Binding="{Binding BoxType}" Width="50" />
+                    <DataGridTextColumn Header="{Binding CategoryHeader.Value}" Binding="{Binding Category}" Width="50" />
+                    <DataGridTextColumn Header="{Binding CustomerNameHeader.Value}" Binding="{Binding CustomerName}" Width="*" />
+                    <DataGridTextColumn Header="{Binding RemarksHeader.Value}" Binding="{Binding Remarks}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <!-- 底部控制列 -->
+        <Border Grid.Row="2" Grid.ColumnSpan="2" Background="#44000000" Padding="16,8">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <Button Command="{Binding NavigateBackCommand}" ToolTip="{Binding BackToLoginToolTip.Value}" MinWidth="120" Height="48" Margin="0,0,8,0"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="⬅" FontSize="24" Foreground="White" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding BackToLoginToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" />
+                    </Grid>
+                </Button>
+                <Button Command="{Binding F7OrderEditCommand}" ToolTip="{Binding F7OrderMakeToolTip.Value}" MinWidth="120" Height="48" Margin="0,0,8,0"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-packing-96.png" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding F7OrderMakeToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" />
+                    </Grid>
+                </Button>
+                <Button Command="{Binding F1StartScheduleCommand}" ToolTip="{Binding F1ScheduleManageToolTip.Value}" MinWidth="120" Height="48" Margin="0,0,8,0"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-schedule-96.png" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding F1ScheduleManageToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" />
+                    </Grid>
+                </Button>
+            </StackPanel>
+                <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
+                <Image x:Name="AlarmImage" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/alarm.png" Width="32" Height="32" Margin="0,0,16,0" gif:ImageBehavior.RepeatBehavior="Forever" />
+                <Button Command="{Binding F11StatusDialogCommand}" ToolTip="{Binding F11StatusDisplayToolTip.Value}" MinWidth="120" Height="48" Margin="0,0,8,0"
+                        Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-warning-96.png" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding F11StatusDisplayToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" />
+                    </Grid>
+                </Button>
+                <Button ToolTip="{Binding ShutdownToolTip.Value}" MinWidth="100" Height="48" Background="Transparent" BorderThickness="0" Cursor="Hand">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-shutdown-96.png" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0" />
+                        <TextBlock Grid.Column="1" Text="{Binding ShutdownToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" />
+                    </Grid>
+                </Button>
+            </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

@@ -98,4 +98,109 @@
     <value>パスワードを入力してください。</value>
     <comment>Login error when empty (Japanese)</comment>
   </data>
+  <data name="Layout2_ProductionInfoPanelTitle" xml:space="preserve">
+    <value>生産情報パネル</value>
+  </data>
+  <data name="Layout2_OPT" xml:space="preserve">
+    <value>OPT</value>
+  </data>
+  <data name="Layout2_PLC" xml:space="preserve">
+    <value>PLC</value>
+  </data>
+  <data name="Layout2_ScheduleTitle" xml:space="preserve">
+    <value>生産スケジュール</value>
+  </data>
+  <data name="Layout2_F2ProductionComplete" xml:space="preserve">
+    <value>F2 生産完了</value>
+  </data>
+  <data name="Layout2_F4Preview" xml:space="preserve">
+    <value>F4 プレビュー</value>
+  </data>
+  <data name="Layout2_F6RemoveOrder" xml:space="preserve">
+    <value>F6 キャンセル</value>
+  </data>
+  <data name="Layout2_OrderNo" xml:space="preserve">
+    <value>製造オーダーNo</value>
+  </data>
+  <data name="Layout2_VersionNo" xml:space="preserve">
+    <value>版番号</value>
+  </data>
+  <data name="Layout2_OrderQuantity" xml:space="preserve">
+    <value>受注数</value>
+  </data>
+  <data name="Layout2_BoxType" xml:space="preserve">
+    <value>箱型</value>
+  </data>
+  <data name="Layout2_Category" xml:space="preserve">
+    <value>カテゴリ</value>
+  </data>
+  <data name="Layout2_CustomerName" xml:space="preserve">
+    <value>顧客名</value>
+  </data>
+  <data name="Layout2_Remarks" xml:space="preserve">
+    <value>備考</value>
+  </data>
+  <data name="Layout2_DateTime" xml:space="preserve">
+    <value>日時</value>
+  </data>
+  <data name="Layout2_AdjustOrder" xml:space="preserve">
+    <value>順序変更</value>
+  </data>
+  <data name="Layout2_OrderMoveUp" xml:space="preserve">
+    <value>上へ</value>
+  </data>
+  <data name="Layout2_OrderMoveDown" xml:space="preserve">
+    <value>下へ</value>
+  </data>
+  <data name="Layout2_BackToLogin" xml:space="preserve">
+    <value>ログインに戻る</value>
+  </data>
+  <data name="Layout2_F7OrderMake" xml:space="preserve">
+    <value>F7 オーダー作成</value>
+  </data>
+  <data name="Layout2_F1ScheduleManage" xml:space="preserve">
+    <value>F1 スケジュール管理</value>
+  </data>
+  <data name="Layout2_F11StatusDisplay" xml:space="preserve">
+    <value>F11 状態表示</value>
+  </data>
+  <data name="Layout2_Shutdown" xml:space="preserve">
+    <value>シャットダウン</value>
+  </data>
+  <data name="Layout2_Parking" xml:space="preserve">
+    <value>停止中</value>
+  </data>
+  <data name="Layout2_EstimatedTimeSec" xml:space="preserve">
+    <value>約 {0} 秒</value>
+  </data>
+  <data name="Layout2_ProductionOrder" xml:space="preserve">
+    <value>製造オーダー</value>
+  </data>
+  <data name="Layout2_ProductionVersion" xml:space="preserve">
+    <value>版番</value>
+  </data>
+  <data name="Layout2_Speed" xml:space="preserve">
+    <value>速度</value>
+  </data>
+  <data name="Layout2_CurrentQuantity" xml:space="preserve">
+    <value>現在生産数</value>
+  </data>
+  <data name="Layout2_OrderQuantityLabel" xml:space="preserve">
+    <value>受注数</value>
+  </data>
+  <data name="Layout2_EstimatedComplete" xml:space="preserve">
+    <value>予測完了</value>
+  </data>
+  <data name="Layout2_OrderMakeWindowTitle" xml:space="preserve">
+    <value>オーダー作成</value>
+  </data>
+  <data name="Layout2_BlankPage" xml:space="preserve">
+    <value>空白ページ</value>
+  </data>
+  <data name="Layout2_StatusDialogTitle" xml:space="preserve">
+    <value>状態表示</value>
+  </data>
+  <data name="Layout2_StatusDialogContent" xml:space="preserve">
+    <value>状態ダイアログ</value>
+  </data>
 </root>

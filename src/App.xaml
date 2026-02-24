@@ -12,6 +12,7 @@
                 <ui:ControlsDictionary />
             </ResourceDictionary.MergedDictionaries>
             <conv:StringNotEmptyToVisibilityConverter x:Key="StringNotEmptyToVisibility" />
+            <conv:BoolToLedBrushConverter x:Key="BoolToLedBrush" />
             <!-- 預設字型：依序 Segoe UI、Meiryo UI、Microsoft JhengHei UI、Leelawadee UI -->
             <FontFamily x:Key="DefaultFontFamily">Segoe UI, Meiryo UI, Microsoft JhengHei UI, Leelawadee UI</FontFamily>
             <Style TargetType="TextElement">

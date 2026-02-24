@@ -11,21 +11,21 @@ public sealed class NavigationService : INavigationService
     private readonly ContentControl _host;
     private readonly Func<object> _mainViewFactory;
     private readonly Func<object> _loginViewFactory;
+    private readonly Func<object> _layout2ViewFactory;
 
     /// <summary>
     /// 建立 NavigationService。
     /// </summary>
-    /// <param name="host">承載 View 的 ContentControl</param>
-    /// <param name="mainViewFactory">主畫面工廠</param>
-    /// <param name="loginViewFactory">登入畫面工廠</param>
     public NavigationService(
         ContentControl host,
         Func<object> mainViewFactory,
-        Func<object> loginViewFactory)
+        Func<object> loginViewFactory,
+        Func<object> layout2ViewFactory)
     {
         _host = host ?? throw new ArgumentNullException(nameof(host));
         _mainViewFactory = mainViewFactory ?? throw new ArgumentNullException(nameof(mainViewFactory));
         _loginViewFactory = loginViewFactory ?? throw new ArgumentNullException(nameof(loginViewFactory));
+        _layout2ViewFactory = layout2ViewFactory ?? throw new ArgumentNullException(nameof(layout2ViewFactory));
     }
 
     /// <inheritdoc />
@@ -43,5 +43,12 @@ public sealed class NavigationService : INavigationService
     {
         _host.Content = _loginViewFactory();
         LogPanelVisibilityChanged?.Invoke(this, true);
+    }
+
+    /// <inheritdoc />
+    public void NavigateToLayout2()
+    {
+        _host.Content = _layout2ViewFactory();
+        LogPanelVisibilityChanged?.Invoke(this, false);
     }
 }

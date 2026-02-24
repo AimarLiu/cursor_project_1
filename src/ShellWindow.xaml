@@ -4,7 +4,7 @@
                  xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
                  xmlns:shared="clr-namespace:CursorTestApp.Views.Shared"
                  Title="Cursor Test App"
-                 Icon="pack://application:,,,/Resources/icons8-app-48.png"
+                 Icon="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-app-96.png"
                  WindowState="Maximized"
                  WindowStartupLocation="CenterScreen">
     <Grid>

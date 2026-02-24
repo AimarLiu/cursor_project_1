@@ -57,7 +57,83 @@ public sealed class DatabaseService : IDatabaseService
             command.ExecuteNonQuery();
         }
 
+        EnsureScheduleTables(connection);
+        SeedScheduleDataIfEmpty(connection);
         SeedTestAccountIfEmpty(connection);
+    }
+
+    private static void SeedScheduleDataIfEmpty(SqliteConnection connection)
+    {
+        using var countCmd = connection.CreateCommand();
+        countCmd.CommandText = "SELECT COUNT(*) FROM ScheduleOrders";
+        if ((long)(countCmd.ExecuteScalar() ?? 0L) > 0) return;
+
+        var inserts = new[]
+        {
+            "INSERT INTO ScheduleOrders (OrderNo, VersionNo, OrderQuantity, BoxType, Category, CustomerName, Remarks, SortOrder) VALUES ('0008','20260218',10,'E','A','Aimar','',0)",
+            "INSERT INTO ScheduleOrders (OrderNo, VersionNo, OrderQuantity, BoxType, Category, CustomerName, Remarks, SortOrder) VALUES ('0010','20260220',300,'E','A','Mason','',1)",
+            "INSERT INTO ScheduleOrders (OrderNo, VersionNo, OrderQuantity, BoxType, Category, CustomerName, Remarks, SortOrder) VALUES ('0011','20260226',800,'E','A','Jenny','',2)",
+        };
+        foreach (var sql in inserts)
+        {
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+
+        using var countCompleted = connection.CreateCommand();
+        countCompleted.CommandText = "SELECT COUNT(*) FROM CompletedOrders";
+        if ((long)(countCompleted.ExecuteScalar() ?? 0L) > 0) return;
+
+        var completed = new[]
+        {
+            "INSERT INTO CompletedOrders (CompletedAt, OrderNo, VersionNo, OrderQuantity, BoxType, Category, CustomerName, Remarks) VALUES ('2026-01-10T13:01:12','0004','20260110',600,'E','A','Aimar','')",
+            "INSERT INTO CompletedOrders (CompletedAt, OrderNo, VersionNo, OrderQuantity, BoxType, Category, CustomerName, Remarks) VALUES ('2026-02-11T11:52:42','0005','20260110',199,'E','A','Mason','')",
+        };
+        foreach (var sql in completed)
+        {
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = sql;
+            cmd.ExecuteNonQuery();
+        }
+    }
+
+    private static void EnsureScheduleTables(SqliteConnection connection)
+    {
+        const string sql = """
+            CREATE TABLE IF NOT EXISTS ScheduleOrders (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                OrderNo TEXT NOT NULL,
+                VersionNo TEXT NOT NULL,
+                OrderQuantity INTEGER NOT NULL,
+                BoxType TEXT NOT NULL,
+                Category TEXT NOT NULL,
+                CustomerName TEXT NOT NULL,
+                Remarks TEXT NOT NULL,
+                SortOrder INTEGER NOT NULL DEFAULT 0
+            );
+            CREATE TABLE IF NOT EXISTS CompletedOrders (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                CompletedAt TEXT NOT NULL,
+                OrderNo TEXT NOT NULL,
+                VersionNo TEXT NOT NULL,
+                OrderQuantity INTEGER NOT NULL,
+                BoxType TEXT NOT NULL,
+                Category TEXT NOT NULL,
+                CustomerName TEXT NOT NULL,
+                Remarks TEXT NOT NULL
+            );
+            CREATE INDEX IF NOT EXISTS IX_ScheduleOrders_SortOrder ON ScheduleOrders(SortOrder);
+            CREATE INDEX IF NOT EXISTS IX_CompletedOrders_CompletedAt ON CompletedOrders(CompletedAt);
+            """;
+        foreach (var stmt in sql.Split(";", StringSplitOptions.RemoveEmptyEntries))
+        {
+            var t = stmt.Trim();
+            if (string.IsNullOrEmpty(t)) continue;
+            using var cmd = connection.CreateCommand();
+            cmd.CommandText = t;
+            cmd.ExecuteNonQuery();
+        }
     }
 
     /// <summary>

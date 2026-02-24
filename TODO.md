@@ -1,11 +1,11 @@
 # Windows 桌面應用程式開發 - Todo List
 
 ## 應用程式規格
-- **用途**：測試 Cursor 實際使用效果
+- **用途**：客戶Demo及測試 Cursor 實際使用效果
 - **技術棧**：C#, **.NET 8 (LTS)**, WPF, WPF-UI（Fluent Design）, MVVM, SQLite
 - **目標平台**：**Windows 8.1** 及以上（.NET 8 官方支援 Windows 10 1607+；Win 8.1 需額外驗證）
 - **部署方式**：**Framework-dependent**（需使用者安裝 .NET 8 Desktop Runtime）
-- **功能**：登入驗證 → 正確則跳轉空白頁面
+- **功能**：登入驗證 → 正確則跳轉Layer2
 - **特色**：右下角 Log、Fluent Design、自訂背景、**多國語系**（日、繁中、葡、英、泰）
 
 ---
@@ -122,6 +122,13 @@
   - NuGet：`dotnet add package Microsoft.Data.Sqlite`
 - [x] （可選）**CommunityToolkit.Mvvm**
   - NuGet：`dotnet add package CommunityToolkit.Mvvm`
+
+### 0.5 動態圖套件 WpfAnimatedGif
+- [x] 安裝 **WpfAnimatedGif**
+  - NuGet：`dotnet add package WpfAnimatedGif`（本專案使用 2.0.2）
+  - 用途：WPF 內建 `Image` + `BitmapImage` 僅顯示 GIF 第一幀，此套件可播放 GIF 動畫
+- [x] 於 Layout2 異常狀態圖示使用：RS485 錯誤時顯示 `red-alam.gif` 動畫，平時顯示 `alarm.png` 靜態圖
+- [x] XAML：`xmlns:gif="http://wpfanimatedgif.codeplex.com"`，以 `ImageBehavior.AnimatedSource` / `SetAnimatedSource` 綁定 GIF
 
 ---
 
@@ -247,6 +254,7 @@
 - **頂部**：左側狀態列（生產資訊看板標題、OPT/PLC LED、圖示）+ 右側訂單管理導航列（生產排程標題 LED、F2/F4/F6 按鈕）
 - **主體**：左側生產資訊看板 + 右側訂單面板（生產排程 DataGrid、調單、生產完成訂單 DataGrid）
 - **底部**：控制列（返回、F7 訂單製作、F1 排程管理、異常圖示、F11 狀態顯示、關機）
+- **視覺**：明亮淡色系
 
 ### 左側頂部狀態列
 | 區塊 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
@@ -254,17 +262,17 @@
 | 左側頂部 | 標題 | 生產資訊看板 | 預設 | 無 |
 | 左側頂部 | 生產運作狀態 | "OPT"字樣，附LED圖示(紅燈與白燈) | Ellipse + Trigger | 收到RS485傳來的資料時會恆亮紅燈 ex: "ACTIVE+" |
 | 左側頂部 | PLC訊號狀態 | "PLC"字樣，附LED圖示(綠燈與白燈) | Ellipse + Trigger | 有收到RS485訊號時綠燈閃爍 |
-| 左側頂部 | 圖示 | png 圖示 | icons8-good-quality-80.png | 無 |
+| 左側頂部 | 圖示 | png 圖示 | Image，icons8-favorites-shield-5-stars-96.png | 無 |
 
 ### 右側頂部訂單管理導航列
 | 區塊 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
 |------|------|------|------|------|
 | 右側頂部 | 標題 | "生產排程"字樣，附 LED 圖示（綠燈與紅燈） | Ellipse + Trigger | 按下底部「排程管理」進入「模擬生產狀態」時紅燈，待機時綠燈 |
-| 右側頂部 | F2 生產完成 | 按鈕，附圖示 | Button，icons8-production-finished-80.png | 將生產排程 DataGrid 所選項目移入生產完成訂單 DataGrid，並自排程移除；完成訂單多「日期時間」欄，為插入當下時間 |
-| 右側頂部 | F4 預覽 | 按鈕，附圖示 | Button，icons8-search-property-80.png | 開啟 Dialog（確定/取消），輸入搜尋條件後於生產排程 DataGrid 搜尋並選取該筆 |
-| 右側頂部 | F6 撤單 | 按鈕，附圖示 | Button，icons8-keep-clean-96.png | 刪除生產排程 DataGrid 所選項目，下方項目上移 |
+| 右側頂部 | F2 生產完成 | 按鈕，附圖示（使用 icons8-production-finished-80.png） | Button | 將生產排程 DataGrid 所選項目移入生產完成訂單 DataGrid，並自排程移除；完成訂單多「日期時間」欄，為插入當下時間 |
+| 右側頂部 | F4 預覽 | 按鈕，附圖示（使用 icons8-search-property-80.png） | Button | 開啟 Dialog（確定/取消），輸入搜尋條件後於生產排程 DataGrid 搜尋並選取該筆 |
+| 右側頂部 | F6 撤單 | 按鈕，附圖示（使用 icons8-keep-clean-96.png） | Button | 刪除生產排程 DataGrid 所選項目，下方項目上移 |
 
-### 左側面板：生產資訊看板
+### 左側面板：生產資訊看板（使用 Grid）
 | 欄位 | 範例值 | 功能模擬 |
 |------|-------|-------|
 | 生產訂單 | 從生產排程 DataGrid 第一筆取得生產訂單號 | 無 |
@@ -279,62 +287,74 @@
 #### 上區：生產排程（DataGrid）
 - **表格欄位**：生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註
 - **範例資料**：0008 / 20260218 / 10 / E / A / Aimar / (空)；0010 / 20260220 / 300 / E / A / Mason / (空)；0011 / 20260226 / 800 / E / A / Jenny / (空)
+- **額外設定**：取消可排序功能，啟用虛擬化（VirtualizingStackPanel.IsVirtualizing="True"）
 
 #### 中區：調單
 | 位置 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
 |------|-------|-------|-------|-------|
 | 左側 | 標題 | "調單"字樣 | 預設 | 無 |
-| 中間 | 訂單上移 | 上箭頭按鈕 | Button，icons8-arrowup-40.png | 所選項目與上一筆對調 |
-| 右側 | 訂單下移 | 下箭頭按鈕 | Button，icons8-arrowdown-40.png | 所選項目與下一筆對調 |
+| 中間 | 訂單上移 | 上箭頭按鈕（使用 icons8-arrowup-40.png） | Button | 所選項目與上一筆對調 |
+| 右側 | 訂單下移 | 下箭頭按鈕（使用 icons8-arrowdown-40.png） | Button | 所選項目與下一筆對調 |
 
 
 #### 下區：生產完成訂單（DataGrid）
 - **表格欄位**：日期時間、生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註
 - **範例資料**：2026/01/10 13:01:12、0004、20260110、600、E、A、Aimar、(空)；2026/02/11 11:52:42、0005、20260110、199、E、A、Mason、(空)
+- **額外設定**：取消可排序功能，啟用虛擬化（VirtualizingStackPanel.IsVirtualizing="True"）
 
 ### 底部控制列
 | 位置 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
 |------|------|------|------|------|
 | 最左 | ⬅ 按鈕 | 返回登入頁 | 預設 | 呼叫 `INavigationService.NavigateToLogin` |
-| 左 | F7 訂單製作 | 按鈕，附圖示 | Button，icons8-packing-96.png | 開啟新空白頁面（含右上 X 關閉） |
-| 中左 | F1 排程管理 | 按鈕，附圖示 | Button，icons8-schedule-96.png | 進入「模擬生產狀態」：自生產排程 DataGrid 第一筆起依序執行至全部完成或手動停止；完成項移入生產完成訂單 DataGrid 並自排程移除，注意兩表排序 |
-| 中右 | 異常狀態圖示 | 警示三角 | alarm.png / alarm.gif | 平時 alarm.png；RS485 錯誤時改為 alarm.gif（如 "ERROR+"） |
-| 右 | F11 狀態顯示 | 按鈕，附圖示 | Button，icons8-warning-96.png | 開啟 Dialog 頁面，含右上方 X |
-| 最右 | 關機 | 按鈕，附圖示 | Button，icons8-shutdown-96.png | 無 |
+| 左 | F7 訂單製作 | 按鈕，附圖示（使用 icons8-packing-96.png） | Button | 開啟新空白頁面（含右上 X 關閉） |
+| 中左 | F1 排程管理 | 按鈕，附圖示（使用 icons8-schedule-96.png） | Button | 進入「模擬生產狀態」：自生產排程 DataGrid 第一筆起依序執行至全部完成或手動停止；完成項移入生產完成訂單 DataGrid 並自排程移除，注意兩表排序 |
+| 中右 | 異常狀態圖示 | 警示三角（red-alam.gif） | Image 或 WpfAnimatedGif | 平時 alarm.png；RS485 錯誤時改為 alarm.gif（如 "ERROR+"） |
+| 右 | F11 狀態顯示 | 按鈕，附圖示（使用 icons8-warning-96.png） | Button | 開啟 Dialog 頁面，含右上方 X |
+| 最右 | 關機 | 按鈕，附圖示（使用 icons8-shutdown-96.png） | Button | 無 |
 
 ### 待實作項目（依 Layout2）
 
+#### 整合
+- [x] 將 `Resources\*.png` 移動至 `Resources\Icons\`
+- [x] 自 `Resources\Icons\` 取得指定 png 圖示並綁定、顯示於上述各控制項
+- [x] Layout2 文字改為 RESX Localization，支援動態語系切換
+
 #### 結構與導航
-- [ ] 新增 Layout2 主畫面 View，登入成功後導航至 Layout2（並存 Phase 4 主畫面）
-- [ ] 擴充 `INavigationService`：`NavigateToLayout2`、必要時 `NavigateToOrderEdit` / `NavigateToStatusDialog`
-- [ ] ShellWindow / ContentHost 可切換 Login / Main(Layout1) / Layout2
+- [x] 新增 Layout2 主畫面 View，登入成功後導航至 Layout2（並存 Phase 4 主畫面）
+- [x] 擴充 `INavigationService`：`NavigateToLayout2`
+- [x] ShellWindow / ContentHost 可切換 Login / Main(Layout1) / Layout2
+
+#### 資料庫表單
+- [x] 依生產排程項目欄位建立資料庫表（生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註）
+- [x] 依生產完成訂單項目欄位建立資料庫表（含日期時間欄）
 
 #### 資料與模型
-- [ ] 定義生產排程項目模型（生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註）
-- [ ] 定義生產完成訂單項目模型（含日期時間欄）
-- [ ] 排程與完成訂單的集合（`ObservableCollection`）及選取項、調單（上移/下移）、F2/F6 等指令所需邏輯
+- [x] 生產排程項目模型（生產訂單號、版號、受訂量、箱型、類別、客戶名稱、備註）；自 DB 載入（`IScheduleOrderRepository`）
+- [x] 生產完成訂單項目模型（含日期時間欄）；自 DB 載入
+- [x] 排程與完成訂單的集合（`ObservableCollection`）及選取項、調單（上移/下移）、F2/F6 等指令邏輯
 
 #### UI 殼層與左側
-- [ ] Layout2 主畫面：左窄右寬版面（Grid 或 DockPanel）
-- [ ] 左側頂部狀態列：標題、OPT/PLC LED（Ellipse + 資料綁定或 Trigger）、圖示
-- [ ] 左側生產資訊看板：生產訂單、生產版號、車速、目前產量、受訂量、預估完成所需時間（綁定至排程第一筆與 RS485/模擬資料）
+- [x] Layout2 主畫面：左窄右寬版面（Grid）
+- [x] 左側頂部狀態列：標題、OPT/PLC LED（Ellipse + BoolToLedBrushConverter）、圖示
+- [x] 左側生產資訊看板：使用 Grid 平均分配各欄位高度、放大字體；綁定生產訂單、生產版號、車速、目前產量、受訂量、預估完成所需時間（排程第一筆與模擬資料）
 
 #### 右側訂單面板
-- [ ] 右側頂部：生產排程標題與 LED、F2 生產完成、F4 預覽、F6 撤單（含指令與圖示）
-- [ ] 上區：生產排程 DataGrid（欄位、選取、F2/F4/F6/調單 操作）
-- [ ] 中區：調單（訂單上移、訂單下移）按鈕與圖示
-- [ ] 下區：生產完成訂單 DataGrid（含日期時間欄）
+- [x] 右側頂部：生產排程標題與 LED、F2 生產完成、F4 預覽、F6 撤單（含指令與圖示）
+- [x] 上區：生產排程 DataGrid（欄位、選取、F2/F4/F6/調單 操作）；取消可排序、啟用虛擬化
+- [x] 中區：調單（訂單上移、訂單下移）按鈕與圖示
+- [x] 下區：生產完成訂單 DataGrid（含日期時間欄）；取消可排序、啟用虛擬化
+- [x] Layout2 按鈕以 Grid 調整適當長寬高：圖片靠左、文字居中（頂部: F2 生產完成/F4 預覽/F6 撤單、中區: 調單、底部: 返回/F7 訂單製作/F1 排程管理/F11 狀態顯示/關機）
 
 #### 底部與 Dialog
-- [ ] 底部控制列：返回、F7 訂單製作、F1 排程管理、異常圖示、F11 狀態顯示、關機
-- [ ] F7 訂單製作：新空白頁（含關閉 X）
-- [ ] F4 預覽：搜尋 Dialog（確定/取消），搜尋生產排程並選取
-- [ ] F11 狀態顯示：狀態 Dialog（含關閉 X）
+- [x] 底部控制列：返回、F7 訂單製作、F1 排程管理、異常圖示、F11 狀態顯示、關機
+- [x] F7 訂單製作：新空白視窗（含關閉 X）
+- [x] F4 預覽：搜尋 Dialog（確定/取消），搜尋生產排程並選取
+- [x] F11 狀態顯示：狀態 Dialog 視窗（含關閉 X）
 
 #### 模擬生產與 RS485
-- [ ] 「模擬生產狀態」邏輯：F1 啟動後依排程第一筆起執行、車速（模擬 400–500）、每 30 秒產量 +1、預估時間更新、完成項移入完成訂單
-- [ ] RS485 服務（COM1: 9600,8,N,1）：Background 讀寫、OPT/PLC LED、車速、異常（alarm.gif）等資料來源
-- [ ] Hosted Service 或 BackgroundWorker 整合 RS485 與 UI 更新
+- [x] 「模擬生產狀態」邏輯：F1 啟動後依排程第一筆起執行、車速（模擬 400–500）、每 30 秒產量 +1、預估時間更新、完成項移入完成訂單
+- [x] RS485 服務介面與實作（Rs485Service 模擬用，OPT/PLC LED、車速、HasError 綁定；實體 COM 可後續接上）
+- [x] Hosted Service 或 BackgroundWorker 整合實體 RS485 與 UI 更新（`Rs485BackgroundService` 讀取 COM1 並更新 Rs485Service；無 COM 時 F1 模擬仍可更新）
 
 ### 可能新增的檔案與目錄結構
 
@@ -398,9 +418,9 @@ src/
 - [x] 驗證五種語系（ja, zh-TW, pt, en, th）顯示正常（需手動驗證）
 
 ### 5.6 應用程式圖示
-- [x] 使用 `Resources/icons8-app-48.png` 作為應用程式圖示來源
+- [x] 使用 `Resources/Icons/icons8-app-96.png` 作為應用程式圖示來源
 - [x] 設定視窗 Icon（pack URI 綁定 PNG）
-- [x] 設定發佈後 exe 圖示（建置前自動將 PNG 轉為 ICO）
+- [x] 設定發佈後 exe 圖示（Resources/Icons/icons8-app-96.ico）
 
 ### 5.7 發佈與 Distribution 套件
 - [ ] 執行 `dotnet publish -c Release`
@@ -436,7 +456,7 @@ src/
 | 導航至主畫面 | ✅ |
 | 登入畫面語系切換（Login 下方） | ✅ |
 | 登入畫面右上角 X 離開按鈕 | ✅ |
-| 應用程式圖示（icons8-app-48.png） | ✅ |
+| 應用程式圖示（icons8-app-96.png） | ✅ |
 | Windows 8.1 模擬測試（VM） | ⬜ |
 | 端對端測試 | ⬜ |
 

@@ -98,4 +98,109 @@
     <value>กรอกรหัสผ่าน</value>
     <comment>Login error when empty (Thai)</comment>
   </data>
+  <data name="Layout2_ProductionInfoPanelTitle" xml:space="preserve">
+    <value>แผงข้อมูลการผลิต</value>
+  </data>
+  <data name="Layout2_OPT" xml:space="preserve">
+    <value>OPT</value>
+  </data>
+  <data name="Layout2_PLC" xml:space="preserve">
+    <value>PLC</value>
+  </data>
+  <data name="Layout2_ScheduleTitle" xml:space="preserve">
+    <value>ตารางการผลิต</value>
+  </data>
+  <data name="Layout2_F2ProductionComplete" xml:space="preserve">
+    <value>F2 เสร็จสิ้น</value>
+  </data>
+  <data name="Layout2_F4Preview" xml:space="preserve">
+    <value>F4 ดูตัวอย่าง</value>
+  </data>
+  <data name="Layout2_F6RemoveOrder" xml:space="preserve">
+    <value>F6 ยกเลิก</value>
+  </data>
+  <data name="Layout2_OrderNo" xml:space="preserve">
+    <value>เลขที่ออเดอร์</value>
+  </data>
+  <data name="Layout2_VersionNo" xml:space="preserve">
+    <value>เวอร์ชัน</value>
+  </data>
+  <data name="Layout2_OrderQuantity" xml:space="preserve">
+    <value>จำนวน</value>
+  </data>
+  <data name="Layout2_BoxType" xml:space="preserve">
+    <value>ประเภทกล่อง</value>
+  </data>
+  <data name="Layout2_Category" xml:space="preserve">
+    <value>หมวดหมู่</value>
+  </data>
+  <data name="Layout2_CustomerName" xml:space="preserve">
+    <value>ลูกค้า</value>
+  </data>
+  <data name="Layout2_Remarks" xml:space="preserve">
+    <value>หมายเหตุ</value>
+  </data>
+  <data name="Layout2_DateTime" xml:space="preserve">
+    <value>วันเวลา</value>
+  </data>
+  <data name="Layout2_AdjustOrder" xml:space="preserve">
+    <value>จัดเรียง</value>
+  </data>
+  <data name="Layout2_OrderMoveUp" xml:space="preserve">
+    <value>เลื่อนขึ้น</value>
+  </data>
+  <data name="Layout2_OrderMoveDown" xml:space="preserve">
+    <value>เลื่อนลง</value>
+  </data>
+  <data name="Layout2_BackToLogin" xml:space="preserve">
+    <value>กลับไปเข้าสู่ระบบ</value>
+  </data>
+  <data name="Layout2_F7OrderMake" xml:space="preserve">
+    <value>F7 สร้างออเดอร์</value>
+  </data>
+  <data name="Layout2_F1ScheduleManage" xml:space="preserve">
+    <value>F1 จัดการตาราง</value>
+  </data>
+  <data name="Layout2_F11StatusDisplay" xml:space="preserve">
+    <value>F11 แสดงสถานะ</value>
+  </data>
+  <data name="Layout2_Shutdown" xml:space="preserve">
+    <value>ปิดเครื่อง</value>
+  </data>
+  <data name="Layout2_Parking" xml:space="preserve">
+    <value>หยุดอยู่</value>
+  </data>
+  <data name="Layout2_EstimatedTimeSec" xml:space="preserve">
+    <value>ประมาณ {0} วินาที</value>
+  </data>
+  <data name="Layout2_ProductionOrder" xml:space="preserve">
+    <value>ออเดอร์ผลิต</value>
+  </data>
+  <data name="Layout2_ProductionVersion" xml:space="preserve">
+    <value>เวอร์ชันผลิต</value>
+  </data>
+  <data name="Layout2_Speed" xml:space="preserve">
+    <value>ความเร็ว</value>
+  </data>
+  <data name="Layout2_CurrentQuantity" xml:space="preserve">
+    <value>จำนวนปัจจุบัน</value>
+  </data>
+  <data name="Layout2_OrderQuantityLabel" xml:space="preserve">
+    <value>จำนวนสั่ง</value>
+  </data>
+  <data name="Layout2_EstimatedComplete" xml:space="preserve">
+    <value>ประมาณการเสร็จ</value>
+  </data>
+  <data name="Layout2_OrderMakeWindowTitle" xml:space="preserve">
+    <value>สร้างออเดอร์</value>
+  </data>
+  <data name="Layout2_BlankPage" xml:space="preserve">
+    <value>หน้าว่าง</value>
+  </data>
+  <data name="Layout2_StatusDialogTitle" xml:space="preserve">
+    <value>แสดงสถานะ</value>
+  </data>
+  <data name="Layout2_StatusDialogContent" xml:space="preserve">
+    <value>กล่องสถานะ</value>
+  </data>
 </root>

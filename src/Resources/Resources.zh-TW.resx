@@ -98,4 +98,109 @@
     <value>請輸入密碼。</value>
     <comment>Login error when empty (Traditional Chinese)</comment>
   </data>
+  <data name="Layout2_ProductionInfoPanelTitle" xml:space="preserve">
+    <value>生產資訊看板</value>
+  </data>
+  <data name="Layout2_OPT" xml:space="preserve">
+    <value>OPT</value>
+  </data>
+  <data name="Layout2_PLC" xml:space="preserve">
+    <value>PLC</value>
+  </data>
+  <data name="Layout2_ScheduleTitle" xml:space="preserve">
+    <value>生產排程</value>
+  </data>
+  <data name="Layout2_F2ProductionComplete" xml:space="preserve">
+    <value>F2 生產完成</value>
+  </data>
+  <data name="Layout2_F4Preview" xml:space="preserve">
+    <value>F4 預覽</value>
+  </data>
+  <data name="Layout2_F6RemoveOrder" xml:space="preserve">
+    <value>F6 撤單</value>
+  </data>
+  <data name="Layout2_OrderNo" xml:space="preserve">
+    <value>生產訂單號</value>
+  </data>
+  <data name="Layout2_VersionNo" xml:space="preserve">
+    <value>版號</value>
+  </data>
+  <data name="Layout2_OrderQuantity" xml:space="preserve">
+    <value>受訂量</value>
+  </data>
+  <data name="Layout2_BoxType" xml:space="preserve">
+    <value>箱型</value>
+  </data>
+  <data name="Layout2_Category" xml:space="preserve">
+    <value>類別</value>
+  </data>
+  <data name="Layout2_CustomerName" xml:space="preserve">
+    <value>客戶名稱</value>
+  </data>
+  <data name="Layout2_Remarks" xml:space="preserve">
+    <value>備註</value>
+  </data>
+  <data name="Layout2_DateTime" xml:space="preserve">
+    <value>日期時間</value>
+  </data>
+  <data name="Layout2_AdjustOrder" xml:space="preserve">
+    <value>調單</value>
+  </data>
+  <data name="Layout2_OrderMoveUp" xml:space="preserve">
+    <value>訂單上移</value>
+  </data>
+  <data name="Layout2_OrderMoveDown" xml:space="preserve">
+    <value>訂單下移</value>
+  </data>
+  <data name="Layout2_BackToLogin" xml:space="preserve">
+    <value>返回登入</value>
+  </data>
+  <data name="Layout2_F7OrderMake" xml:space="preserve">
+    <value>F7 訂單製作</value>
+  </data>
+  <data name="Layout2_F1ScheduleManage" xml:space="preserve">
+    <value>F1 排程管理</value>
+  </data>
+  <data name="Layout2_F11StatusDisplay" xml:space="preserve">
+    <value>F11 狀態顯示</value>
+  </data>
+  <data name="Layout2_Shutdown" xml:space="preserve">
+    <value>關機</value>
+  </data>
+  <data name="Layout2_Parking" xml:space="preserve">
+    <value>停車中</value>
+  </data>
+  <data name="Layout2_EstimatedTimeSec" xml:space="preserve">
+    <value>約 {0} 秒</value>
+  </data>
+  <data name="Layout2_ProductionOrder" xml:space="preserve">
+    <value>生產訂單</value>
+  </data>
+  <data name="Layout2_ProductionVersion" xml:space="preserve">
+    <value>生產版號</value>
+  </data>
+  <data name="Layout2_Speed" xml:space="preserve">
+    <value>車速</value>
+  </data>
+  <data name="Layout2_CurrentQuantity" xml:space="preserve">
+    <value>目前產量</value>
+  </data>
+  <data name="Layout2_OrderQuantityLabel" xml:space="preserve">
+    <value>受訂量</value>
+  </data>
+  <data name="Layout2_EstimatedComplete" xml:space="preserve">
+    <value>預估完成</value>
+  </data>
+  <data name="Layout2_OrderMakeWindowTitle" xml:space="preserve">
+    <value>訂單製作</value>
+  </data>
+  <data name="Layout2_BlankPage" xml:space="preserve">
+    <value>空白頁面</value>
+  </data>
+  <data name="Layout2_StatusDialogTitle" xml:space="preserve">
+    <value>狀態顯示</value>
+  </data>
+  <data name="Layout2_StatusDialogContent" xml:space="preserve">
+    <value>狀態 Dialog</value>
+  </data>
 </root>

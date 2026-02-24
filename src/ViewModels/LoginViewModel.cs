@@ -100,8 +100,8 @@ public sealed partial class LoginViewModel : ViewModelBase
         if (user != null)
         {
             _logService.Append($"登入成功：{user.Username}");
-            _logService.Append("導航至主畫面");
-            _navigationService.NavigateToMain();
+            _logService.Append("導航至 Layout2");
+            _navigationService.NavigateToLayout2();
         }
         else
         {

@@ -29,13 +29,14 @@ public sealed class DatabaseService : IDatabaseService
     public string DatabasePath => _databasePath;
 
     /// <summary>
-    /// 建立 DatabaseService，預設使用應用程式目錄下的 app.db。
+    /// 建立 DatabaseService。未指定路徑時使用 %LocalAppData%\{AppName}\app.db，避免單檔發佈在另一台電腦時 BaseDirectory 唯讀導致 crash。
     /// </summary>
     /// <param name="databasePath">可選，自訂資料庫檔案路徑</param>
     public DatabaseService(string? databasePath = null)
     {
         _databasePath = databasePath ?? Path.Combine(
-            AppDomain.CurrentDomain.BaseDirectory,
+            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+            "CursorTestApp",
             "app.db");
     }
 

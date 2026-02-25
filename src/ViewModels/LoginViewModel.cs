@@ -101,7 +101,16 @@ public sealed partial class LoginViewModel : ViewModelBase
         {
             _logService.Append($"登入成功：{user.Username}");
             _logService.Append("導航至 Layout2");
-            _navigationService.NavigateToLayout2();
+            try
+            {
+                _navigationService.NavigateToLayout2();
+            }
+            catch (Exception ex)
+            {
+                _logService.Append($"導航失敗：{ex.Message}");
+                LoginErrorMessage = ex.Message;
+                MessageBox.Show("無法進入主畫面：\n\n" + Helpers.ExceptionFormatHelper.ToDisplayString(ex), "錯誤", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
         else
         {

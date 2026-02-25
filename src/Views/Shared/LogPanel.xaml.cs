@@ -1,5 +1,6 @@
 using System.Collections.Specialized;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using CursorTestApp.Services;
 
 namespace CursorTestApp.Views.Shared;
@@ -58,7 +59,12 @@ public partial class LogPanel : UserControl
         if (args.NewItems?.Count > 0 && LogListBox.Items.Count > 0)
         {
             var lastItem = LogListBox.Items[LogListBox.Items.Count - 1];
-            LogListBox.ScrollIntoView(lastItem);
+            // 延後至 Layout 之後再捲動，避免在 CollectionChanged 內觸發 layout 導致異機「ItemsControl 與其項目來源不一致」
+            LogListBox.Dispatcher.BeginInvoke(() =>
+            {
+                if (LogListBox.Items.Count > 0)
+                    LogListBox.ScrollIntoView(LogListBox.Items[LogListBox.Items.Count - 1]);
+            }, DispatcherPriority.Loaded);
         }
     }
 }

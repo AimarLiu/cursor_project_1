@@ -125,7 +125,7 @@ User? u = authService.GetUserByUsername("aimarliu");
 
 ### 資料庫路徑
 
-- **預設**：`{AppDomain.BaseDirectory}app.db`
+- **預設**：`%LocalAppData%\CursorTestApp\app.db`（`Environment.SpecialFolder.LocalApplicationData`），避免單檔發佈在另一台電腦執行時 BaseDirectory 指向解壓暫存目錄（可能唯讀）導致 crash。說明見 `QandA/crashAfterLoginOnOtherPC.md`。
 - **自訂**：`new DatabaseService("C:\custom\path\app.db")`
 
 ### 依賴套件
@@ -362,6 +362,9 @@ Views/
 | 資料庫連線失敗 | App.OnStartup 內 try/catch `Initialize()`，失敗時 MessageBox 後 `Shutdown(1)` | `App.xaml.cs` |
 | 密碼錯誤提示 | LoginViewModel.LoginErrorMessage（RESX `LoginErrorWrongPassword`），LoginView 紅色 TextBlock 顯示 | `LoginViewModel.cs`、`LoginView.xaml` |
 | 輸入為空提示 | 登入前檢查 `string.IsNullOrWhiteSpace(Password)`，顯示 RESX `LoginErrorEmptyPassword` | `LoginViewModel.cs` |
+| 未處理例外 | `DispatcherUnhandledException` 註冊：完整例外（含 InnerException）以 `ExceptionFormatHelper.ToDisplayString` 寫入與執行檔同目錄的 `error_yyyy-MM-dd_HH-mm-ss.log`，MessageBox 僅提示「詳情已寫入：{檔名}」；寫檔失敗時 fallback 顯示簡短錯誤訊息 | `App.xaml.cs`、`Helpers/ExceptionFormatHelper.cs` |
+| 登入後導航失敗 | `NavigateToLayout2()` 外層 try/catch，失敗時寫 Log、設 LoginErrorMessage、MessageBox 顯示 | `LoginViewModel.cs` |
+| LogListBox 異機不一致 | 「ItemsControl 與其項目來源不一致」：LogService.Append 一律 `InvokeAsync(Loaded)`、LogListBox 設 `VirtualizingPanel.IsVirtualizing="False"`、LogPanel 內 ScrollIntoView 延後至 `DispatcherPriority.Loaded`；異機已驗證通過，詳見 `LessonLearn/whyItemSourceNotConsistant.md` | `LogService.cs`、`LogPanel.xaml`、`LogPanel.xaml.cs` |
 | Converter | 字串非空 → Visible，空 → Collapsed | `Converters/StringNotEmptyToVisibilityConverter.cs`、`App.xaml` |
 
 ### 5.3 Log 服務整合
@@ -447,8 +450,11 @@ src/
 - **Phase 5.1–5.6**：已完成；含綁定與流程、錯誤處理、Log 整合、程式品質、多國語系與字型、應用程式圖示（icons8-app-96）
 - **Layout2 圖示**：左側頂部為 icons8-favorites-shield-5-stars-96（96×96）；異常狀態使用 WpfAnimatedGif 播放 red-alam.gif
 - **Phase 5.7 以後**：發佈、Win 8.1 測試、SqliteViewer 小工具等見 TODO.md
+- **發佈建議**：Demo／測試優先使用單一執行檔（`scripts\publish.ps1` 或 `dotnet publish -r win-x64 --self-contained true -p:PublishSingleFile=true`）；正式產品再考慮安裝程式。說明見 `QandA/howToPackApplication.md`。
+- **異機執行**：資料庫預設改為 `%LocalAppData%\CursorTestApp\app.db`，並加上未處理例外與登入後導航 try-catch，避免單檔在另一台電腦登入後 crash。詳見 `QandA/crashAfterLoginOnOtherPC.md`。
+- **LogListBox 異機**：LogPanel 綁定之 LogMessages 在異機曾出現「ItemsControl 與其項目來源不一致」；已以 InvokeAsync(Loaded)、關閉虛擬化、ScrollIntoView 延後至 Loaded 修正，異機驗證通過。詳見 `LessonLearn/whyItemSourceNotConsistant.md`。
 
 ---
 
 *建立日期：2025-02-22*
-*更新：Phase 5.1–5.6 實作摘要；Phase 4 (Layout2) 圖示與異常 GIF 動畫（WpfAnimatedGif）、左側頂部圖示*
+*更新：Phase 5.1–5.6 實作摘要；Phase 4 (Layout2) 圖示與異常 GIF 動畫；異機執行 crash 修正；未處理例外寫入 error_日期時間.log；LogListBox ItemsControl 異機不一致修正並驗證*

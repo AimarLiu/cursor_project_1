@@ -400,11 +400,15 @@ src/
 - [x] 資料庫連線失敗處理（App.OnStartup  try/catch，MessageBox 後 Shutdown）
 - [x] 密碼錯誤提示（LoginViewModel.LoginErrorMessage + RESX，LoginView 顯示）
 - [x] 輸入為空時的提示（RESX `LoginErrorEmptyPassword`，登入時檢查並顯示）
+- [x] 未處理例外（App.DispatcherUnhandledException，完整內容寫入與執行檔同目錄的 `error_yyyy-MM-dd_HH-mm-ss.log`，MessageBox 僅提示已寫入之檔名）
+- [x] 登入後導航失敗（NavigateToLayout2 外層 try/catch，失敗時 MessageBox + LoginErrorMessage，見 `QandA/crashAfterLoginOnOtherPC.md`）
+- [x] 資料庫預設路徑改為 `%LocalAppData%\CursorTestApp\app.db`（單檔發佈在另一台電腦執行時避免 BaseDirectory 唯讀導致 crash）
 
 ### 5.3 Log 服務整合
 - [x] 確保 `ILogService` 於 App 啟動時初始化（ShellWindow 建構時建立並注入）
 - [x] 所有 View 共享同一 Log 實例（單例或 DI）（同一 _logService 傳入 LoginViewModel / MainViewModel）
 - [x] Log 格式建議：`[HH:mm:ss] 訊息內容`（LogService 已實作）
+- [x] LogListBox「ItemsControl 與其項目來源不一致」異機修正：LogService.Append 一律 `InvokeAsync(Loaded)`、LogListBox 關閉虛擬化、ScrollIntoView 延後至 Loaded；詳見 `LessonLearn/whyItemSourceNotConsistant.md`
 
 ### 5.4 程式品質
 - [x] 移除不必要的 `Console.WriteLine`，改寫入 Log（專案內無 Console.WriteLine）
@@ -425,6 +429,8 @@ src/
 ### 5.7 發佈與 Distribution 套件
 - [ ] 執行 `dotnet publish -c Release`
 - [ ] 撰寫安裝指引，列出使用者須安裝的套件（.NET 8 Desktop Runtime、VC++ Redistributable）
+- **建議**：Demo／測試優先使用**單一執行檔**（self-contained + PublishSingleFile），見 `QandA/howToPackApplication.md`；正式產品再考慮安裝程式（Inno Setup、WiX、MSIX）。
+- [ ] 使用 `scripts\publish.ps1` 產生單一 exe（可選）
 
 ### 5.8 Windows 8.1 模擬測試
 - [ ] 依上方「Windows 8.1 模擬測試」章節進行 VM 測試

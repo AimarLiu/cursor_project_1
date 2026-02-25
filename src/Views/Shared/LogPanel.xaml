@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <ListBox x:Name="LogListBox"
              ItemsSource="{Binding LogMessages}"
+             VirtualizingPanel.IsVirtualizing="False"
              IsHitTestVisible="True"
              FontFamily="Courier New"
              FontSize="12"

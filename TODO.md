@@ -267,7 +267,7 @@
 ### 右側頂部訂單管理導航列
 | 區塊 | 項目 | 說明 | 可用控制項或圖示 | 功能模擬 |
 |------|------|------|------|------|
-| 右側頂部 | 標題 | "生產排程"字樣，附 LED 圖示（綠燈與紅燈） | Ellipse + Trigger | 按下底部「排程管理」進入「模擬生產狀態」時紅燈，待機時綠燈 |
+| 右側頂部 | 標題 | "生產排程"字樣，附 LED 圖示（綠燈與紅燈） | Ellipse + Trigger | 當 Layout2 處於「模擬生產狀態」時紅燈（由 Phase 5 Dialog F2/F3 觸發後啟動），待機時綠燈 |
 | 右側頂部 | F2 生產完成 | 按鈕，附圖示（使用 icons8-production-finished-80.png） | Button | 將生產排程 DataGrid 所選項目移入生產完成訂單 DataGrid，並自排程移除；完成訂單多「日期時間」欄，為插入當下時間 |
 | 右側頂部 | F4 預覽 | 按鈕，附圖示（使用 icons8-search-property-80.png） | Button | 開啟 Dialog（確定/取消），輸入搜尋條件後於生產排程 DataGrid 搜尋並選取該筆 |
 | 右側頂部 | F6 撤單 | 按鈕，附圖示（使用 icons8-keep-clean-96.png） | Button | 刪除生產排程 DataGrid 所選項目，下方項目上移 |
@@ -307,7 +307,7 @@
 |------|------|------|------|------|
 | 最左 | ⬅ 按鈕 | 返回登入頁 | 預設 | 呼叫 `INavigationService.NavigateToLogin` |
 | 左 | F7 訂單製作 | 按鈕，附圖示（使用 icons8-packing-96.png） | Button | 開啟新空白頁面（含右上 X 關閉） |
-| 中左 | F1 排程管理 | 按鈕，附圖示（使用 icons8-schedule-96.png） | Button | 進入「模擬生產狀態」：自生產排程 DataGrid 第一筆起依序執行至全部完成或手動停止；完成項移入生產完成訂單 DataGrid 並自排程移除，注意兩表排序 |
+| 中左 | F1 排程管理 | 按鈕，附圖示（使用 icons8-schedule-96.png） | Button | 先進入Phase 5的排程管理子頁， 若進入「模擬生產狀態」圖示變為icons8-pause-squared-96.png且文字變為"F1 生產中"（RESX，多語系），直到停止或手動按下，圖示切回原本的icons8-schedule-96.png與文字"F1 排程管理" |
 | 中右 | 異常狀態圖示 | 警示三角（red-alam.gif） | Image 或 WpfAnimatedGif | 平時 alarm.png；RS485 錯誤時改為 alarm.gif（如 "ERROR+"） |
 | 右 | F11 狀態顯示 | 按鈕，附圖示（使用 icons8-warning-96.png） | Button | 開啟 Dialog 頁面，含右上方 X |
 | 最右 | 關機 | 按鈕，附圖示（使用 icons8-shutdown-96.png） | Button | 無 |
@@ -352,7 +352,8 @@
 - [x] F11 狀態顯示：狀態 Dialog 視窗（含關閉 X）
 
 #### 模擬生產與 RS485
-- [x] 「模擬生產狀態」邏輯：F1 啟動後依排程第一筆起執行、車速（模擬 400–500）、每 30 秒產量 +1、預估時間更新、完成項移入完成訂單
+- [x] **模擬生產狀態**（由 Phase 5 Dialog 之 **F2 前置排單**或 **F3 把全排量** 觸發後，關閉 Dialog 返回 Layout2 時啟動）：車速模擬 400–500、每 30 秒目前產量 +1、預估時間更新、完成項移入生產完成訂單並自排程移除。**停止條件**：F2（小量）＝僅第一筆訂單生產 5 個後自動停止；F3（全量）＝依序生產至排程清空或使用者手動停止。Layout2 需能接收 Dialog 關閉時帶回之模式（小量／全量）並據此驅動模擬。
+- [x] **F1 排程管理按鈕狀態**：模擬生產狀態運行中時，按鈕圖示改為 icons8-pause-squared-96.png、文字改為「F1 生產中」（RESX）；按下可手動停止。停止後圖示與文字還原為 icons8-schedule-96.png 與「F1 排程管理」。 
 - [x] RS485 服務介面與實作（Rs485Service 模擬用，OPT/PLC LED、車速、HasError 綁定；實體 COM 可後續接上）
 - [x] Hosted Service 或 BackgroundWorker 整合實體 RS485 與 UI 更新（`Rs485BackgroundService` 讀取 COM1 並更新 Rs485Service；無 COM 時 F1 模擬仍可更新）
 
@@ -388,15 +389,76 @@ src/
 
 ---
 
-## Phase 5：整合與收尾
+## Phase 5：排程管理子頁（Dialog）
 
-### 5.1 綁定與流程
+> **概述**：由 Layout2 **F1 排程管理**按鈕開啟的「排單管理」對話框，顯示目前排單版號與生產訂單列表。在此 Dialog 可執行 **F2 前置排單**（小量模擬）或 **F3 把全排量**（全量模擬），兩者皆會關閉 Dialog、返回 Layout2 並**啟動模擬生產狀態**；若僅 **F1 離開**則只關閉 Dialog，不啟動模擬。
+
+### F1 排程管理、F2 前置排單、F3 全排單與模擬生產狀態之關係
+
+| 位置 | 按鍵 | 行為 |
+|------|------|------|
+| **Layout2 底部** | F1 排程管理 | 開啟本 Phase 5「排程管理子頁」Dialog（排單管理）。若 Layout2 已處於模擬生產中，則按鈕顯示為「F1 生產中」+ 暫停圖示，可手動停止。 |
+| **Dialog 內** | F2 前置排單 | 關閉 Dialog、返回 Layout2，並**啟動模擬生產狀態（小量）**：僅生產**第一筆**訂單 **5 個**後自動停止；車速／產量／預估時間依 Phase 4 模擬邏輯。 |
+| **Dialog 內** | F3 把全排量 | 關閉 Dialog、返回 Layout2，並**啟動模擬生產狀態（全量）**：依序生產**每筆**訂單直到**全部完成**或使用者手動停止；車速／產量／預估時間依 Phase 4 模擬邏輯。 |
+| **Dialog 內** | F1 離開 | 僅關閉 Dialog、返回 Layout2，**不**啟動模擬生產。 |
+
+- **模擬生產狀態**（實作於 Phase 4 Layout2）：車速模擬 400–500、每 30 秒目前產量 +1、完成項移入生產完成訂單並自排程移除、預估完成時間更新；**停止條件**由從 Dialog 所選模式決定——F2 為「第一筆做 5 個即停」，F3 為「全部做完或手動停」。
+
+### 控制項與 Layout 配置
+
+| 區塊 | 項目 | 說明 | 控制項／備註 |
+|------|------|------|--------------|
+| 標題列 | 對話框標題 | 「排單管理」 | Window / Dialog Title |
+| 頂部 | 版號說明 | 標籤「您目前正要排單的版號:」 | TextBlock(優先) / Label |
+| 頂部 | 目前版號 | 唯讀顯示目前排單版號（如 20260218） | TextBlock(優先) 或 TextBox ReadOnly |
+| 中央 | 資料表格 | 生產訂單列表，支援垂直捲動 | DataGrid(優先) 或 ListView/GridView |
+| 表格欄位 | 生產訂單 | 欄標題可為黃底 | 欄位 1 |
+| 表格欄位 | 版號 | 資料可為數字，文字或特殊符號（ex: 0004） | 欄位 2 |
+| 表格欄位 | 受訂量 | 資料為數字（ex: 10） | 欄位 3 |
+| 表格欄位 | 箱型 | 資料為英文字（如 E） | 欄位 4 |
+| 表格欄位 | 楊別 | 資料為英文字（如 A、B） | 欄位 5 |
+| 表格欄位 | 客戶名稱 |  資料為英文，數字或特殊符號 | 欄位 6 |
+| 表格欄位 | 備註 | 資料為英文，數字或特殊符號 | 欄位 7 |
+| 底部 | F4 分印 | 按鈕 + 圖示（icons8-bear-footprint-80.png） | Button |
+| 底部 | F2 前置排單 | 按鈕 + 圖示（icons8-frying-pan-96.png） | Button |
+| 底部 | F3 把全排量 | 按鈕 + 圖示（icons8-process-80.png） | Button |
+| 底部 | F1 離開 | 按鈕 + 圖示（icons8-exit-96.png） | Button |
+
+### 5.1 對話框與版號區
+- [x] 新增排程管理子頁為 **Dialog/Window**（由 Layout2 F1 排程管理進入）
+- [x] 標題列顯示「排單管理」（RESX，多語系）
+- [x] 頂部區：標籤「您目前正要排單的版號:」+ 唯讀目前版號顯示（資料來源：依規格訂定，排程第一筆版號）（RESX，多語系）
+
+### 5.2 資料表格（生產訂單列表）
+- [x] 中央區使用 **DataGrid**（與 Layout2 上區生產排程相同控制項）顯示生產訂單列表，欄位：**生產訂單、版號、受訂量、箱型、楊別、客戶名稱、備註**（RESX，多語系）
+- [x] 欄標題樣式：title 整行背景黃色、文字黑色；樣式設定參考 Layout2 生產排程並避免 whyDataGridleg（標題 code-behind 填入、Row/Cell 選取樣式、系統選取色、虛擬化 Recycling）
+- [x] 支援**垂直捲動**；資料可為數字或文字，版號、客戶名稱和備註欄可有特殊字
+- [x] 綁定資料來源（現有排程資料）
+
+### 5.3 底部按鈕列
+- [x] 底部區塊背景**黃色**（#F9A825），按鈕文字**粗體**、深色（#111）以利辨識
+- [x] 底部四顆按鈕：**F4 分印**、**F2 前置排單**、**F3 把全排量**、**F1 離開**，每顆附左圖示與置中文字（RESX，多語系）
+- [x] **F1 離開**：關閉 Dialog 並返回 Layout2，不啟動模擬
+- [x] **F2 前置排單**：關閉 Dialog、返回 Layout2，並以**小量模式**啟動模擬生產狀態（僅第一筆訂單生產 5 個後自動停止）；與 Phase 4 模擬邏輯對接（車速、每 30 秒 +1、完成項移入完成訂單）
+- [x] **F3 把全排量**：關閉 Dialog、返回 Layout2，並以**全量模式**啟動模擬生產狀態（依序生產至全部完成或手動停止）；與 Phase 4 模擬邏輯對接
+- [x] **F4 分印**：後續 Phase 補齊，暫無功能
+
+### 5.4 與 Layout2／排程資料與模擬邏輯整合
+- [x] 進入時機：由 Layout2 **F1 排程管理**按鈕開啟此 Dialog（見 Phase 4 底部控制列）
+- [x] 目前版號與表格資料與 `IProductionScheduleService`、`IScheduleOrderRepository` 對接（可先沿用現有排程／完成訂單資料）
+- [x] 擴充 Phase 4「模擬生產狀態」：支援**兩種停止條件**——(1) 小量模式（由 F2 觸發）：第一筆訂單生產 5 個即停止；(2) 全量模式（由 F3 觸發）：依序生產至排程清空或手動停止。Layout2 需能接收從 Dialog 帶回的模式參數並據此驅動模擬
+
+---
+
+## Phase 6：整合與收尾
+
+### 6.1 綁定與流程
 - [x] 將 `LoginView` 設為啟動畫面（ShellWindow 啟動後 `NavigateToLogin()` 顯示 LoginView）
 - [x] 確認 DataContext 正確綁定至 `LoginViewModel`（ShellWindow.CreateLoginView 設定）
 - [x] 測試流程：輸入密碼 → Enter → 比對資料庫 → 成功跳轉
 - [x] 測試 Cancel 清除密碼
 
-### 5.2 錯誤處理
+### 6.2 錯誤處理
 - [x] 資料庫連線失敗處理（App.OnStartup  try/catch，MessageBox 後 Shutdown）
 - [x] 密碼錯誤提示（LoginViewModel.LoginErrorMessage + RESX，LoginView 顯示）
 - [x] 輸入為空時的提示（RESX `LoginErrorEmptyPassword`，登入時檢查並顯示）
@@ -404,39 +466,39 @@ src/
 - [x] 登入後導航失敗（NavigateToLayout2 外層 try/catch，失敗時 MessageBox + LoginErrorMessage，見 `QandA/crashAfterLoginOnOtherPC.md`）
 - [x] 資料庫預設路徑改為 `%LocalAppData%\CursorTestApp\app.db`（單檔發佈在另一台電腦執行時避免 BaseDirectory 唯讀導致 crash）
 
-### 5.3 Log 服務整合
+### 6.3 Log 服務整合
 - [x] 確保 `ILogService` 於 App 啟動時初始化（ShellWindow 建構時建立並注入）
 - [x] 所有 View 共享同一 Log 實例（單例或 DI）（同一 _logService 傳入 LoginViewModel / MainViewModel）
 - [x] Log 格式建議：`[HH:mm:ss] 訊息內容`（LogService 已實作）
 - [x] LogListBox「ItemsControl 與其項目來源不一致」異機修正：LogService.Append 一律 `InvokeAsync(Loaded)`、LogListBox 關閉虛擬化、ScrollIntoView 延後至 Loaded；詳見 `LessonLearn/whyItemSourceNotConsistant.md`
 
-### 5.4 程式品質
+### 6.4 程式品質
 - [x] 移除不必要的 `Console.WriteLine`，改寫入 Log（專案內無 Console.WriteLine）
 - [x] 密碼以明文儲存於 SQLite（本專案為測試用）
 - [x] 基本程式碼整理與註解
 
-### 5.5 多國語系與字型
+### 6.5 多國語系與字型
 - [x] Login 畫面字串使用 RESX 綁定（`LocalizedString` 實現動態切換）
 - [x] 其餘 UI 字串使用 RESX 綁定（MainView 主畫面標題、返回 ToolTip；登入錯誤訊息 RESX）
 - [x] 預設字型設為 `Segoe UI, Meiryo UI, Microsoft JhengHei, Leelawadee UI`（App.xaml）
 - [x] 驗證五種語系（ja, zh-TW, pt, en, th）顯示正常（需手動驗證）
 
-### 5.6 應用程式圖示
+### 6.6 應用程式圖示
 - [x] 使用 `Resources/Icons/icons8-app-96.png` 作為應用程式圖示來源
 - [x] 設定視窗 Icon（pack URI 綁定 PNG）
 - [x] 設定發佈後 exe 圖示（Resources/Icons/icons8-app-96.ico）
 
-### 5.7 發佈與 Distribution 套件
+### 6.7 發佈與 Distribution 套件
 - [ ] 執行 `dotnet publish -c Release`
 - [ ] 撰寫安裝指引，列出使用者須安裝的套件（.NET 8 Desktop Runtime、VC++ Redistributable）
 - **建議**：Demo／測試優先使用**單一執行檔**（self-contained + PublishSingleFile），見 `QandA/howToPackApplication.md`；正式產品再考慮安裝程式（Inno Setup、WiX、MSIX）。
 - [ ] 使用 `scripts\publish.ps1` 產生單一 exe（可選）
 
-### 5.8 Windows 8.1 模擬測試
+### 6.8 Windows 8.1 模擬測試
 - [ ] 依上方「Windows 8.1 模擬測試」章節進行 VM 測試
 - [ ] 驗證在 Win 8.1 上安裝必要 Distribution 套件後可正常執行
 
-### 5.9 SQLite 資料庫檢視小工具
+### 6.9 SQLite 資料庫檢視小工具
 - [x] 使用 **Microsoft.Data.Sqlite** 撰寫小工具，可檢視資料庫內的資料
 - [x] 指定 `.db` 檔路徑後，瀏覽其表與資料（列出所有表、選取表後顯示內容）
 - [x] 程式碼放置於 `tools/` 資料夾
@@ -450,7 +512,7 @@ src/
 | .NET 8 SDK 安裝 | ⬜ |
 | 使用者端 Distribution 套件清單 | ⬜ |
 | 預設字型（Win 8.1 相容） | ⬜ |
-| 多國語系（ja, zh-TW, pt, en, th） | 🟨 結構完成，待 Phase 5.5 整合 |
+| 多國語系（ja, zh-TW, pt, en, th） | 🟨 結構完成，待 Phase 6.5 整合 |
 | WPF-UI（Fluent Design）套件 | ✅ |
 | SQLite 與資料表（明文密碼） | ✅ |
 | 專案建立（Phase 1.1） | ✅ |
@@ -463,6 +525,7 @@ src/
 | 登入畫面語系切換（Login 下方） | ✅ |
 | 登入畫面右上角 X 離開按鈕 | ✅ |
 | 應用程式圖示（icons8-app-96.png） | ✅ |
+| Phase 5 排程管理子頁（排單管理 Dialog） | ✅ |
 | Windows 8.1 模擬測試（VM） | ⬜ |
 | 端對端測試 | ⬜ |
 
@@ -474,8 +537,9 @@ src/
 2. **Phase 1**：建立專案與 MVVM 結構  
 3. **Phase 2**：完成 SQLite 與驗證邏輯  
 4. **Phase 3**：實作登入畫面與 ViewModel  
-5. **Phase 4**：實作導航與主畫面  
-6. **Phase 5**：整合測試與收尾  
+5. **Phase 4**：實作導航與主畫面（含 Layout2）  
+6. **Phase 5**：排程管理子頁（Dialog）  
+7. **Phase 6**：整合測試與收尾  
 
 ---
 

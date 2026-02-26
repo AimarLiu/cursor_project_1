@@ -7,6 +7,7 @@ using CommunityToolkit.Mvvm.Input;
 using CursorTestApp.Helpers;
 using CursorTestApp.Models;
 using CursorTestApp.Services;
+using CursorTestApp.Views.Layout2;
 
 namespace CursorTestApp.ViewModels;
 
@@ -23,6 +24,7 @@ public sealed partial class Layout2ViewModel : ViewModelBase
     private DispatcherTimer? _simSpeedTimer;
     private DispatcherTimer? _simProductionTimer;
     private readonly Random _rnd = new();
+    private SimulationMode _simulationMode = SimulationMode.None;
 
     [ObservableProperty]
     private ScheduleOrderItem? _selectedScheduleItem;
@@ -64,6 +66,8 @@ public sealed partial class Layout2ViewModel : ViewModelBase
     public LocalizedString BackToLoginToolTip { get; }
     public LocalizedString F7OrderMakeToolTip { get; }
     public LocalizedString F1ScheduleManageToolTip { get; }
+    /// <summary>模擬生產中時 F1 按鈕文字（F1 生產中）。</summary>
+    public LocalizedString F1ProducingToolTip { get; }
     public LocalizedString F11StatusDisplayToolTip { get; }
     public LocalizedString ShutdownToolTip { get; }
     public LocalizedString ProductionOrderLabel { get; }
@@ -79,6 +83,9 @@ public sealed partial class Layout2ViewModel : ViewModelBase
 
     /// <summary>左側面板字體大小：英文 16、其餘語系 20。</summary>
     public int LeftPanelFontSize => string.Equals(_localizationService.CurrentCulture.TwoLetterISOLanguageName, "en", StringComparison.OrdinalIgnoreCase) ? 16 : 20;
+
+    /// <summary>F1 按鈕 ToolTip（模擬中顯示 F1 生產中，否則 F1 排程管理）。</summary>
+    public string F1ButtonToolTip => IsSimulating ? F1ProducingToolTip.Value : F1ScheduleManageToolTip.Value;
 
     public Layout2ViewModel(
         INavigationService navigationService,
@@ -114,6 +121,7 @@ public sealed partial class Layout2ViewModel : ViewModelBase
         BackToLoginToolTip = new LocalizedString(_localizationService, "Layout2_BackToLogin");
         F7OrderMakeToolTip = new LocalizedString(_localizationService, "Layout2_F7OrderMake");
         F1ScheduleManageToolTip = new LocalizedString(_localizationService, "Layout2_F1ScheduleManage");
+        F1ProducingToolTip = new LocalizedString(_localizationService, "Layout2_F1Producing");
         F11StatusDisplayToolTip = new LocalizedString(_localizationService, "Layout2_F11StatusDisplay");
         ShutdownToolTip = new LocalizedString(_localizationService, "Layout2_Shutdown");
         ProductionOrderLabel = new LocalizedString(_localizationService, "Layout2_ProductionOrder");
@@ -229,11 +237,24 @@ public sealed partial class Layout2ViewModel : ViewModelBase
             _logService.Append("排程為空，無法啟動模擬生產");
             return;
         }
+        var vm = new ScheduleManageDialogViewModel(_scheduleService, _localizationService);
+        var dialog = new ScheduleManageDialog(vm)
+        {
+            Owner = Application.Current.MainWindow
+        };
+        dialog.ShowDialog();
+        if (dialog.DialogResult == true && dialog.Tag is SimulationMode mode && mode != SimulationMode.None)
+            StartSimulationWithMode(mode);
+    }
+
+    private void StartSimulationWithMode(SimulationMode mode)
+    {
+        _simulationMode = mode;
         IsSimulating = true;
         _rs485Service.IsOptActive = true;
         _rs485Service.IsPlcActive = true;
         _rs485Service.HasError = false;
-        _logService.Append("F1 排程管理：進入模擬生產狀態");
+        _logService.Append(mode == SimulationMode.SmallBatch ? "F2 前置排單：進入模擬生產（小量 5 個）" : "F3 把全排量：進入模擬生產");
 
         _simSpeedTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
         _simSpeedTimer.Tick += (_, _) =>
@@ -253,6 +274,15 @@ public sealed partial class Layout2ViewModel : ViewModelBase
     {
         CurrentQuantity++;
         UpdateEstimatedTime();
+        if (_simulationMode == SimulationMode.SmallBatch)
+        {
+            if (CurrentQuantity >= 5)
+            {
+                StopSimulation();
+                _logService.Append("模擬生產（小量）：已生產 5 個，停止");
+            }
+            return;
+        }
         var first = FirstScheduleItem;
         if (first != null && CurrentQuantity >= first.OrderQuantity)
         {
@@ -269,6 +299,7 @@ public sealed partial class Layout2ViewModel : ViewModelBase
 
     private void StopSimulation()
     {
+        _simulationMode = SimulationMode.None;
         IsSimulating = false;
         _simSpeedTimer?.Stop();
         _simSpeedTimer = null;
@@ -284,6 +315,7 @@ public sealed partial class Layout2ViewModel : ViewModelBase
 
     partial void OnIsSimulatingChanged(bool value)
     {
+        OnPropertyChanged(nameof(F1ButtonToolTip));
         if (!value) return;
         CurrentQuantity = 0;
         UpdateEstimatedTime();

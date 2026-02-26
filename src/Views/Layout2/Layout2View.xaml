@@ -258,15 +258,37 @@
                         <TextBlock Grid.Column="1" Text="{Binding F7OrderMakeToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" />
                     </Grid>
                 </Button>
-                <Button Command="{Binding F1StartScheduleCommand}" ToolTip="{Binding F1ScheduleManageToolTip.Value}" MinWidth="120" Height="48" Margin="0,0,8,0"
+                <Button Command="{Binding F1StartScheduleCommand}" ToolTip="{Binding F1ButtonToolTip}" MinWidth="120" Height="48" Margin="0,0,8,0"
                         Background="Transparent" BorderThickness="0" Cursor="Hand">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Image Grid.Column="0" Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-schedule-96.png" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0" />
-                        <TextBlock Grid.Column="1" Text="{Binding F1ScheduleManageToolTip.Value}" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13" />
+                        <Image Grid.Column="0" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0">
+                            <Image.Style>
+                                <Style TargetType="Image">
+                                    <Setter Property="Source" Value="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-schedule-96.png" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSimulating}" Value="True">
+                                            <Setter Property="Source" Value="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-pause-squared-96.png" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Image.Style>
+                        </Image>
+                        <TextBlock Grid.Column="1" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="13">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding F1ScheduleManageToolTip.Value}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsSimulating}" Value="True">
+                                            <Setter Property="Text" Value="{Binding F1ProducingToolTip.Value}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
                     </Grid>
                 </Button>
             </StackPanel>

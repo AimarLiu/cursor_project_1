@@ -203,4 +203,25 @@
   <data name="Layout2_StatusDialogContent" xml:space="preserve">
     <value>Diálogo de estado</value>
   </data>
+  <data name="Layout2_F1Producing" xml:space="preserve">
+    <value>F1 Em produção</value>
+  </data>
+  <data name="ScheduleManageDialog_Title" xml:space="preserve">
+    <value>Gestão de agenda</value>
+  </data>
+  <data name="ScheduleManageDialog_VersionLabel" xml:space="preserve">
+    <value>Versão que está a agendar:</value>
+  </data>
+  <data name="ScheduleManageDialog_F4Print" xml:space="preserve">
+    <value>F4 Imprimir</value>
+  </data>
+  <data name="ScheduleManageDialog_F2PreSchedule" xml:space="preserve">
+    <value>F2 Pré-agenda</value>
+  </data>
+  <data name="ScheduleManageDialog_F3FullSchedule" xml:space="preserve">
+    <value>F3 Agenda total</value>
+  </data>
+  <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
+    <value>F1 Sair</value>
+  </data>
 </root>

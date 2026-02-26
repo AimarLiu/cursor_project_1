@@ -203,4 +203,25 @@
   <data name="Layout2_StatusDialogContent" xml:space="preserve">
     <value>狀態 Dialog</value>
   </data>
+  <data name="Layout2_F1Producing" xml:space="preserve">
+    <value>F1 生產中</value>
+  </data>
+  <data name="ScheduleManageDialog_Title" xml:space="preserve">
+    <value>排單管理</value>
+  </data>
+  <data name="ScheduleManageDialog_VersionLabel" xml:space="preserve">
+    <value>您目前正要排單的版號:</value>
+  </data>
+  <data name="ScheduleManageDialog_F4Print" xml:space="preserve">
+    <value>F4 分印</value>
+  </data>
+  <data name="ScheduleManageDialog_F2PreSchedule" xml:space="preserve">
+    <value>F2 前置排單</value>
+  </data>
+  <data name="ScheduleManageDialog_F3FullSchedule" xml:space="preserve">
+    <value>F3 把全排量</value>
+  </data>
+  <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
+    <value>F1 離開</value>
+  </data>
 </root>

@@ -220,7 +220,7 @@ if (user != null)
 
 密碼 `aimarliu` 可通過驗證（見 Phase 2）。
 
-### 5.6 應用程式圖示
+### 6.6 應用程式圖示
 
 | 項目 | 說明 | 檔案路徑 |
 |------|------|----------|
@@ -328,9 +328,10 @@ Views/
 ### Layout2 按鈕版面（Grid、圖左文居中）
 - 頂部 F2/F4/F6、中區訂單上移/下移、底部返回/F7/F1/F11/關機：皆以 `Grid` 為按鈕內容，兩欄（`Auto` + `*`），圖片/圖示靠左、文字綁定 RESX 並置中；`MinWidth`/`Height` 統一適當尺寸（頂部 36、中區 40、底部 48）。
 
-### 模擬生產（F1 排程管理）
-- F1 啟動：`IsSimulating = true`，OPT/PLC 亮，車速每秒亂數 400–500，每 30 秒目前產量 +1 並將排程第一筆移入完成訂單；排程清空時自動停止。
-- 再按 F1 可手動停止。
+### 模擬生產（F1 排程管理、Phase 5 Dialog）
+- **F1 排程管理**（Layout2 底部）：點擊開啟 **Phase 5 排程管理子頁**（ScheduleManageDialog），不直接啟動模擬。若已在模擬中則按鈕顯示「F1 生產中」+ 暫停圖示，再按可手動停止。
+- **排程管理 Dialog**：標題「排單管理」、頂部目前版號（排程第一筆）、DataGrid 綁定同一 `ScheduleOrders`、底部 F4 分印（暫無功能）/ F2 前置排單 / F3 把全排量 / F1 離開。F2 或 F3 關閉 Dialog 並帶回 `SimulationMode.SmallBatch` 或 `FullBatch`，F1 離開帶回 `None`。
+- **啟動模擬**：Layout2 依 Dialog 關閉時帶回之模式呼叫 `StartSimulationWithMode(mode)`。小量（F2）：僅第一筆訂單生產 5 個後自動停止；全量（F3）：每 30 秒產量 +1、完成筆移入完成訂單，排程清空或手動停止。車速 400–500、OPT/PLC 亮、預估時間更新同前。
 
 ### RS485
 - `Rs485BackgroundService`：背景執行緒嘗試開啟 COM1（9600,8,N,1），讀取文字行並解析 `ACTIVE+`/`ACTIVE-`、`PLC+`/`PLC-`、`RPM:123`、`ERROR+`/`ERROR-`，以 `Dispatcher.InvokeAsync` 更新 `Rs485Service`，UI 即時反映。若 COM 無法開啟則靜默結束，F1 模擬仍可直接更新 `Rs485Service`。
@@ -347,16 +348,35 @@ Views/
 
 ---
 
-## Phase 5：整合與收尾（5.1–5.6 已完成）
+## Phase 5：排程管理子頁（Dialog）
 
-### 5.1 綁定與流程
+### 實作內容
+| 項目 | 說明 | 檔案路徑 |
+|------|------|----------|
+| SimulationMode | 列舉 None / SmallBatch（F2 小量 5 個）/ FullBatch（F3 全量） | `Models/SimulationMode.cs` |
+| ScheduleManageDialog | 排單管理 Window，標題/版號/**DataGrid**（與 Layout2 上區相同控制項與樣式，避免 whyDataGridleg）/四按鈕；標題列黃底黑字（DialogDataGridColumnHeaderStyle）；**底部區塊黃底** #F9A825、按鈕文字**粗體**深色 #111；F4 bear-footprint、F2 frying-pan、F3 process、F1 exit；F2/F3 關閉時 Tag=Mode、DialogResult=true | `Views/Layout2/ScheduleManageDialog.xaml(.cs)` |
+| ScheduleManageDialogViewModel | 綁定 ScheduleOrders、FirstScheduleItem.VersionNo、四按鈕 Command，RequestClose(Mode?) | `ViewModels/ScheduleManageDialogViewModel.cs` |
+| Layout2ViewModel | F1 改為開啟 Dialog；StartSimulationWithMode(mode)；OnSimProductionTick 依 SmallBatch/FullBatch 停止條件 | `ViewModels/Layout2ViewModel.cs` |
+| Layout2View F1 按鈕 | IsSimulating 時圖示改 pause、文字改 F1ProducingToolTip（F1 生產中） | `Views/Layout2/Layout2View.xaml` |
+| RESX | Layout2_F1Producing、ScheduleManageDialog_Title / VersionLabel / F4Print / F2PreSchedule / F3FullSchedule / F1Exit，五語系；日文（ja）排程管理 Dialog 標題與四按鈕以平假名為主（はいだんかんり、ぶんいん、ぜんちはいだん、ぜんりょうはいだん、でる） | `Resources/Resources.*.resx` |
+
+### 程式碼要點
+- Dialog 建構時注入 `ScheduleManageDialogViewModel(IProductionScheduleService, ILocalizationService)`，同一 `ScheduleOrders` 與 Layout2 共用。ViewModel 的 `RequestClose` 事件傳遞 `SimulationMode?`；Window 訂閱後設 `Tag = mode`、`DialogResult = (mode != null && mode != None)`、`Close()`。
+- Layout2ViewModel.F1StartSchedule：若已模擬則 StopSimulation；否則 `new ScheduleManageDialog(vm) { Owner = MainWindow }.ShowDialog()`，若 `DialogResult == true && Tag is SimulationMode m` 則 `StartSimulationWithMode(m)`。
+- 小量模式：`OnSimProductionTick` 內當 `CurrentQuantity >= 5` 時 `StopSimulation()` 並 log，不移入完成訂單。全量模式：維持原邏輯（達受訂量移入完成、排程清空或手動停止）。
+
+---
+
+## Phase 6：整合與收尾（6.1–6.6 已完成）
+
+### 6.1 綁定與流程
 | 項目 | 說明 |
 |------|------|
 | 啟動畫面 | ShellWindow 啟動後 `NavigateToLogin()` 顯示 LoginView |
 | DataContext | ShellWindow.CreateLoginView 將 LoginViewModel 設為 LoginView.DataContext |
 | 流程 | 輸入密碼 → Enter → 比對資料庫 → 成功則 NavigateToLayout2() |
 
-### 5.2 錯誤處理
+### 6.2 錯誤處理
 | 項目 | 說明 | 檔案 |
 |------|------|------|
 | 資料庫連線失敗 | App.OnStartup 內 try/catch `Initialize()`，失敗時 MessageBox 後 `Shutdown(1)` | `App.xaml.cs` |
@@ -367,19 +387,19 @@ Views/
 | LogListBox 異機不一致 | 「ItemsControl 與其項目來源不一致」：LogService.Append 一律 `InvokeAsync(Loaded)`、LogListBox 設 `VirtualizingPanel.IsVirtualizing="False"`、LogPanel 內 ScrollIntoView 延後至 `DispatcherPriority.Loaded`；異機已驗證通過，詳見 `LessonLearn/whyItemSourceNotConsistant.md` | `LogService.cs`、`LogPanel.xaml`、`LogPanel.xaml.cs` |
 | Converter | 字串非空 → Visible，空 → Collapsed | `Converters/StringNotEmptyToVisibilityConverter.cs`、`App.xaml` |
 
-### 5.3 Log 服務整合
+### 6.3 Log 服務整合
 | 項目 | 說明 |
 |------|------|
 | 初始化時機 | ShellWindow 建構時建立 `LogService`，並注入 LoginViewModel / MainViewModel |
 | 共用實例 | 同一 `_logService` 傳入各 ViewModel |
 | 格式 | `[HH:mm:ss] 訊息內容`（LogService 已實作） |
 
-### 5.4 程式品質
+### 6.4 程式品質
 - 專案內無 `Console.WriteLine`
 - 密碼以明文儲存於 SQLite（測試用）
 - 註解與結構已整理
 
-### 5.5 多國語系與字型
+### 6.5 多國語系與字型
 | 項目 | 說明 |
 |------|------|
 | Login / Main | 字串已使用 RESX + LocalizedString |
@@ -398,7 +418,8 @@ src/
 │   ├── User.cs
 │   ├── LanguageOption.cs
 │   ├── ScheduleOrderItem.cs
-│   └── CompletedOrderItem.cs
+│   ├── CompletedOrderItem.cs
+│   └── SimulationMode.cs
 ├── Resources/
 │   ├── Icons/          (*.png, alarm.png, red-alam.gif)
 │   ├── Resources.resx
@@ -418,7 +439,8 @@ src/
 │   ├── ViewModelBase.cs
 │   ├── LoginViewModel.cs
 │   ├── MainViewModel.cs
-│   └── Layout2ViewModel.cs
+│   ├── Layout2ViewModel.cs
+│   └── ScheduleManageDialogViewModel.cs
 ├── Views/
 │   ├── Login/
 │   │   └── LoginView.xaml(.cs)
@@ -426,6 +448,7 @@ src/
 │   │   └── MainView.xaml(.cs)
 │   ├── Layout2/
 │   │   ├── Layout2View.xaml(.cs)
+│   │   ├── ScheduleManageDialog.xaml(.cs)
 │   │   ├── ProductionInfoPanel.xaml(.cs)
 │   │   └── F4SearchDialog.xaml(.cs)
 │   └── Shared/
@@ -446,10 +469,11 @@ src/
 ## 後續 Phase 整合提示
 
 - **Phase 4 主畫面**：已完成，MainView 共用 `ILocalizationService`，返回按鈕 ToolTip 已綁定 RESX
-- **Phase 4 (Layout2)**：已完成，登入後導航至 Layout2，含排程/完成訂單、模擬生產、F4/F7/F11 Dialog
-- **Phase 5.1–5.6**：已完成；含綁定與流程、錯誤處理、Log 整合、程式品質、多國語系與字型、應用程式圖示（icons8-app-96）
+- **Phase 4 (Layout2)**：已完成，登入後導航至 Layout2，含排程/完成訂單、模擬生產、F4/F7/F11 Dialog；F1 改為開啟 Phase 5 排程管理 Dialog，模擬由 F2/F3 觸發（小量/全量）
+- **Phase 5 排程管理子頁**：已完成，ScheduleManageDialog（排單管理）、F2 前置排單（小量 5 個）/ F3 把全排量（全量）/ F1 離開，與 Layout2 模擬邏輯整合
+- **Phase 6.1–6.6**：已完成；含綁定與流程、錯誤處理、Log 整合、程式品質、多國語系與字型、應用程式圖示（icons8-app-96）
 - **Layout2 圖示**：左側頂部為 icons8-favorites-shield-5-stars-96（96×96）；異常狀態使用 WpfAnimatedGif 播放 red-alam.gif
-- **Phase 5.7 以後**：發佈、Win 8.1 測試、SqliteViewer 小工具等見 TODO.md
+- **Phase 6.7 以後**：發佈、Win 8.1 測試、SqliteViewer 小工具等見 TODO.md
 - **發佈建議**：Demo／測試優先使用單一執行檔（`scripts\publish.ps1` 或 `dotnet publish -r win-x64 --self-contained true -p:PublishSingleFile=true`）；正式產品再考慮安裝程式。說明見 `QandA/howToPackApplication.md`。
 - **異機執行**：資料庫預設改為 `%LocalAppData%\CursorTestApp\app.db`，並加上未處理例外與登入後導航 try-catch，避免單檔在另一台電腦登入後 crash。詳見 `QandA/crashAfterLoginOnOtherPC.md`。
 - **LogListBox 異機**：LogPanel 綁定之 LogMessages 在異機曾出現「ItemsControl 與其項目來源不一致」；已以 InvokeAsync(Loaded)、關閉虛擬化、ScrollIntoView 延後至 Loaded 修正，異機驗證通過。詳見 `LessonLearn/whyItemSourceNotConsistant.md`。
@@ -457,4 +481,4 @@ src/
 ---
 
 *建立日期：2025-02-22*
-*更新：Phase 5.1–5.6 實作摘要；Phase 4 (Layout2) 圖示與異常 GIF 動畫；異機執行 crash 修正；未處理例外寫入 error_日期時間.log；LogListBox ItemsControl 異機不一致修正並驗證*
+*更新：Phase 5 排程管理子頁改為 DataGrid（與 Layout2 上區相同、避免 whyDataGridleg）、標題列黃底黑字、底部區塊黃底、按鈕文字粗體；Phase 6 整合與收尾；LogListBox 異機不一致修正並驗證（2026-02-26）*

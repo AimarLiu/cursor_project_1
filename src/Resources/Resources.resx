@@ -204,4 +204,25 @@
   <data name="Layout2_StatusDialogContent" xml:space="preserve">
     <value>Status Dialog</value>
   </data>
+  <data name="Layout2_F1Producing" xml:space="preserve">
+    <value>F1 Producing</value>
+  </data>
+  <data name="ScheduleManageDialog_Title" xml:space="preserve">
+    <value>Schedule Manage</value>
+  </data>
+  <data name="ScheduleManageDialog_VersionLabel" xml:space="preserve">
+    <value>Version you are scheduling:</value>
+  </data>
+  <data name="ScheduleManageDialog_F4Print" xml:space="preserve">
+    <value>F4 Print</value>
+  </data>
+  <data name="ScheduleManageDialog_F2PreSchedule" xml:space="preserve">
+    <value>F2 Pre-schedule</value>
+  </data>
+  <data name="ScheduleManageDialog_F3FullSchedule" xml:space="preserve">
+    <value>F3 Full Schedule</value>
+  </data>
+  <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
+    <value>F1 Exit</value>
+  </data>
 </root>

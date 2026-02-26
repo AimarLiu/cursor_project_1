@@ -203,4 +203,25 @@
   <data name="Layout2_StatusDialogContent" xml:space="preserve">
     <value>状態ダイアログ</value>
   </data>
+  <data name="Layout2_F1Producing" xml:space="preserve">
+    <value>F1 生産中</value>
+  </data>
+  <data name="ScheduleManageDialog_Title" xml:space="preserve">
+    <value>はいだんかんり</value>
+  </data>
+  <data name="ScheduleManageDialog_VersionLabel" xml:space="preserve">
+    <value>いま はいだんちゅう の ばんごう:</value>
+  </data>
+  <data name="ScheduleManageDialog_F4Print" xml:space="preserve">
+    <value>F4 ぶんいん</value>
+  </data>
+  <data name="ScheduleManageDialog_F2PreSchedule" xml:space="preserve">
+    <value>F2 ぜんちはいだん</value>
+  </data>
+  <data name="ScheduleManageDialog_F3FullSchedule" xml:space="preserve">
+    <value>F3 ぜんりょうはいだん</value>
+  </data>
+  <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
+    <value>F1 でる</value>
+  </data>
 </root>

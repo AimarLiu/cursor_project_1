@@ -203,4 +203,25 @@
   <data name="Layout2_StatusDialogContent" xml:space="preserve">
     <value>กล่องสถานะ</value>
   </data>
+  <data name="Layout2_F1Producing" xml:space="preserve">
+    <value>F1 กำลังผลิต</value>
+  </data>
+  <data name="ScheduleManageDialog_Title" xml:space="preserve">
+    <value>จัดการตาราง</value>
+  </data>
+  <data name="ScheduleManageDialog_VersionLabel" xml:space="preserve">
+    <value>รุ่นที่คุณกำลังจัดตาราง:</value>
+  </data>
+  <data name="ScheduleManageDialog_F4Print" xml:space="preserve">
+    <value>F4 พิมพ์</value>
+  </data>
+  <data name="ScheduleManageDialog_F2PreSchedule" xml:space="preserve">
+    <value>F2 จัดตารางล่วงหน้า</value>
+  </data>
+  <data name="ScheduleManageDialog_F3FullSchedule" xml:space="preserve">
+    <value>F3 จัดตารางเต็ม</value>
+  </data>
+  <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
+    <value>F1 ออก</value>
+  </data>
 </root>

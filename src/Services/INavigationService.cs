@@ -21,6 +21,11 @@ public interface INavigationService
     void NavigateToLayout2();
 
     /// <summary>
+    /// 導航至訂單製作（主內容區頁面，與 Login、Layout2 同）。
+    /// </summary>
+    void NavigateToOrderMaking();
+
+    /// <summary>
     /// LogPanel 顯示與否變更時觸發。主畫面不需 Log，登入頁需要。
     /// </summary>
     event EventHandler<bool>? LogPanelVisibilityChanged;

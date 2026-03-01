@@ -225,4 +225,64 @@
   <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
     <value>F1 Exit</value>
   </data>
+  <data name="OrderMakingDialog_Title" xml:space="preserve">
+    <value>Order Make</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNo" xml:space="preserve">
+    <value>Version No:</value>
+  </data>
+  <data name="OrderMakingDialog_F6Search" xml:space="preserve">
+    <value>F6 Search</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNoQuery" xml:space="preserve">
+    <value>Version Query</value>
+  </data>
+  <data name="OrderMakingDialog_Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="OrderMakingDialog_SubmitVersionPosition" xml:space="preserve">
+    <value>Submit Version Position</value>
+  </data>
+  <data name="OrderMakingDialog_Phase" xml:space="preserve">
+    <value>Phase</value>
+  </data>
+  <data name="OrderMakingDialog_Phase1Color" xml:space="preserve">
+    <value>1-color</value>
+  </data>
+  <data name="OrderMakingDialog_Phase2Color" xml:space="preserve">
+    <value>2-color</value>
+  </data>
+  <data name="OrderMakingDialog_Phase3Color" xml:space="preserve">
+    <value>3-color</value>
+  </data>
+  <data name="OrderMakingDialog_LengthLabel" xml:space="preserve">
+    <value>Length</value>
+  </data>
+  <data name="OrderMakingDialog_WidthLabel" xml:space="preserve">
+    <value>Width</value>
+  </data>
+  <data name="OrderMakingDialog_F4Delete" xml:space="preserve">
+    <value>F4 Delete</value>
+  </data>
+  <data name="OrderMakingDialog_F5CompleteEdit" xml:space="preserve">
+    <value>F5 Complete Edit</value>
+  </data>
+  <data name="OrderMakingDialog_F5AddOrder" xml:space="preserve">
+    <value>F5 Add Order</value>
+  </data>
+  <data name="OrderMakingDialog_F2AddToSchedule" xml:space="preserve">
+    <value>F2 Add to Schedule / Exit</value>
+  </data>
+  <data name="OrderMakingDialog_F1Exit" xml:space="preserve">
+    <value>F1 Exit</value>
+  </data>
+  <data name="OrderMakingDialog_ConfirmNewVersion" xml:space="preserve">
+    <value>Version not found. Add as new order?</value>
+  </data>
+  <data name="OrderMakingDialog_OrderSaved" xml:space="preserve">
+    <value>Order saved: {0}</value>
+  </data>
+  <data name="OrderMakingDialog_ColCreatedAt" xml:space="preserve">
+    <value>Created</value>
+  </data>
 </root>

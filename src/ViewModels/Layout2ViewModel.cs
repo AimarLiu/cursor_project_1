@@ -19,6 +19,7 @@ public sealed partial class Layout2ViewModel : ViewModelBase
     private readonly INavigationService _navigationService;
     private readonly ILogService _logService;
     private readonly IProductionScheduleService _scheduleService;
+    private readonly IOrderRepository _orderRepository;
     private readonly Rs485Service _rs485Service;
     private readonly ILocalizationService _localizationService;
     private DispatcherTimer? _simSpeedTimer;
@@ -91,12 +92,14 @@ public sealed partial class Layout2ViewModel : ViewModelBase
         INavigationService navigationService,
         ILogService logService,
         IProductionScheduleService scheduleService,
+        IOrderRepository orderRepository,
         Rs485Service rs485Service,
         ILocalizationService localizationService)
     {
         _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
         _logService = logService ?? throw new ArgumentNullException(nameof(logService));
         _scheduleService = scheduleService ?? throw new ArgumentNullException(nameof(scheduleService));
+        _orderRepository = orderRepository ?? throw new ArgumentNullException(nameof(orderRepository));
         _rs485Service = rs485Service ?? throw new ArgumentNullException(nameof(rs485Service));
         _localizationService = localizationService ?? throw new ArgumentNullException(nameof(localizationService));
 
@@ -341,16 +344,7 @@ public sealed partial class Layout2ViewModel : ViewModelBase
     [RelayCommand]
     private void F7OrderEdit()
     {
-        var w = new Window
-        {
-            Title = OrderMakeWindowTitle.Value,
-            Width = 400,
-            Height = 300,
-            WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            Owner = Application.Current.MainWindow
-        };
-        w.Content = new System.Windows.Controls.TextBlock { Text = BlankPageText.Value, Margin = new Thickness(24), VerticalAlignment = VerticalAlignment.Center };
-        w.Show();
+        _navigationService.NavigateToOrderMaking();
     }
 
     [RelayCommand]

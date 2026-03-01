@@ -18,6 +18,7 @@ public partial class ShellWindow : FluentWindow
     private readonly INavigationService _navigationService;
     private readonly ILocalizationService _localizationService;
     private readonly IProductionScheduleService _scheduleService;
+    private readonly IOrderRepository _orderRepository;
     private readonly Rs485Service _rs485Service;
     private readonly Rs485BackgroundService _rs485Background;
 
@@ -32,13 +33,15 @@ public partial class ShellWindow : FluentWindow
         _localizationService = new LocalizationService();
         IScheduleOrderRepository scheduleRepo = new ScheduleOrderRepository(databaseService);
         _scheduleService = new ProductionScheduleService(scheduleRepo);
+        _orderRepository = new OrderRepository(databaseService);
         _rs485Service = new Rs485Service();
         _rs485Background = new Rs485BackgroundService(_rs485Service);
         _navigationService = new NavigationService(
             ContentHost,
             CreateMainView,
             () => CreateLoginView(authService),
-            CreateLayout2View);
+            CreateLayout2View,
+            CreateOrderMakingView);
 
         LogPanel.DataContext = _logService;
         _logService.Append("應用程式已啟動");
@@ -64,8 +67,14 @@ public partial class ShellWindow : FluentWindow
 
     private UserControl CreateLayout2View()
     {
-        Layout2ViewModel viewModel = new(_navigationService, _logService, _scheduleService, _rs485Service, _localizationService);
+        Layout2ViewModel viewModel = new(_navigationService, _logService, _scheduleService, _orderRepository, _rs485Service, _localizationService);
         return new Layout2View { DataContext = viewModel };
+    }
+
+    private UserControl CreateOrderMakingView()
+    {
+        OrderMakingDialogViewModel viewModel = new(_orderRepository, _scheduleService, _localizationService, _logService, _navigationService);
+        return new OrderMakingView { DataContext = viewModel };
     }
 
     private void OnLogPanelVisibilityChanged(object? sender, bool visible)

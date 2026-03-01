@@ -224,4 +224,64 @@
   <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
     <value>F1 離開</value>
   </data>
+  <data name="OrderMakingDialog_Title" xml:space="preserve">
+    <value>訂單製作</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNo" xml:space="preserve">
+    <value>版號:</value>
+  </data>
+  <data name="OrderMakingDialog_F6Search" xml:space="preserve">
+    <value>F6 搜尋</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNoQuery" xml:space="preserve">
+    <value>版號查詢</value>
+  </data>
+  <data name="OrderMakingDialog_Preview" xml:space="preserve">
+    <value>預覽</value>
+  </data>
+  <data name="OrderMakingDialog_SubmitVersionPosition" xml:space="preserve">
+    <value>送入版號位置</value>
+  </data>
+  <data name="OrderMakingDialog_Phase" xml:space="preserve">
+    <value>相位</value>
+  </data>
+  <data name="OrderMakingDialog_Phase1Color" xml:space="preserve">
+    <value>1色</value>
+  </data>
+  <data name="OrderMakingDialog_Phase2Color" xml:space="preserve">
+    <value>2色</value>
+  </data>
+  <data name="OrderMakingDialog_Phase3Color" xml:space="preserve">
+    <value>3色</value>
+  </data>
+  <data name="OrderMakingDialog_LengthLabel" xml:space="preserve">
+    <value>長</value>
+  </data>
+  <data name="OrderMakingDialog_WidthLabel" xml:space="preserve">
+    <value>寬</value>
+  </data>
+  <data name="OrderMakingDialog_F4Delete" xml:space="preserve">
+    <value>F4 刪除</value>
+  </data>
+  <data name="OrderMakingDialog_F5CompleteEdit" xml:space="preserve">
+    <value>F5 完成編輯訂單</value>
+  </data>
+  <data name="OrderMakingDialog_F5AddOrder" xml:space="preserve">
+    <value>F5 新增訂單</value>
+  </data>
+  <data name="OrderMakingDialog_F2AddToSchedule" xml:space="preserve">
+    <value>F2 加入排程/離開</value>
+  </data>
+  <data name="OrderMakingDialog_F1Exit" xml:space="preserve">
+    <value>F1 離開</value>
+  </data>
+  <data name="OrderMakingDialog_ConfirmNewVersion" xml:space="preserve">
+    <value>是否新增此筆新的版號？</value>
+  </data>
+  <data name="OrderMakingDialog_OrderSaved" xml:space="preserve">
+    <value>此筆訂單:「{0}」已儲存</value>
+  </data>
+  <data name="OrderMakingDialog_ColCreatedAt" xml:space="preserve">
+    <value>建檔日期</value>
+  </data>
 </root>

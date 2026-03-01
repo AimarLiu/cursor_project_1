@@ -25,4 +25,6 @@ public interface IProductionScheduleService
     int FindScheduleIndex(string keyword);
     /// <summary>取得排程第一筆（供生產資訊看板綁定）。</summary>
     ScheduleOrderItem? FirstScheduleItem { get; }
+    /// <summary>將一筆訂單加入生產排程（Phase 6 F2 加入排程）。</summary>
+    void AddOrderToSchedule(ScheduleOrderItem item);
 }

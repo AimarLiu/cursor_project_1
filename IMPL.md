@@ -367,7 +367,51 @@ Views/
 
 ---
 
-## Phase 6：整合與收尾（6.1–6.6 已完成）
+## Phase 6：訂單製作（F7 訂單製作）
+
+### 實作內容
+| 項目 | 說明 | 檔案路徑 |
+|------|------|----------|
+| Orders 表 | 建立日期時間、生產訂單號、版號、受訂量、箱型、楞別、相位1～3、長度、寬度、客戶名稱、備註；DatabaseService 內 EnsureOrdersTable + SeedOrdersIfEmpty（隨機 100 筆） | `Services/DatabaseService.cs`、`Scripts/CreateOrdersTable.sql` |
+| Order 模型 | 對應 Orders 表，INotifyPropertyChanged | `Models/Order.cs` |
+| IOrderRepository / OrderRepository | FindByVersionNo、GetPage(10)、GetAll()、GetTotalCount、Insert、Update、Delete；4.4 不分頁時以 GetAll 供 DataGrid 捲軸顯示 | `Services/IOrderRepository.cs`、`Services/OrderRepository.cs` |
+| IProductionScheduleService.AddOrderToSchedule | 將一筆 ScheduleOrderItem 加入排程（F2 加入排程用） | `Services/IProductionScheduleService.cs`、`ProductionScheduleService.cs` |
+| OrderMakingView | **主內容區頁面**（UserControl，顯示於 Shell ContentHost）；頂部左:右 1:2、4.3:4.4 為 6:4；頂/底深灰、Phase6 整頁淺灰、左/右/4.5 白底；版號+F6、版號查詢+上下箭頭+預覽+送入版號位置；左側表單、右側 DataGrid **不分頁、捲軸**；版號/版號查詢找到訂單時定位選取並捲動至中央（RequestScrollToSelected），手動點選列不捲動；雙擊列帶出至左側與 4.5；4.5 相位 1色/2色/3色 標籤+輸入**上下排列**；底部 F4/F5/F2 靠左、**F1 離開最右**；右側 DataGrid 欄位標題 RESX、建檔日期 `yyyy/MM/dd HH:mm` | `Views/Layout2/OrderMakingView.xaml(.cs)` |
+| OrderMakingDialogViewModel | 流程 3.0～3.4：初始反灰、版號搜尋有/無資料、版號查詢 DataGrid、預覽帶出、F5 儲存、F4 刪除、F2 加入排程並關閉；LocalizedString 多語系 | `ViewModels/OrderMakingDialogViewModel.cs` |
+| Layout2ViewModel / ShellWindow | F7 改為導航至 OrderMakingView（主內容區）；ShellWindow.CreateOrderMakingView 建立 OrderMakingView + OrderMakingDialogViewModel；注入 IOrderRepository | `ViewModels/Layout2ViewModel.cs`、`ShellWindow.xaml.cs` |
+| RESX | OrderMakingDialog_Title、VersionNo、F6Search、VersionNoQuery、Phase、Phase1Color/Phase2Color/Phase3Color、LengthLabel、WidthLabel、SubmitVersionPosition、F4Delete、F5CompleteEdit、F5AddOrder、F2AddToSchedule、F1Exit、ConfirmNewVersion、OrderSaved、ColCreatedAt；右側 DataGrid 欄位標題沿用 Layout2_VersionNo/CustomerName/BoxType/Category + OrderMakingDialog_ColCreatedAt；五語系 | `Resources/Resources.*.resx` |
+
+### 程式碼要點
+- **流程 3.0**：開啟時 IsLeftAndBottomEnabled、IsF4Enabled、IsF5Enabled、IsF2Enabled 皆 false；F5ButtonText 為「F5 完成編輯訂單」。
+- **流程 3.1**：頂部左側輸入版號後 Enter 或 F6 搜尋 → FindByVersionNo；有資料則 LoadOrderToForm、解除反灰；無資料則 MessageBox 確認是否新增，確認後解除左/下/F5/F2、F5 改為「F5 新增訂單」。
+- **儲存**：F5 依 CurrentOrderId 呼叫 Update 或 Insert，完成後顯示「此筆訂單:版號已儲存」並再次反灰。
+- **F2 加入排程**：由目前表單組 ScheduleOrderItem，呼叫 _scheduleService.AddOrderToSchedule，_navigationService.NavigateToLayout2() 返回 Layout2。
+- **4.4 不分頁**：RefreshOrdersPage 改為呼叫 GetAll() 填滿 OrdersPage，DataGrid 以捲軸顯示；上/下箭頭改為「同版號（版號查詢欄位）上一筆/下一筆」選取，不循環。
+- **版號查詢（頂部右）**：Enter 時 QueryVersionNoInGrid，在 OrdersPage 找 VersionNo 並選取；找到後觸發 RequestScrollToSelected 讓 View 捲動至該列中央。
+- **捲動時機**：僅在「版號搜尋」或「版號查詢」程式設定選取後觸發 RequestScrollToSelected；手動點選列不觸發，避免捲軸自動跑掉（見 LessonLearn/whyMoveWhenMouseClick.md）。
+
+### 使用範例
+```csharp
+// ShellWindow 建立 IOrderRepository，NavigationService 註冊 CreateOrderMakingView
+_orderRepository = new OrderRepository(databaseService);
+_navigationService = new NavigationService(ContentHost, CreateMainView, CreateLoginView, CreateLayout2View, CreateOrderMakingView);
+
+// F7 由 Layout2 導航至訂單製作（主內容區頁面）
+private UserControl CreateOrderMakingView()
+{
+    var vm = new OrderMakingDialogViewModel(_orderRepository, _scheduleService, _localizationService, _logService, _navigationService);
+    return new OrderMakingView { DataContext = vm };
+}
+// Layout2ViewModel.F7OrderEdit() → _navigationService.NavigateToOrderMaking();
+```
+
+### 補充說明
+- 種子 100 筆：CreatedAt 隨機 2024/01/01 13:00～2026/01/10 13:00，生產訂單號 4 碼、版號＝西元年+訂單號，箱型 E/S、楞別 A/AB/B/BC/C/E、客戶名隨機英文名。
+- 送出版號位置按鈕與上下箭頭圖示（icons8-collapse/expand-arrow）可後續補上；預覽按鈕目前與 F6 共用圖示，可改為 icons8-package-search-96。
+
+---
+
+## Phase 6 整合與收尾（6.1–6.6 已完成）
 
 ### 6.1 綁定與流程
 | 項目 | 說明 |
@@ -419,7 +463,8 @@ src/
 │   ├── LanguageOption.cs
 │   ├── ScheduleOrderItem.cs
 │   ├── CompletedOrderItem.cs
-│   └── SimulationMode.cs
+│   ├── SimulationMode.cs
+│   └── Order.cs
 ├── Resources/
 │   ├── Icons/          (*.png, alarm.png, red-alam.gif)
 │   ├── Resources.resx
@@ -433,6 +478,7 @@ src/
 │   ├── ILocalizationService.cs, LocalizationService.cs
 │   ├── IProductionScheduleService.cs, ProductionScheduleService.cs
 │   ├── IScheduleOrderRepository.cs, ScheduleOrderRepository.cs
+│   ├── IOrderRepository.cs, OrderRepository.cs
 │   ├── IRs485Service.cs, Rs485Service.cs, Rs485BackgroundService.cs
 │   └── ...
 ├── ViewModels/
@@ -440,7 +486,8 @@ src/
 │   ├── LoginViewModel.cs
 │   ├── MainViewModel.cs
 │   ├── Layout2ViewModel.cs
-│   └── ScheduleManageDialogViewModel.cs
+│   ├── ScheduleManageDialogViewModel.cs
+│   └── OrderMakingDialogViewModel.cs
 ├── Views/
 │   ├── Login/
 │   │   └── LoginView.xaml(.cs)
@@ -449,6 +496,7 @@ src/
 │   ├── Layout2/
 │   │   ├── Layout2View.xaml(.cs)
 │   │   ├── ScheduleManageDialog.xaml(.cs)
+│   │   ├── OrderMakingView.xaml(.cs)
 │   │   ├── ProductionInfoPanel.xaml(.cs)
 │   │   └── F4SearchDialog.xaml(.cs)
 │   └── Shared/
@@ -461,7 +509,8 @@ src/
 │   └── BoolToLedBrushConverter.cs
 └── Scripts/
     ├── CreateUsersTable.sql
-    └── CreateScheduleTables.sql
+    ├── CreateScheduleTables.sql
+    └── CreateOrdersTable.sql
 ```
 
 ---
@@ -471,7 +520,8 @@ src/
 - **Phase 4 主畫面**：已完成，MainView 共用 `ILocalizationService`，返回按鈕 ToolTip 已綁定 RESX
 - **Phase 4 (Layout2)**：已完成，登入後導航至 Layout2，含排程/完成訂單、模擬生產、F4/F7/F11 Dialog；F1 改為開啟 Phase 5 排程管理 Dialog，模擬由 F2/F3 觸發（小量/全量）
 - **Phase 5 排程管理子頁**：已完成，ScheduleManageDialog（排單管理）、F2 前置排單（小量 5 個）/ F3 把全排量（全量）/ F1 離開，與 Layout2 模擬邏輯整合
-- **Phase 6.1–6.6**：已完成；含綁定與流程、錯誤處理、Log 整合、程式品質、多國語系與字型、應用程式圖示（icons8-app-96）
+- **Phase 6 訂單製作**：已完成，Orders 表與種子 100 筆、OrderMakingView 主內容區頁面（4.1～4.6）、流程 3.0～3.4（搜尋/編輯/新增/刪除、F2 加入排程）、IOrderRepository、F7 由 Layout2 導航至訂單製作
+- **Phase 6 整合與收尾（6.1–6.6）**：已完成；含綁定與流程、錯誤處理、Log 整合、程式品質、多國語系與字型、應用程式圖示（icons8-app-96）
 - **Layout2 圖示**：左側頂部為 icons8-favorites-shield-5-stars-96（96×96）；異常狀態使用 WpfAnimatedGif 播放 red-alam.gif
 - **Phase 6.7 以後**：發佈、Win 8.1 測試、SqliteViewer 小工具等見 TODO.md
 - **發佈建議**：Demo／測試優先使用單一執行檔（`scripts\publish.ps1` 或 `dotnet publish -r win-x64 --self-contained true -p:PublishSingleFile=true`）；正式產品再考慮安裝程式。說明見 `QandA/howToPackApplication.md`。
@@ -481,4 +531,4 @@ src/
 ---
 
 *建立日期：2025-02-22*
-*更新：Phase 5 排程管理子頁改為 DataGrid（與 Layout2 上區相同、避免 whyDataGridleg）、標題列黃底黑字、底部區塊黃底、按鈕文字粗體；Phase 6 整合與收尾；LogListBox 異機不一致修正並驗證（2026-02-26）*
+*更新：Phase 5 排程管理子頁改為 DataGrid；Phase 6 整合與收尾；LogListBox 異機修正（2026-02-26）；Phase 6 訂單製作（F7）實作（2026-03-01）；Phase 6 重大修改（2026-02-28）：4.4 不分頁+捲軸、GetAll、上/下箭頭同版號導航、雙擊列帶出、F1 最右、版號/版號查詢定位選取並捲動至中央、RequestScrollToSelected 僅程式觸發、右側欄位 RESX 與建檔日期含時間、4.5 相位標籤上下排列、頂部輸入框焦點樣式與備註高度、LessonLearn whyTextBoxIsGrayonFocus / whyMoveWhenMouseClick*

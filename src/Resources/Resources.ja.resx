@@ -120,7 +120,7 @@
     <value>F6 キャンセル</value>
   </data>
   <data name="Layout2_OrderNo" xml:space="preserve">
-    <value>製造オーダーNo</value>
+    <value>オーダーNo</value>
   </data>
   <data name="Layout2_VersionNo" xml:space="preserve">
     <value>版番号</value>
@@ -223,5 +223,65 @@
   </data>
   <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
     <value>F1 でる</value>
+  </data>
+  <data name="OrderMakingDialog_Title" xml:space="preserve">
+    <value>オーダー作成</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNo" xml:space="preserve">
+    <value>版番:</value>
+  </data>
+  <data name="OrderMakingDialog_F6Search" xml:space="preserve">
+    <value>F6 検索</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNoQuery" xml:space="preserve">
+    <value>版番検索</value>
+  </data>
+  <data name="OrderMakingDialog_Preview" xml:space="preserve">
+    <value>プレビュー</value>
+  </data>
+  <data name="OrderMakingDialog_SubmitVersionPosition" xml:space="preserve">
+    <value>版号位置へ送信</value>
+  </data>
+  <data name="OrderMakingDialog_Phase" xml:space="preserve">
+    <value>相位</value>
+  </data>
+  <data name="OrderMakingDialog_Phase1Color" xml:space="preserve">
+    <value>1色</value>
+  </data>
+  <data name="OrderMakingDialog_Phase2Color" xml:space="preserve">
+    <value>2色</value>
+  </data>
+  <data name="OrderMakingDialog_Phase3Color" xml:space="preserve">
+    <value>3色</value>
+  </data>
+  <data name="OrderMakingDialog_LengthLabel" xml:space="preserve">
+    <value>長</value>
+  </data>
+  <data name="OrderMakingDialog_WidthLabel" xml:space="preserve">
+    <value>幅</value>
+  </data>
+  <data name="OrderMakingDialog_F4Delete" xml:space="preserve">
+    <value>F4 削除</value>
+  </data>
+  <data name="OrderMakingDialog_F5CompleteEdit" xml:space="preserve">
+    <value>F5 編集完了</value>
+  </data>
+  <data name="OrderMakingDialog_F5AddOrder" xml:space="preserve">
+    <value>F5 新規追加</value>
+  </data>
+  <data name="OrderMakingDialog_F2AddToSchedule" xml:space="preserve">
+    <value>F2 排程追加/終了</value>
+  </data>
+  <data name="OrderMakingDialog_F1Exit" xml:space="preserve">
+    <value>F1 終了</value>
+  </data>
+  <data name="OrderMakingDialog_ConfirmNewVersion" xml:space="preserve">
+    <value>版番が見つかりません。新規追加しますか？</value>
+  </data>
+  <data name="OrderMakingDialog_OrderSaved" xml:space="preserve">
+    <value>訂單已儲存: {0}</value>
+  </data>
+  <data name="OrderMakingDialog_ColCreatedAt" xml:space="preserve">
+    <value>建檔日</value>
   </data>
 </root>

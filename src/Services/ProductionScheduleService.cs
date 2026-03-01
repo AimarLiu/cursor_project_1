@@ -102,4 +102,21 @@ public sealed class ProductionScheduleService : IProductionScheduleService
         }
         return -1;
     }
+
+    /// <inheritdoc />
+    public void AddOrderToSchedule(ScheduleOrderItem item)
+    {
+        if (item == null) return;
+        var clone = new ScheduleOrderItem
+        {
+            OrderNo = item.OrderNo,
+            VersionNo = item.VersionNo,
+            OrderQuantity = item.OrderQuantity,
+            BoxType = item.BoxType,
+            Category = item.Category,
+            CustomerName = item.CustomerName,
+            Remarks = item.Remarks
+        };
+        ScheduleOrders.Add(clone);
+    }
 }

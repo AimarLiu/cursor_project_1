@@ -224,4 +224,64 @@
   <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
     <value>F1 ออก</value>
   </data>
+  <data name="OrderMakingDialog_Title" xml:space="preserve">
+    <value>สร้างออเดอร์</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNo" xml:space="preserve">
+    <value>เวอร์ชัน:</value>
+  </data>
+  <data name="OrderMakingDialog_F6Search" xml:space="preserve">
+    <value>F6 ค้นหา</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNoQuery" xml:space="preserve">
+    <value>ค้นห เวอร์ชัน</value>
+  </data>
+  <data name="OrderMakingDialog_Preview" xml:space="preserve">
+    <value>แสดงตัวอย่าง</value>
+  </data>
+  <data name="OrderMakingDialog_SubmitVersionPosition" xml:space="preserve">
+    <value>ส่งตำแหน่งเวอร์ชัน</value>
+  </data>
+  <data name="OrderMakingDialog_Phase" xml:space="preserve">
+    <value>เฟส</value>
+  </data>
+  <data name="OrderMakingDialog_Phase1Color" xml:space="preserve">
+    <value>1 สี</value>
+  </data>
+  <data name="OrderMakingDialog_Phase2Color" xml:space="preserve">
+    <value>2 สี</value>
+  </data>
+  <data name="OrderMakingDialog_Phase3Color" xml:space="preserve">
+    <value>3 สี</value>
+  </data>
+  <data name="OrderMakingDialog_LengthLabel" xml:space="preserve">
+    <value>ยาว</value>
+  </data>
+  <data name="OrderMakingDialog_WidthLabel" xml:space="preserve">
+    <value>กว้าง</value>
+  </data>
+  <data name="OrderMakingDialog_F4Delete" xml:space="preserve">
+    <value>F4 ลบ</value>
+  </data>
+  <data name="OrderMakingDialog_F5CompleteEdit" xml:space="preserve">
+    <value>F5 แก้ไขเสร็จ</value>
+  </data>
+  <data name="OrderMakingDialog_F5AddOrder" xml:space="preserve">
+    <value>F5 เพิ่มออเดอร์</value>
+  </data>
+  <data name="OrderMakingDialog_F2AddToSchedule" xml:space="preserve">
+    <value>F2 เพิ่มลงตาราง/ออก</value>
+  </data>
+  <data name="OrderMakingDialog_F1Exit" xml:space="preserve">
+    <value>F1 ออก</value>
+  </data>
+  <data name="OrderMakingDialog_ConfirmNewVersion" xml:space="preserve">
+    <value>ไม่พบเวอร์ชัน เพิ่มเป็นออเดอร์ใหม่?</value>
+  </data>
+  <data name="OrderMakingDialog_OrderSaved" xml:space="preserve">
+    <value>บันทึกออเดอร์: {0}</value>
+  </data>
+  <data name="OrderMakingDialog_ColCreatedAt" xml:space="preserve">
+    <value>วันที่สร้าง</value>
+  </data>
 </root>

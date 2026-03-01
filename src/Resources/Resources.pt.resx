@@ -224,4 +224,64 @@
   <data name="ScheduleManageDialog_F1Exit" xml:space="preserve">
     <value>F1 Sair</value>
   </data>
+  <data name="OrderMakingDialog_Title" xml:space="preserve">
+    <value>Criar Pedido</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNo" xml:space="preserve">
+    <value>Versão:</value>
+  </data>
+  <data name="OrderMakingDialog_F6Search" xml:space="preserve">
+    <value>F6 Pesquisar</value>
+  </data>
+  <data name="OrderMakingDialog_VersionNoQuery" xml:space="preserve">
+    <value>Consulta Versão</value>
+  </data>
+  <data name="OrderMakingDialog_Preview" xml:space="preserve">
+    <value>Pré-visualizar</value>
+  </data>
+  <data name="OrderMakingDialog_SubmitVersionPosition" xml:space="preserve">
+    <value>Enviar posição de versão</value>
+  </data>
+  <data name="OrderMakingDialog_Phase" xml:space="preserve">
+    <value>Fase</value>
+  </data>
+  <data name="OrderMakingDialog_Phase1Color" xml:space="preserve">
+    <value>1ª cor</value>
+  </data>
+  <data name="OrderMakingDialog_Phase2Color" xml:space="preserve">
+    <value>2ª cor</value>
+  </data>
+  <data name="OrderMakingDialog_Phase3Color" xml:space="preserve">
+    <value>3ª cor</value>
+  </data>
+  <data name="OrderMakingDialog_LengthLabel" xml:space="preserve">
+    <value>Compr.</value>
+  </data>
+  <data name="OrderMakingDialog_WidthLabel" xml:space="preserve">
+    <value>Larg.</value>
+  </data>
+  <data name="OrderMakingDialog_F4Delete" xml:space="preserve">
+    <value>F4 Excluir</value>
+  </data>
+  <data name="OrderMakingDialog_F5CompleteEdit" xml:space="preserve">
+    <value>F5 Concluir Edição</value>
+  </data>
+  <data name="OrderMakingDialog_F5AddOrder" xml:space="preserve">
+    <value>F5 Adicionar Pedido</value>
+  </data>
+  <data name="OrderMakingDialog_F2AddToSchedule" xml:space="preserve">
+    <value>F2 Adicionar à Agenda / Sair</value>
+  </data>
+  <data name="OrderMakingDialog_F1Exit" xml:space="preserve">
+    <value>F1 Sair</value>
+  </data>
+  <data name="OrderMakingDialog_ConfirmNewVersion" xml:space="preserve">
+    <value>Versão não encontrada. Adicionar como novo?</value>
+  </data>
+  <data name="OrderMakingDialog_OrderSaved" xml:space="preserve">
+    <value>Pedido guardado: {0}</value>
+  </data>
+  <data name="OrderMakingDialog_ColCreatedAt" xml:space="preserve">
+    <value>Data</value>
+  </data>
 </root>

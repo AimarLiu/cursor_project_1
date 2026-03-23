@@ -1,0 +1,246 @@
+<UserControl x:Class="CursorTestApp.Views.Settings.Tabs.SettingsTab2BoxParametersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Foreground="#1E293B">
+    <!-- Fluent/WPF UI 殼層常把 Foreground 設成淺色；本頁白底必須強制深色字，否則 ComboBox／CheckBox 會白底白字 -->
+    <UserControl.Resources>
+        <Style x:Key="Tab2FieldLabel" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="Foreground" Value="#334155" />
+            <Setter Property="Margin" Value="0,0,0,4" />
+        </Style>
+        <Style x:Key="Tab2TextBox" TargetType="TextBox">
+            <Setter Property="Foreground" Value="#0F172A" />
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="CaretBrush" Value="#0F172A" />
+            <Setter Property="MinWidth" Value="120" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Padding" Value="6,4" />
+            <Setter Property="TextAlignment" Value="Right" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="BorderBrush" Value="#CBD5E1" />
+            <Setter Property="BorderThickness" Value="1" />
+        </Style>
+        <Style x:Key="Tab2GroupBox" TargetType="GroupBox">
+            <Setter Property="Padding" Value="10,8,10,10" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+            <Setter Property="BorderBrush" Value="#CBD5E1" />
+            <Setter Property="Foreground" Value="#1E293B" />
+        </Style>
+        <Style x:Key="Tab2ComboBoxItem" TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="#0F172A" />
+            <Setter Property="Background" Value="#FFFFFF" />
+        </Style>
+        <Style x:Key="Tab2ComboBox" TargetType="ComboBox">
+            <Setter Property="Foreground" Value="#0F172A" />
+            <Setter Property="Background" Value="#FFFFFF" />
+            <Setter Property="BorderBrush" Value="#94A3B8" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="MinHeight" Value="32" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource Tab2ComboBoxItem}" />
+        </Style>
+        <Style x:Key="Tab2CheckBox" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#0F172A" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="0,4" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+        </Style>
+    </UserControl.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                  HorizontalScrollBarVisibility="Disabled"
+                  Padding="12,8"
+                  Foreground="#1E293B">
+        <!-- 四欄等分：左／中左／中右 DieCutter 1～9／右 DieCutter 10～12+車速。列內 VerticalAlignment=Top 避免 E 型 GroupBox 被右欄拉高 -->
+        <Grid MaxWidth="1680" HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" MinWidth="200" />
+                <ColumnDefinition Width="*" MinWidth="200" />
+                <ColumnDefinition Width="*" MinWidth="200" />
+                <ColumnDefinition Width="*" MinWidth="200" />
+            </Grid.ColumnDefinitions>
+
+            <!-- 左欄：C 上、D/A7 下 -->
+            <StackPanel Grid.Column="0"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Top">
+                <GroupBox Style="{StaticResource Tab2GroupBox}" Header="{Binding GroupC.Value}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Tab2FieldLabel}" Text="{Binding LabelSlotBitePaperReturnKnife.Value}" />
+                        <TextBox Style="{StaticResource Tab2TextBox}"
+                                 Text="{Binding CKnifePullOut, UpdateSourceTrigger=PropertyChanged}" />
+                        <ComboBox Style="{StaticResource Tab2ComboBox}"
+                                  Margin="0,10,0,0"
+                                  MinWidth="200"
+                                  HorizontalAlignment="Stretch"
+                                  SelectedValuePath="OptionId"
+                                  ItemsSource="{Binding CKnifeOptions}"
+                                  SelectedValue="{Binding CKnifeSelectedId}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Foreground="#0F172A" Text="{Binding DisplayText}" TextTrimming="CharacterEllipsis" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Style="{StaticResource Tab2GroupBox}" Header="{Binding GroupDa7.Value}">
+                    <StackPanel>
+                        <TextBlock Style="{StaticResource Tab2FieldLabel}" Text="{Binding LabelSlotBitePaperReturnKnife.Value}" />
+                        <TextBox Style="{StaticResource Tab2TextBox}"
+                                 Text="{Binding Da7KnifePullOut, UpdateSourceTrigger=PropertyChanged}" />
+                        <ComboBox Style="{StaticResource Tab2ComboBox}"
+                                  Margin="0,10,0,0"
+                                  MinWidth="200"
+                                  HorizontalAlignment="Stretch"
+                                  SelectedValuePath="OptionId"
+                                  ItemsSource="{Binding Da7KnifeOptions}"
+                                  SelectedValue="{Binding Da7KnifeSelectedId}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Foreground="#0F172A" Text="{Binding DisplayText}" TextTrimming="CharacterEllipsis" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <CheckBox Style="{StaticResource Tab2CheckBox}"
+                                  Margin="0,12,0,0"
+                                  IsChecked="{Binding Da7AutoJudge}">
+                            <TextBlock Foreground="#0F172A" Text="{Binding CheckAutoJudge.Value}" VerticalAlignment="Center" />
+                        </CheckBox>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+
+            <!-- 中左：E（A2 + 巢狀 A2.1「E型箱設定」） -->
+            <GroupBox Grid.Column="1"
+                      Style="{StaticResource Tab2GroupBox}"
+                      Margin="0,0,8,0"
+                      VerticalAlignment="Top"
+                      HorizontalAlignment="Stretch"
+                      Header="{Binding GroupE.Value}">
+                <StackPanel>
+                    <TextBlock Style="{StaticResource Tab2FieldLabel}" Text="{Binding LabelSlotBitePaperReturnKnife.Value}" />
+                    <TextBox Style="{StaticResource Tab2TextBox}"
+                             Text="{Binding EKnifePullOut, UpdateSourceTrigger=PropertyChanged}" />
+                    <ComboBox Style="{StaticResource Tab2ComboBox}"
+                              Margin="0,10,0,0"
+                              MinWidth="200"
+                              HorizontalAlignment="Stretch"
+                              SelectedValuePath="OptionId"
+                              ItemsSource="{Binding EKnifeOptions}"
+                              SelectedValue="{Binding EKnifeSelectedId}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Foreground="#0F172A" Text="{Binding DisplayText}" TextTrimming="CharacterEllipsis" />
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <CheckBox Style="{StaticResource Tab2CheckBox}"
+                              Margin="0,10,0,0"
+                              IsChecked="{Binding EUseDatabaseBlade}">
+                        <TextBlock Foreground="#0F172A" Text="{Binding CheckUseDatabaseBlade.Value}" VerticalAlignment="Center" />
+                    </CheckBox>
+                    <GroupBox Margin="0,10,0,0"
+                              Padding="8,8,8,10"
+                              Foreground="#1E293B"
+                              Style="{StaticResource Tab2GroupBox}"
+                              Header="{Binding GroupESettings.Value}">
+                        <StackPanel TextElement.Foreground="#1E293B">
+                            <CheckBox Style="{StaticResource Tab2CheckBox}"
+                                      Margin="0,0,0,6"
+                                      IsChecked="{Binding EUseEquation2}">
+                                <TextBlock Foreground="#0F172A" Text="{Binding CheckUseFormula2.Value}" VerticalAlignment="Center" />
+                            </CheckBox>
+                            <TextBlock Style="{StaticResource Tab2FieldLabel}" Text="{Binding LabelEFrontKnifeRetract.Value}" />
+                            <TextBox Style="{StaticResource Tab2TextBox}"
+                                     Text="{Binding EFrontKnifePullOut, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LabelERearKnifeRetract.Value}" />
+                            <TextBox Style="{StaticResource Tab2TextBox}"
+                                     Text="{Binding EBackKnifePullOut, UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Margin="0,8,0,4"
+                                       FontSize="11"
+                                       Foreground="#B91C1C"
+                                       TextWrapping="Wrap"
+                                       Text="{Binding SubtitleWithoutFormula2.Value}" />
+                            <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,4,0,4" Text="{Binding LabelSlotFrontBackRetractEach.Value}" />
+                            <TextBox Style="{StaticResource Tab2TextBox}"
+                                     Text="{Binding EBothKnifePullOut, UpdateSourceTrigger=PropertyChanged}" />
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </GroupBox>
+
+            <!-- 中右（Grid 第 2 欄）：DieCutter 連續參數 1～9（至伺服印刷偏差值） -->
+            <StackPanel Grid.Column="2"
+                        Margin="0,0,8,0"
+                        VerticalAlignment="Top">
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Text="{Binding LTrim.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieTrim, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LBackBoardDensity.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieBackDensity, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LBackBoardMax.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieBackMax, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LDriveDensity.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieDriveDensity, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LExpand.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieExpand, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LSubmitWind.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieSubmitWind, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LPrintWind.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DiePrintWind, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LPhase2Offset.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DiePhase2, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LServoPrintOffset.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieServoOffset, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+
+            <!-- 右欄（Grid 第 3 欄）：Tab2-B 第 10～12 項（安全刀／落下收料／車速） -->
+            <StackPanel Grid.Column="3"
+                        Margin="0,0,0,0"
+                        VerticalAlignment="Top">
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Text="{Binding LKnifeThreshold.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieKnifeThreshold, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,8,0,4" Text="{Binding LItemCountDefault.Value}" />
+                <TextBox Style="{StaticResource Tab2TextBox}"
+                         HorizontalAlignment="Stretch"
+                         Text="{Binding DieItemCount, UpdateSourceTrigger=PropertyChanged}" />
+                <TextBlock Style="{StaticResource Tab2FieldLabel}" Margin="0,12,0,4" Text="{Binding LCarSpeed.Value}" />
+                <ComboBox Style="{StaticResource Tab2ComboBox}"
+                          MinWidth="260"
+                          HorizontalAlignment="Stretch"
+                          SelectedValuePath="Value"
+                          ItemsSource="{Binding CarSpeedOptionRows}"
+                          SelectedValue="{Binding CarSpeed}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Foreground="#0F172A" Text="{Binding Label.Value}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>

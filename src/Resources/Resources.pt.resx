@@ -227,6 +227,12 @@
   <data name="OrderMakingDialog_Title" xml:space="preserve">
     <value>Criar Pedido</value>
   </data>
+  <data name="OrderMakingDialog_BoxTypeE" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="OrderMakingDialog_BoxTypeS" xml:space="preserve">
+    <value>S</value>
+  </data>
   <data name="OrderMakingDialog_VersionNo" xml:space="preserve">
     <value>Versão:</value>
   </data>
@@ -283,5 +289,378 @@
   </data>
   <data name="OrderMakingDialog_ColCreatedAt" xml:space="preserve">
     <value>Data</value>
+  </data>
+  <data name="SettingsTab1_TabHeader" xml:space="preserve">
+    <value>Configurações de segurança das cinco facas</value>
+  </data>
+  <data name="SettingsTab2_TabHeader" xml:space="preserve">
+    <value>Parâmetros da caixa</value>
+  </data>
+  <data name="SettingsTab3_TabHeader" xml:space="preserve">
+    <value>Outros parâmetros</value>
+  </data>
+  <data name="SettingsTab4_TabHeader" xml:space="preserve">
+    <value>Histórico de alarmes</value>
+  </data>
+  <data name="SettingsTab5_TabHeader" xml:space="preserve">
+    <value>Parâmetros de gestão da produção</value>
+  </data>
+  <data name="SettingsTab6_TabHeader" xml:space="preserve">
+    <value>Área de backup</value>
+  </data>
+  <data name="SettingsTab1_SkeletonBody" xml:space="preserve">
+    <value>Tab 1 — Knife safety thresholds (Phase 7 skeleton). See TODO_Phase7.md §7.5.1.</value>
+  </data>
+  <data name="SettingsTab2_SkeletonBody" xml:space="preserve">
+    <value>Tab 2 — Die cutter / box parameters (Phase 7 skeleton). See TODO_Phase7.md §7.5.2.</value>
+  </data>
+  <data name="SettingsTab3_SkeletonBody" xml:space="preserve">
+    <value>Tab 3 — Communication and department PLC parameters (Phase 7 skeleton). See TODO_Phase7.md §7.5.3.</value>
+  </data>
+  <data name="SettingsTab4_SkeletonBody" xml:space="preserve">
+    <value>Tab 4 — Alarm history UI is deferred; placeholder only.</value>
+  </data>
+  <data name="SettingsTab5_SkeletonBody" xml:space="preserve">
+    <value>Tab 5 — Production management UI is deferred; placeholder only.</value>
+  </data>
+  <data name="SettingsTab6_SkeletonBody" xml:space="preserve">
+    <value>Tab 6 — Empty backup area (placeholder).</value>
+  </data>
+  <data name="Settings_Footer_F1_Exit" xml:space="preserve">
+    <value>F1 Sair</value>
+  </data>
+  <data name="Settings_Footer_F2_Save" xml:space="preserve">
+    <value>F2 Salvar</value>
+  </data>
+  <data name="Settings_Footer_F3_Cancel" xml:space="preserve">
+    <value>F3 Descartar alterações</value>
+  </data>
+  <data name="Settings_Footer_F5_MachineDimension" xml:space="preserve">
+    <value>F5 Dimensões da máquina</value>
+  </data>
+  <data name="Settings_Footer_F6_SpecialParams" xml:space="preserve">
+    <value>F6 Parâmetros especiais</value>
+  </data>
+  <data name="SettingsTab1_MaxE" xml:space="preserve">
+    <value>MAX E</value>
+  </data>
+  <data name="SettingsTab1_MinE" xml:space="preserve">
+    <value>MIN E</value>
+  </data>
+  <data name="SettingsTab1_MaxJ" xml:space="preserve">
+    <value>MAX J</value>
+  </data>
+  <data name="SettingsTab1_MinJ" xml:space="preserve">
+    <value>MIN J</value>
+  </data>
+  <data name="SettingsTab1_MaxK" xml:space="preserve">
+    <value>MAX K</value>
+  </data>
+  <data name="SettingsTab1_MinK" xml:space="preserve">
+    <value>MIN K</value>
+  </data>
+  <data name="SettingsTab1_MaxF" xml:space="preserve">
+    <value>MAX F</value>
+  </data>
+  <data name="SettingsTab1_MinF" xml:space="preserve">
+    <value>MIN F</value>
+  </data>
+  <data name="SettingsTab1_MaxA" xml:space="preserve">
+    <value>MAX A</value>
+  </data>
+  <data name="SettingsTab1_MinA" xml:space="preserve">
+    <value>MIN A</value>
+  </data>
+  <data name="SettingsTab1_MaxH" xml:space="preserve">
+    <value>MAX H</value>
+  </data>
+  <data name="SettingsTab1_MinH" xml:space="preserve">
+    <value>MIN H</value>
+  </data>
+  <data name="SettingsTab1_MaxI" xml:space="preserve">
+    <value>MAX I</value>
+  </data>
+  <data name="SettingsTab1_MinI" xml:space="preserve">
+    <value>MIN I</value>
+  </data>
+  <data name="SettingsTab1_MaxB" xml:space="preserve">
+    <value>MAX B</value>
+  </data>
+  <data name="SettingsTab1_MinB" xml:space="preserve">
+    <value>MIN B</value>
+  </data>
+  <data name="SettingsTab1_Validate_Number" xml:space="preserve">
+    <value>Please enter integers only (empty means unset).</value>
+  </data>
+  <data name="SettingsTab1_Validate_MinMax" xml:space="preserve">
+    <value>MIN must be less than or equal to MAX for each slot when both are set.</value>
+  </data>
+  <data name="SettingsTab1_SaveOk" xml:space="preserve">
+    <value>Settings: Tab1 knife safety values saved.</value>
+  </data>
+  <data name="SettingsTab1_SaveFailed" xml:space="preserve">
+    <value>Save failed.</value>
+  </data>
+  <data name="SettingsTab1_ReloadOk" xml:space="preserve">
+    <value>Settings: Tab1 reloaded from database.</value>
+  </data>
+  <data name="SettingsTab12_SaveOk" xml:space="preserve">
+    <value>Settings: Tab1 and Tab2 saved.</value>
+  </data>
+  <data name="SettingsTab12_ReloadOk" xml:space="preserve">
+    <value>Settings: Tab1 and Tab2 reloaded from database.</value>
+  </data>
+  <data name="SettingsTab2_Group_C_SelectKnife" xml:space="preserve">
+    <value>Caixa tipo C — seleção de facas</value>
+  </data>
+  <data name="SettingsTab2_Group_E_SelectKnife" xml:space="preserve">
+    <value>Caixa tipo E — seleção de facas</value>
+  </data>
+  <data name="SettingsTab2_Group_E_BoxSettings" xml:space="preserve">
+    <value>Configurações da caixa tipo E</value>
+  </data>
+  <data name="SettingsTab2_Group_DA7_SelectKnife" xml:space="preserve">
+    <value>Caixa D/A7 — seleção de facas</value>
+  </data>
+  <data name="SettingsTab2_Label_SlotBitePaperReturnKnife" xml:space="preserve">
+    <value>Retorno de papel na ranhura (faca)</value>
+  </data>
+  <data name="SettingsTab2_Check_UseDatabaseBlade" xml:space="preserve">
+    <value>Usar seleção de lâmina do banco de dados</value>
+  </data>
+  <data name="SettingsTab2_Check_UseFormula2" xml:space="preserve">
+    <value>Usar fórmula 2</value>
+  </data>
+  <data name="SettingsTab2_Label_E_FrontKnifeRetract" xml:space="preserve">
+    <value>Recuo da faca dianteira tipo E</value>
+  </data>
+  <data name="SettingsTab2_Label_E_RearKnifeRetract" xml:space="preserve">
+    <value>Recuo da faca traseira tipo E</value>
+  </data>
+  <data name="SettingsTab2_Subtitle_WithoutFormula2" xml:space="preserve">
+    <value>Quando a fórmula 2 está desativada</value>
+  </data>
+  <data name="SettingsTab2_Label_SlotFrontBackRetractEach" xml:space="preserve">
+    <value>Recuo frontal/traseiro da ranhura (cada)</value>
+  </data>
+  <data name="SettingsTab2_Check_AutoJudge" xml:space="preserve">
+    <value>Julgamento automático</value>
+  </data>
+  <data name="SettingsTab2_Label_TrimValue" xml:space="preserve">
+    <value>Valor de ajuste</value>
+  </data>
+  <data name="SettingsTab2_Label_BackBaffleTightness" xml:space="preserve">
+    <value>Aperto do defletor traseiro</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedBackBaffleMax" xml:space="preserve">
+    <value>Máximo do defletor traseiro de alimentação</value>
+  </data>
+  <data name="SettingsTab2_Label_DriveSideTightness" xml:space="preserve">
+    <value>Aperto do lado de acionamento</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedExtension" xml:space="preserve">
+    <value>Extensão da alimentação</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedAirVolume" xml:space="preserve">
+    <value>Volume de ar da alimentação</value>
+  </data>
+  <data name="SettingsTab2_Label_PrintingAirVolume" xml:space="preserve">
+    <value>Volume de ar de impressão</value>
+  </data>
+  <data name="SettingsTab2_Label_DestroyPhase2Offset" xml:space="preserve">
+    <value>Deslocamento da fase 2 de corte</value>
+  </data>
+  <data name="SettingsTab2_Label_ServoPrintOffset" xml:space="preserve">
+    <value>Deslocamento de impressão do servo</value>
+  </data>
+  <data name="SettingsTab2_Label_SafetyBladeExtra" xml:space="preserve">
+    <value>Folga extra da lâmina de segurança</value>
+  </data>
+  <data name="SettingsTab2_Label_DropCollectCountDefault" xml:space="preserve">
+    <value>Contagem padrão de coleta de queda</value>
+  </data>
+  <data name="SettingsTab2_Label_CarSpeedFormat" xml:space="preserve">
+    <value>Velocidade do carro</value>
+  </data>
+  <data name="SettingsTab2_CarSpeed_Option0" xml:space="preserve">
+    <value>0 folhas por minuto</value>
+  </data>
+  <data name="SettingsTab2_CarSpeed_Option1" xml:space="preserve">
+    <value>1 folha por hora</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_0" xml:space="preserve">
+    <value>0: facas 2,3</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_1" xml:space="preserve">
+    <value>1: facas 2,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_2" xml:space="preserve">
+    <value>2: facas 3,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_3" xml:space="preserve">
+    <value>1: facas 2,3,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_4" xml:space="preserve">
+    <value>3: facas 3,4,5</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_5" xml:space="preserve">
+    <value>4: facas 1,5</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_6" xml:space="preserve">
+    <value>0: facas 1,2,3</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_7" xml:space="preserve">
+    <value>1: facas 1,2,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_8" xml:space="preserve">
+    <value>2: facas 3,4,6</value>
+  </data>
+  <data name="SettingsTab2_Validate_Integer" xml:space="preserve">
+    <value>Insira um número inteiro válido.</value>
+  </data>
+  <data name="SettingsTab2_Validate_Number" xml:space="preserve">
+    <value>Insira um número válido.</value>
+  </data>
+  <data name="SettingsTab2_Validate_CarSpeed" xml:space="preserve">
+    <value>A velocidade do carro deve ser 0 ou 1.</value>
+  </data>
+  <data name="SettingsTab2_Validate_KnifeOption" xml:space="preserve">
+    <value>A combinação de facas selecionada não é permitida para este tipo de caixa.</value>
+  </data>
+  <data name="SettingsTab2_SaveFailed" xml:space="preserve">
+    <value>Falha ao salvar a Tab2.</value>
+  </data>
+  <data name="SettingsTab123_SaveOk" xml:space="preserve">
+    <value>Tab1, Tab2, and Tab3 saved.</value>
+  </data>
+  <data name="SettingsTab123_ReloadOk" xml:space="preserve">
+    <value>Tab1, Tab2, and Tab3 reloaded.</value>
+  </data>
+  <data name="SettingsTab3_SaveFailed" xml:space="preserve">
+    <value>Falha ao salvar a Tab3.</value>
+  </data>
+  <data name="SettingsTab3_Validate_Number" xml:space="preserve">
+    <value>Número inválido ({0}).</value>
+  </data>
+  <data name="SettingsTab3_Validate_MinMax" xml:space="preserve">
+    <value>O mínimo deve ser menor ou igual ao máximo.</value>
+  </data>
+  <data name="SettingsTab3_Group_OtherCommPorts" xml:space="preserve">
+    <value>Outras portas de comunicação</value>
+  </data>
+  <data name="SettingsTab3_Group_GluePlc" xml:space="preserve">
+    <value>PLC do carrinho de cola</value>
+  </data>
+  <data name="SettingsTab3_Group_UserPasswordManagement" xml:space="preserve">
+    <value>Gestão de senhas de usuário</value>
+  </data>
+  <data name="SettingsTab3_Label_PrinterPlcPort" xml:space="preserve">
+    <value>Porta PLC da impressora</value>
+  </data>
+  <data name="SettingsTab3_Label_PanelPort" xml:space="preserve">
+    <value>Porta do painel</value>
+  </data>
+  <data name="SettingsTab3_Label_GluePlcPort" xml:space="preserve">
+    <value>Porta PLC do carrinho de cola</value>
+  </data>
+  <data name="SettingsTab3_Label_BaudRate" xml:space="preserve">
+    <value>Taxa de baud</value>
+  </data>
+  <data name="SettingsTab3_Label_ByteSize" xml:space="preserve">
+    <value>Bits de dados</value>
+  </data>
+  <data name="SettingsTab3_Label_Parity" xml:space="preserve">
+    <value>Paridade</value>
+  </data>
+  <data name="SettingsTab3_Label_StopBits" xml:space="preserve">
+    <value>Bits de parada</value>
+  </data>
+  <data name="SettingsTab3_Column_ComponentName" xml:space="preserve">
+    <value>Componente</value>
+  </data>
+  <data name="SettingsTab3_Column_Max" xml:space="preserve">
+    <value>Máximo</value>
+  </data>
+  <data name="SettingsTab3_Column_Min" xml:space="preserve">
+    <value>Mínimo</value>
+  </data>
+  <data name="SettingsTab3_Column_Accurate" xml:space="preserve">
+    <value>Precisão</value>
+  </data>
+  <data name="SettingsTab3_Column_Department" xml:space="preserve">
+    <value>Departamento</value>
+  </data>
+  <data name="SettingsTab3_Column_UserName" xml:space="preserve">
+    <value>Usuário</value>
+  </data>
+  <data name="SettingsTab3_Column_Password" xml:space="preserve">
+    <value>Senha</value>
+  </data>
+  <data name="SettingsTab3_Dept_Feed" xml:space="preserve"><value>Alimentação</value></data>
+  <data name="SettingsTab3_Dept_Print1" xml:space="preserve"><value>Print1</value></data>
+  <data name="SettingsTab3_Dept_Print2" xml:space="preserve"><value>Print2</value></data>
+  <data name="SettingsTab3_Dept_Print3" xml:space="preserve"><value>Print3</value></data>
+  <data name="SettingsTab3_Dept_Print4" xml:space="preserve"><value>Print4</value></data>
+  <data name="SettingsTab3_Dept_Print5" xml:space="preserve"><value>Print5</value></data>
+  <data name="SettingsTab3_Dept_Print6" xml:space="preserve"><value>Print6</value></data>
+  <data name="SettingsTab3_Dept_Print7" xml:space="preserve"><value>Print7</value></data>
+  <data name="SettingsTab3_Dept_Print8" xml:space="preserve"><value>Print8</value></data>
+  <data name="SettingsTab3_Dept_Slotter" xml:space="preserve"><value>Ranhurador</value></data>
+  <data name="SettingsTab3_Dept_Knife" xml:space="preserve"><value>Faca</value></data>
+  <data name="SettingsTab3_Dept_DieCut" xml:space="preserve"><value>Corte e vinco</value></data>
+  <data name="SettingsTab3_Dept_Stack" xml:space="preserve"><value>Empilhamento</value></data>
+  <data name="SettingsTab3_Dept_Inline" xml:space="preserve"><value>Inline</value></data>
+  <data name="SettingsTab3_Dept_KnifeII" xml:space="preserve"><value>Faca II</value></data>
+  <data name="SettingsTab3_Dept_Other" xml:space="preserve"><value>Outros</value></data>
+  <data name="SettingsTab3_Dept_All" xml:space="preserve"><value>Todos</value></data>
+  <data name="SettingsTab3_Feed_Name_DriveSideBaffle" xml:space="preserve"><value>Defletor lado motor</value></data>
+  <data name="SettingsTab3_Feed_Name_OperatorSideBaffle" xml:space="preserve"><value>Defletor lado operador</value></data>
+  <data name="SettingsTab3_Feed_Name_RearBaffle" xml:space="preserve"><value>Defletor traseiro</value></data>
+  <data name="SettingsTab3_Feed_Name_FeedRollerGap" xml:space="preserve"><value>Folga do rolo de alimentação</value></data>
+  <data name="SettingsTab3_Feed_Name_FrontBaffleGap" xml:space="preserve"><value>Folga do defletor frontal</value></data>
+  <data name="SettingsTab3_Feed_Name_FeedPhase" xml:space="preserve"><value>Fase de alimentação</value></data>
+  <data name="SettingsTab3_Feed_Name_CurrentSheetCount" xml:space="preserve"><value>Contagem atual de folhas</value></data>
+  <data name="SettingsTab3_Feed_Name_OptimizationButton" xml:space="preserve"><value>Botão de otimização</value></data>
+  <data name="SettingsTab3_Other_Name_NumberOfPaper.Bundle" xml:space="preserve"><value>Folhas por pacote</value></data>
+  <data name="SettingsTab3_Other_Name_BellAlarm" xml:space="preserve"><value>Alarme sonoro</value></data>
+  <data name="SettingsTab3_Other_Name_ContinueSubmittingPaper" xml:space="preserve"><value>Alimentação contínua</value></data>
+  <data name="SettingsTab3_Other_Name_CTKMaximumSpeed" xml:space="preserve"><value>Velocidade máxima CTK</value></data>
+  <data name="SettingsTab3_Other_Name_EarKnife" xml:space="preserve"><value>Faca de orelha</value></data>
+  <data name="SettingsTab3_Other_Name_AlreadyProduced" xml:space="preserve"><value>Produzido neste turno</value></data>
+  <data name="SettingsTab3_Print1_Name_Register" xml:space="preserve"><value>Registro</value></data>
+  <data name="SettingsTab3_Print1_Name_PressAperture" xml:space="preserve"><value>Folga de pressão</value></data>
+  <data name="SettingsTab3_Print1_Name_Phase" xml:space="preserve"><value>Fase</value></data>
+  <data name="SettingsTab3_Print1_Name_LateralGap2" xml:space="preserve"><value>Px1Gap2</value></data>
+  <data name="SettingsTab3_Print1_Name_ColorLateralShift" xml:space="preserve"><value>Deslocamento lateral 1 cor</value></data>
+  <data name="SettingsTab3_Print1_Name_LateralGap3" xml:space="preserve"><value>Px1Gap3</value></data>
+  <data name="SettingsTab3_Print2_Name_Register" xml:space="preserve"><value>Registro</value></data>
+  <data name="SettingsTab3_Print2_Name_PressAperture" xml:space="preserve"><value>Folga de pressão</value></data>
+  <data name="SettingsTab3_Print2_Name_Phase" xml:space="preserve"><value>Fase</value></data>
+  <data name="SettingsTab3_Print2_Name_LateralGap2" xml:space="preserve"><value>Px2Gap2</value></data>
+  <data name="SettingsTab3_Print2_Name_ColorLateralShift" xml:space="preserve"><value>Deslocamento lateral 2 cores</value></data>
+  <data name="SettingsTab3_Print2_Name_LateralGap3" xml:space="preserve"><value>Px2Gap3</value></data>
+  <data name="SettingsTab3_Print3_Name_Register" xml:space="preserve"><value>Registro</value></data>
+  <data name="SettingsTab3_Print3_Name_PressAperture" xml:space="preserve"><value>Folga de pressão</value></data>
+  <data name="SettingsTab3_Print3_Name_Phase" xml:space="preserve"><value>Fase</value></data>
+  <data name="SettingsTab3_Print3_Name_LateralGap2" xml:space="preserve"><value>Px3Gap2</value></data>
+  <data name="SettingsTab3_Print3_Name_ColorLateralShift" xml:space="preserve"><value>Deslocamento lateral 3 cores</value></data>
+  <data name="SettingsTab3_Print3_Name_LateralGap3" xml:space="preserve"><value>Px3Gap3</value></data>
+  <data name="SettingsTab3_Print7_Name_Register" xml:space="preserve"><value>Registro</value></data>
+  <data name="SettingsTab3_Print7_Name_PressAperture" xml:space="preserve"><value>Folga de pressão</value></data>
+  <data name="SettingsTab3_Print7_Name_Phase" xml:space="preserve"><value>Fase</value></data>
+  <data name="SettingsTab3_Print7_Name_LateralGap2" xml:space="preserve"><value>Px7Gap2</value></data>
+  <data name="SettingsTab3_Print7_Name_ColorLateralShift" xml:space="preserve"><value>Deslocamento lateral 7 cores</value></data>
+  <data name="SettingsTab3_Print7_Name_LateralGap3" xml:space="preserve"><value>Px7Gap3</value></data>
+  <data name="SettingsTab3_Print8_Name_Register" xml:space="preserve"><value>Registro</value></data>
+  <data name="SettingsTab3_Print8_Name_PressAperture" xml:space="preserve"><value>Folga de pressão</value></data>
+  <data name="SettingsTab3_Print8_Name_Phase" xml:space="preserve"><value>Fase</value></data>
+  <data name="SettingsTab3_Print8_Name_LateralGap2" xml:space="preserve"><value>Px8Gap2</value></data>
+  <data name="SettingsTab3_Print8_Name_ColorLateralShift" xml:space="preserve"><value>Deslocamento lateral 8 cores</value></data>
+  <data name="SettingsTab3_Print8_Name_LateralGap3" xml:space="preserve"><value>Px8Gap3</value></data>
+  <data name="SettingsTab3_Label_UserPassword" xml:space="preserve">
+    <value>Senha do usuário</value>
+  </data>
+  <data name="SettingsTab3_Label_AdminPassword" xml:space="preserve">
+    <value>Senha de alteração de parâmetros</value>
   </data>
 </root>

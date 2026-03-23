@@ -110,6 +110,10 @@ public sealed partial class OrderMakingDialogViewModel : ViewModelBase
     public LocalizedString OrderQuantityLabel { get; }
     public LocalizedString CategoryLabel { get; }
     public LocalizedString BoxTypeLabel { get; }
+    /// <summary>箱型 Radio：E（與 DB 代碼一致，可於 RESX 調整顯示）。</summary>
+    public LocalizedString BoxTypeRadioE { get; }
+    /// <summary>箱型 Radio：S。</summary>
+    public LocalizedString BoxTypeRadioS { get; }
     public LocalizedString CustomerNameLabel { get; }
     public LocalizedString RemarksLabel { get; }
     public LocalizedString LengthLabel { get; }
@@ -161,6 +165,8 @@ public sealed partial class OrderMakingDialogViewModel : ViewModelBase
         OrderQuantityLabel = new LocalizedString(_localizationService, "Layout2_OrderQuantity");
         CategoryLabel = new LocalizedString(_localizationService, "Layout2_Category");
         BoxTypeLabel = new LocalizedString(_localizationService, "Layout2_BoxType");
+        BoxTypeRadioE = new LocalizedString(_localizationService, "OrderMakingDialog_BoxTypeE");
+        BoxTypeRadioS = new LocalizedString(_localizationService, "OrderMakingDialog_BoxTypeS");
         CustomerNameLabel = new LocalizedString(_localizationService, "Layout2_CustomerName");
         RemarksLabel = new LocalizedString(_localizationService, "Layout2_Remarks");
         LengthLabel = new LocalizedString(_localizationService, "OrderMakingDialog_LengthLabel");

@@ -26,6 +26,11 @@ public interface INavigationService
     void NavigateToOrderMaking();
 
     /// <summary>
+    /// 導航至 Phase 7 Settings（PLC／參數設定；僅 Admin）。
+    /// </summary>
+    void NavigateToSettings();
+
+    /// <summary>
     /// LogPanel 顯示與否變更時觸發。主畫面不需 Log，登入頁需要。
     /// </summary>
     event EventHandler<bool>? LogPanelVisibilityChanged;

@@ -1,7 +1,8 @@
+<!-- Phase 6 整頁背景：與頂/底 #333333 搭配，襯托中間白區；可選 #4A4A4A 更深、#6B6B6B 較淺 -->
 <UserControl x:Class="CursorTestApp.Views.Layout2.OrderMakingView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             Background="#E0E0E0">
+             Background="#5C5C5C">
     <UserControl.Resources>
         <Style x:Key="OrderDgCell" TargetType="DataGridCell">
             <Setter Property="BorderThickness" Value="0" />
@@ -67,6 +68,14 @@
                     <Setter Property="Background" Value="#FFF9C4" />
                 </Trigger>
             </Style.Triggers>
+        </Style>
+        <!-- 白底區：明確前景／模板，避免主題將 Radio 標籤字色蓋成與背景相同 -->
+        <Style x:Key="OrderMakingBoxTypeRadioStyle" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#111827" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Padding" Value="6,4" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="MinWidth" Value="36" />
         </Style>
     </UserControl.Resources>
     <Grid>
@@ -160,8 +169,15 @@
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                         <TextBlock Text="{Binding BoxTypeLabel.Value}" Foreground="Black" Width="100" VerticalAlignment="Center" />
-                        <RadioButton Content="E" IsChecked="{Binding IsBoxTypeE, Mode=TwoWay}" GroupName="BoxType" Foreground="Black" Margin="0,0,16,0" />
-                        <RadioButton Content="S" IsChecked="{Binding IsBoxTypeS, Mode=TwoWay}" GroupName="BoxType" Foreground="Black" />
+                        <RadioButton Style="{StaticResource OrderMakingBoxTypeRadioStyle}"
+                                     Content="{Binding BoxTypeRadioE.Value}"
+                                     IsChecked="{Binding IsBoxTypeE, Mode=TwoWay}"
+                                     GroupName="BoxType"
+                                     Margin="0,0,16,0" />
+                        <RadioButton Style="{StaticResource OrderMakingBoxTypeRadioStyle}"
+                                     Content="{Binding BoxTypeRadioS.Value}"
+                                     IsChecked="{Binding IsBoxTypeS, Mode=TwoWay}"
+                                     GroupName="BoxType" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                         <TextBlock Text="{Binding CustomerNameLabel.Value}" Foreground="Black" Width="100" VerticalAlignment="Center" />

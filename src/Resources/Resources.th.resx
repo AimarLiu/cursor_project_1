@@ -227,6 +227,12 @@
   <data name="OrderMakingDialog_Title" xml:space="preserve">
     <value>สร้างออเดอร์</value>
   </data>
+  <data name="OrderMakingDialog_BoxTypeE" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="OrderMakingDialog_BoxTypeS" xml:space="preserve">
+    <value>S</value>
+  </data>
   <data name="OrderMakingDialog_VersionNo" xml:space="preserve">
     <value>เวอร์ชัน:</value>
   </data>
@@ -283,5 +289,378 @@
   </data>
   <data name="OrderMakingDialog_ColCreatedAt" xml:space="preserve">
     <value>วันที่สร้าง</value>
+  </data>
+  <data name="SettingsTab1_TabHeader" xml:space="preserve">
+    <value>การตั้งค่าความปลอดภัยมีด 5 ใบ</value>
+  </data>
+  <data name="SettingsTab2_TabHeader" xml:space="preserve">
+    <value>พารามิเตอร์กล่อง</value>
+  </data>
+  <data name="SettingsTab3_TabHeader" xml:space="preserve">
+    <value>พารามิเตอร์อื่น ๆ</value>
+  </data>
+  <data name="SettingsTab4_TabHeader" xml:space="preserve">
+    <value>ประวัติการเตือน</value>
+  </data>
+  <data name="SettingsTab5_TabHeader" xml:space="preserve">
+    <value>พารามิเตอร์การจัดการการผลิต</value>
+  </data>
+  <data name="SettingsTab6_TabHeader" xml:space="preserve">
+    <value>พื้นที่สำรองข้อมูล</value>
+  </data>
+  <data name="SettingsTab1_SkeletonBody" xml:space="preserve">
+    <value>Tab 1 — Knife safety thresholds (Phase 7 skeleton). See TODO_Phase7.md §7.5.1.</value>
+  </data>
+  <data name="SettingsTab2_SkeletonBody" xml:space="preserve">
+    <value>Tab 2 — Die cutter / box parameters (Phase 7 skeleton). See TODO_Phase7.md §7.5.2.</value>
+  </data>
+  <data name="SettingsTab3_SkeletonBody" xml:space="preserve">
+    <value>Tab 3 — Communication and department PLC parameters (Phase 7 skeleton). See TODO_Phase7.md §7.5.3.</value>
+  </data>
+  <data name="SettingsTab4_SkeletonBody" xml:space="preserve">
+    <value>Tab 4 — Alarm history UI is deferred; placeholder only.</value>
+  </data>
+  <data name="SettingsTab5_SkeletonBody" xml:space="preserve">
+    <value>Tab 5 — Production management UI is deferred; placeholder only.</value>
+  </data>
+  <data name="SettingsTab6_SkeletonBody" xml:space="preserve">
+    <value>Tab 6 — Empty backup area (placeholder).</value>
+  </data>
+  <data name="Settings_Footer_F1_Exit" xml:space="preserve">
+    <value>F1 ออก</value>
+  </data>
+  <data name="Settings_Footer_F2_Save" xml:space="preserve">
+    <value>F2 บันทึก</value>
+  </data>
+  <data name="Settings_Footer_F3_Cancel" xml:space="preserve">
+    <value>F3 ยกเลิกการเปลี่ยนแปลง</value>
+  </data>
+  <data name="Settings_Footer_F5_MachineDimension" xml:space="preserve">
+    <value>F5 ขนาดเครื่องจักร</value>
+  </data>
+  <data name="Settings_Footer_F6_SpecialParams" xml:space="preserve">
+    <value>F6 พารามิเตอร์พิเศษ</value>
+  </data>
+  <data name="SettingsTab1_MaxE" xml:space="preserve">
+    <value>MAX E</value>
+  </data>
+  <data name="SettingsTab1_MinE" xml:space="preserve">
+    <value>MIN E</value>
+  </data>
+  <data name="SettingsTab1_MaxJ" xml:space="preserve">
+    <value>MAX J</value>
+  </data>
+  <data name="SettingsTab1_MinJ" xml:space="preserve">
+    <value>MIN J</value>
+  </data>
+  <data name="SettingsTab1_MaxK" xml:space="preserve">
+    <value>MAX K</value>
+  </data>
+  <data name="SettingsTab1_MinK" xml:space="preserve">
+    <value>MIN K</value>
+  </data>
+  <data name="SettingsTab1_MaxF" xml:space="preserve">
+    <value>MAX F</value>
+  </data>
+  <data name="SettingsTab1_MinF" xml:space="preserve">
+    <value>MIN F</value>
+  </data>
+  <data name="SettingsTab1_MaxA" xml:space="preserve">
+    <value>MAX A</value>
+  </data>
+  <data name="SettingsTab1_MinA" xml:space="preserve">
+    <value>MIN A</value>
+  </data>
+  <data name="SettingsTab1_MaxH" xml:space="preserve">
+    <value>MAX H</value>
+  </data>
+  <data name="SettingsTab1_MinH" xml:space="preserve">
+    <value>MIN H</value>
+  </data>
+  <data name="SettingsTab1_MaxI" xml:space="preserve">
+    <value>MAX I</value>
+  </data>
+  <data name="SettingsTab1_MinI" xml:space="preserve">
+    <value>MIN I</value>
+  </data>
+  <data name="SettingsTab1_MaxB" xml:space="preserve">
+    <value>MAX B</value>
+  </data>
+  <data name="SettingsTab1_MinB" xml:space="preserve">
+    <value>MIN B</value>
+  </data>
+  <data name="SettingsTab1_Validate_Number" xml:space="preserve">
+    <value>Please enter integers only (empty means unset).</value>
+  </data>
+  <data name="SettingsTab1_Validate_MinMax" xml:space="preserve">
+    <value>MIN must be less than or equal to MAX for each slot when both are set.</value>
+  </data>
+  <data name="SettingsTab1_SaveOk" xml:space="preserve">
+    <value>Settings: Tab1 knife safety values saved.</value>
+  </data>
+  <data name="SettingsTab1_SaveFailed" xml:space="preserve">
+    <value>Save failed.</value>
+  </data>
+  <data name="SettingsTab1_ReloadOk" xml:space="preserve">
+    <value>Settings: Tab1 reloaded from database.</value>
+  </data>
+  <data name="SettingsTab12_SaveOk" xml:space="preserve">
+    <value>Settings: Tab1 and Tab2 saved.</value>
+  </data>
+  <data name="SettingsTab12_ReloadOk" xml:space="preserve">
+    <value>Settings: Tab1 and Tab2 reloaded from database.</value>
+  </data>
+  <data name="SettingsTab2_Group_C_SelectKnife" xml:space="preserve">
+    <value>กล่องชนิด C — เลือกมีด</value>
+  </data>
+  <data name="SettingsTab2_Group_E_SelectKnife" xml:space="preserve">
+    <value>กล่องชนิด E — เลือกมีด</value>
+  </data>
+  <data name="SettingsTab2_Group_E_BoxSettings" xml:space="preserve">
+    <value>การตั้งค่ากล่องชนิด E</value>
+  </data>
+  <data name="SettingsTab2_Group_DA7_SelectKnife" xml:space="preserve">
+    <value>กล่อง D/A7 — เลือกมีด</value>
+  </data>
+  <data name="SettingsTab2_Label_SlotBitePaperReturnKnife" xml:space="preserve">
+    <value>คืนกระดาษกัดร่อง (มีด)</value>
+  </data>
+  <data name="SettingsTab2_Check_UseDatabaseBlade" xml:space="preserve">
+    <value>ใช้การเลือกใบมีดจากฐานข้อมูล</value>
+  </data>
+  <data name="SettingsTab2_Check_UseFormula2" xml:space="preserve">
+    <value>ใช้สูตร 2</value>
+  </data>
+  <data name="SettingsTab2_Label_E_FrontKnifeRetract" xml:space="preserve">
+    <value>มีดหน้าถอยกลับชนิด E</value>
+  </data>
+  <data name="SettingsTab2_Label_E_RearKnifeRetract" xml:space="preserve">
+    <value>มีดหลังถอยกลับชนิด E</value>
+  </data>
+  <data name="SettingsTab2_Subtitle_WithoutFormula2" xml:space="preserve">
+    <value>เมื่อปิดสูตร 2</value>
+  </data>
+  <data name="SettingsTab2_Label_SlotFrontBackRetractEach" xml:space="preserve">
+    <value>ร่องหน้า/หลังถอยกลับแยกกัน</value>
+  </data>
+  <data name="SettingsTab2_Check_AutoJudge" xml:space="preserve">
+    <value>ตัดสินอัตโนมัติ</value>
+  </data>
+  <data name="SettingsTab2_Label_TrimValue" xml:space="preserve">
+    <value>ค่าปรับแต่ง</value>
+  </data>
+  <data name="SettingsTab2_Label_BackBaffleTightness" xml:space="preserve">
+    <value>ความแน่นแผงกั้นด้านหลัง</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedBackBaffleMax" xml:space="preserve">
+    <value>ค่าสูงสุดแผงกั้นหลังป้อนกระดาษ</value>
+  </data>
+  <data name="SettingsTab2_Label_DriveSideTightness" xml:space="preserve">
+    <value>ความแน่นด้านขับเคลื่อน</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedExtension" xml:space="preserve">
+    <value>ระยะยืดการป้อนกระดาษ</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedAirVolume" xml:space="preserve">
+    <value>ปริมาณลมป้อนกระดาษ</value>
+  </data>
+  <data name="SettingsTab2_Label_PrintingAirVolume" xml:space="preserve">
+    <value>ปริมาณลมงานพิมพ์</value>
+  </data>
+  <data name="SettingsTab2_Label_DestroyPhase2Offset" xml:space="preserve">
+    <value>ออฟเซ็ตเฟส 2</value>
+  </data>
+  <data name="SettingsTab2_Label_ServoPrintOffset" xml:space="preserve">
+    <value>ออฟเซ็ตการพิมพ์เซอร์โว</value>
+  </data>
+  <data name="SettingsTab2_Label_SafetyBladeExtra" xml:space="preserve">
+    <value>ระยะเผื่อมีดนิรภัย</value>
+  </data>
+  <data name="SettingsTab2_Label_DropCollectCountDefault" xml:space="preserve">
+    <value>ค่าตั้งต้นจำนวนรับตก</value>
+  </data>
+  <data name="SettingsTab2_Label_CarSpeedFormat" xml:space="preserve">
+    <value>ความเร็วรถ</value>
+  </data>
+  <data name="SettingsTab2_CarSpeed_Option0" xml:space="preserve">
+    <value>0 แผ่นต่อนาที</value>
+  </data>
+  <data name="SettingsTab2_CarSpeed_Option1" xml:space="preserve">
+    <value>1 แผ่นต่อชั่วโมง</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_0" xml:space="preserve">
+    <value>0: มีด 2,3</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_1" xml:space="preserve">
+    <value>1: มีด 2,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_2" xml:space="preserve">
+    <value>2: มีด 3,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_3" xml:space="preserve">
+    <value>1: มีด 2,3,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_4" xml:space="preserve">
+    <value>3: มีด 3,4,5</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_5" xml:space="preserve">
+    <value>4: มีด 1,5</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_6" xml:space="preserve">
+    <value>0: มีด 1,2,3</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_7" xml:space="preserve">
+    <value>1: มีด 1,2,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_8" xml:space="preserve">
+    <value>2: มีด 3,4,6</value>
+  </data>
+  <data name="SettingsTab2_Validate_Integer" xml:space="preserve">
+    <value>กรุณากรอกจำนวนเต็มที่ถูกต้อง</value>
+  </data>
+  <data name="SettingsTab2_Validate_Number" xml:space="preserve">
+    <value>กรุณากรอกตัวเลขที่ถูกต้อง</value>
+  </data>
+  <data name="SettingsTab2_Validate_CarSpeed" xml:space="preserve">
+    <value>ความเร็วรถต้องเป็น 0 หรือ 1</value>
+  </data>
+  <data name="SettingsTab2_Validate_KnifeOption" xml:space="preserve">
+    <value>ชุดมีดที่เลือกไม่สามารถใช้กับกล่องชนิดนี้ได้</value>
+  </data>
+  <data name="SettingsTab2_SaveFailed" xml:space="preserve">
+    <value>บันทึก Tab2 ล้มเหลว</value>
+  </data>
+  <data name="SettingsTab123_SaveOk" xml:space="preserve">
+    <value>Tab1, Tab2, and Tab3 saved.</value>
+  </data>
+  <data name="SettingsTab123_ReloadOk" xml:space="preserve">
+    <value>Tab1, Tab2, and Tab3 reloaded.</value>
+  </data>
+  <data name="SettingsTab3_SaveFailed" xml:space="preserve">
+    <value>บันทึก Tab3 ล้มเหลว</value>
+  </data>
+  <data name="SettingsTab3_Validate_Number" xml:space="preserve">
+    <value>ตัวเลขไม่ถูกต้อง ({0})</value>
+  </data>
+  <data name="SettingsTab3_Validate_MinMax" xml:space="preserve">
+    <value>ค่าต่ำสุดต้องน้อยกว่าหรือเท่ากับค่าสูงสุด</value>
+  </data>
+  <data name="SettingsTab3_Group_OtherCommPorts" xml:space="preserve">
+    <value>พอร์ตสื่อสารอื่น ๆ</value>
+  </data>
+  <data name="SettingsTab3_Group_GluePlc" xml:space="preserve">
+    <value>PLC รถทากาว</value>
+  </data>
+  <data name="SettingsTab3_Group_UserPasswordManagement" xml:space="preserve">
+    <value>การจัดการรหัสผ่านผู้ใช้</value>
+  </data>
+  <data name="SettingsTab3_Label_PrinterPlcPort" xml:space="preserve">
+    <value>พอร์ต PLC เครื่องพิมพ์</value>
+  </data>
+  <data name="SettingsTab3_Label_PanelPort" xml:space="preserve">
+    <value>พอร์ตแผงควบคุม</value>
+  </data>
+  <data name="SettingsTab3_Label_GluePlcPort" xml:space="preserve">
+    <value>พอร์ต PLC รถทากาว</value>
+  </data>
+  <data name="SettingsTab3_Label_BaudRate" xml:space="preserve">
+    <value>อัตราบอด</value>
+  </data>
+  <data name="SettingsTab3_Label_ByteSize" xml:space="preserve">
+    <value>บิตข้อมูล</value>
+  </data>
+  <data name="SettingsTab3_Label_Parity" xml:space="preserve">
+    <value>พาริตี</value>
+  </data>
+  <data name="SettingsTab3_Label_StopBits" xml:space="preserve">
+    <value>สต็อปบิต</value>
+  </data>
+  <data name="SettingsTab3_Column_ComponentName" xml:space="preserve">
+    <value>ชื่อชิ้นส่วน</value>
+  </data>
+  <data name="SettingsTab3_Column_Max" xml:space="preserve">
+    <value>ค่าสูงสุด</value>
+  </data>
+  <data name="SettingsTab3_Column_Min" xml:space="preserve">
+    <value>ค่าต่ำสุด</value>
+  </data>
+  <data name="SettingsTab3_Column_Accurate" xml:space="preserve">
+    <value>ความแม่นยำ</value>
+  </data>
+  <data name="SettingsTab3_Column_Department" xml:space="preserve">
+    <value>แผนก</value>
+  </data>
+  <data name="SettingsTab3_Column_UserName" xml:space="preserve">
+    <value>ผู้ใช้</value>
+  </data>
+  <data name="SettingsTab3_Column_Password" xml:space="preserve">
+    <value>รหัสผ่าน</value>
+  </data>
+  <data name="SettingsTab3_Dept_Feed" xml:space="preserve"><value>ป้อนกระดาษ</value></data>
+  <data name="SettingsTab3_Dept_Print1" xml:space="preserve"><value>Print1</value></data>
+  <data name="SettingsTab3_Dept_Print2" xml:space="preserve"><value>Print2</value></data>
+  <data name="SettingsTab3_Dept_Print3" xml:space="preserve"><value>Print3</value></data>
+  <data name="SettingsTab3_Dept_Print4" xml:space="preserve"><value>Print4</value></data>
+  <data name="SettingsTab3_Dept_Print5" xml:space="preserve"><value>Print5</value></data>
+  <data name="SettingsTab3_Dept_Print6" xml:space="preserve"><value>Print6</value></data>
+  <data name="SettingsTab3_Dept_Print7" xml:space="preserve"><value>Print7</value></data>
+  <data name="SettingsTab3_Dept_Print8" xml:space="preserve"><value>Print8</value></data>
+  <data name="SettingsTab3_Dept_Slotter" xml:space="preserve"><value>เครื่องกรีดร่อง</value></data>
+  <data name="SettingsTab3_Dept_Knife" xml:space="preserve"><value>มีด</value></data>
+  <data name="SettingsTab3_Dept_DieCut" xml:space="preserve"><value>ไดคัท</value></data>
+  <data name="SettingsTab3_Dept_Stack" xml:space="preserve"><value>ซ้อนกอง</value></data>
+  <data name="SettingsTab3_Dept_Inline" xml:space="preserve"><value>อินไลน์</value></data>
+  <data name="SettingsTab3_Dept_KnifeII" xml:space="preserve"><value>มีด II</value></data>
+  <data name="SettingsTab3_Dept_Other" xml:space="preserve"><value>อื่น ๆ</value></data>
+  <data name="SettingsTab3_Dept_All" xml:space="preserve"><value>ทั้งหมด</value></data>
+  <data name="SettingsTab3_Feed_Name_DriveSideBaffle" xml:space="preserve"><value>แผงกั้นด้านขับ</value></data>
+  <data name="SettingsTab3_Feed_Name_OperatorSideBaffle" xml:space="preserve"><value>แผงกั้นด้านผู้ปฏิบัติ</value></data>
+  <data name="SettingsTab3_Feed_Name_RearBaffle" xml:space="preserve"><value>แผงกั้นด้านหลัง</value></data>
+  <data name="SettingsTab3_Feed_Name_FeedRollerGap" xml:space="preserve"><value>ช่องว่างลูกกลิ้งป้อน</value></data>
+  <data name="SettingsTab3_Feed_Name_FrontBaffleGap" xml:space="preserve"><value>ช่องว่างแผงกั้นด้านหน้า</value></data>
+  <data name="SettingsTab3_Feed_Name_FeedPhase" xml:space="preserve"><value>เฟสการป้อน</value></data>
+  <data name="SettingsTab3_Feed_Name_CurrentSheetCount" xml:space="preserve"><value>จำนวนแผ่นปัจจุบัน</value></data>
+  <data name="SettingsTab3_Feed_Name_OptimizationButton" xml:space="preserve"><value>ปุ่มปรับให้เหมาะสม</value></data>
+  <data name="SettingsTab3_Other_Name_NumberOfPaper.Bundle" xml:space="preserve"><value>จำนวนแผ่นต่อมัด</value></data>
+  <data name="SettingsTab3_Other_Name_BellAlarm" xml:space="preserve"><value>สัญญาณกระดิ่ง</value></data>
+  <data name="SettingsTab3_Other_Name_ContinueSubmittingPaper" xml:space="preserve"><value>ป้อนต่อเนื่อง</value></data>
+  <data name="SettingsTab3_Other_Name_CTKMaximumSpeed" xml:space="preserve"><value>ความเร็วสูงสุด CTK</value></data>
+  <data name="SettingsTab3_Other_Name_EarKnife" xml:space="preserve"><value>มีดหู</value></data>
+  <data name="SettingsTab3_Other_Name_AlreadyProduced" xml:space="preserve"><value>ผลิตแล้วในกะนี้</value></data>
+  <data name="SettingsTab3_Print1_Name_Register" xml:space="preserve"><value>รีจิสเตอร์</value></data>
+  <data name="SettingsTab3_Print1_Name_PressAperture" xml:space="preserve"><value>ช่องว่างแรงกด</value></data>
+  <data name="SettingsTab3_Print1_Name_Phase" xml:space="preserve"><value>เฟส</value></data>
+  <data name="SettingsTab3_Print1_Name_LateralGap2" xml:space="preserve"><value>Px1Gap2</value></data>
+  <data name="SettingsTab3_Print1_Name_ColorLateralShift" xml:space="preserve"><value>เลื่อนด้านข้าง 1 สี</value></data>
+  <data name="SettingsTab3_Print1_Name_LateralGap3" xml:space="preserve"><value>Px1Gap3</value></data>
+  <data name="SettingsTab3_Print2_Name_Register" xml:space="preserve"><value>รีจิสเตอร์</value></data>
+  <data name="SettingsTab3_Print2_Name_PressAperture" xml:space="preserve"><value>ช่องว่างแรงกด</value></data>
+  <data name="SettingsTab3_Print2_Name_Phase" xml:space="preserve"><value>เฟส</value></data>
+  <data name="SettingsTab3_Print2_Name_LateralGap2" xml:space="preserve"><value>Px2Gap2</value></data>
+  <data name="SettingsTab3_Print2_Name_ColorLateralShift" xml:space="preserve"><value>เลื่อนด้านข้าง 2 สี</value></data>
+  <data name="SettingsTab3_Print2_Name_LateralGap3" xml:space="preserve"><value>Px2Gap3</value></data>
+  <data name="SettingsTab3_Print3_Name_Register" xml:space="preserve"><value>รีจิสเตอร์</value></data>
+  <data name="SettingsTab3_Print3_Name_PressAperture" xml:space="preserve"><value>ช่องว่างแรงกด</value></data>
+  <data name="SettingsTab3_Print3_Name_Phase" xml:space="preserve"><value>เฟส</value></data>
+  <data name="SettingsTab3_Print3_Name_LateralGap2" xml:space="preserve"><value>Px3Gap2</value></data>
+  <data name="SettingsTab3_Print3_Name_ColorLateralShift" xml:space="preserve"><value>เลื่อนด้านข้าง 3 สี</value></data>
+  <data name="SettingsTab3_Print3_Name_LateralGap3" xml:space="preserve"><value>Px3Gap3</value></data>
+  <data name="SettingsTab3_Print7_Name_Register" xml:space="preserve"><value>รีจิสเตอร์</value></data>
+  <data name="SettingsTab3_Print7_Name_PressAperture" xml:space="preserve"><value>ช่องว่างแรงกด</value></data>
+  <data name="SettingsTab3_Print7_Name_Phase" xml:space="preserve"><value>เฟส</value></data>
+  <data name="SettingsTab3_Print7_Name_LateralGap2" xml:space="preserve"><value>Px7Gap2</value></data>
+  <data name="SettingsTab3_Print7_Name_ColorLateralShift" xml:space="preserve"><value>เลื่อนด้านข้าง 7 สี</value></data>
+  <data name="SettingsTab3_Print7_Name_LateralGap3" xml:space="preserve"><value>Px7Gap3</value></data>
+  <data name="SettingsTab3_Print8_Name_Register" xml:space="preserve"><value>รีจิสเตอร์</value></data>
+  <data name="SettingsTab3_Print8_Name_PressAperture" xml:space="preserve"><value>ช่องว่างแรงกด</value></data>
+  <data name="SettingsTab3_Print8_Name_Phase" xml:space="preserve"><value>เฟส</value></data>
+  <data name="SettingsTab3_Print8_Name_LateralGap2" xml:space="preserve"><value>Px8Gap2</value></data>
+  <data name="SettingsTab3_Print8_Name_ColorLateralShift" xml:space="preserve"><value>เลื่อนด้านข้าง 8 สี</value></data>
+  <data name="SettingsTab3_Print8_Name_LateralGap3" xml:space="preserve"><value>Px8Gap3</value></data>
+  <data name="SettingsTab3_Label_UserPassword" xml:space="preserve">
+    <value>รหัสผ่านผู้ใช้</value>
+  </data>
+  <data name="SettingsTab3_Label_AdminPassword" xml:space="preserve">
+    <value>รหัสผ่านแก้ไขพารามิเตอร์</value>
   </data>
 </root>

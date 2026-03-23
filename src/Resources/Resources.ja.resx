@@ -227,6 +227,12 @@
   <data name="OrderMakingDialog_Title" xml:space="preserve">
     <value>オーダー作成</value>
   </data>
+  <data name="OrderMakingDialog_BoxTypeE" xml:space="preserve">
+    <value>E</value>
+  </data>
+  <data name="OrderMakingDialog_BoxTypeS" xml:space="preserve">
+    <value>S</value>
+  </data>
   <data name="OrderMakingDialog_VersionNo" xml:space="preserve">
     <value>版番:</value>
   </data>
@@ -283,5 +289,378 @@
   </data>
   <data name="OrderMakingDialog_ColCreatedAt" xml:space="preserve">
     <value>建檔日</value>
+  </data>
+  <data name="SettingsTab1_TabHeader" xml:space="preserve">
+    <value>5枚ナイフ安全設定</value>
+  </data>
+  <data name="SettingsTab2_TabHeader" xml:space="preserve">
+    <value>箱パラメータ</value>
+  </data>
+  <data name="SettingsTab3_TabHeader" xml:space="preserve">
+    <value>その他のパラメータ</value>
+  </data>
+  <data name="SettingsTab4_TabHeader" xml:space="preserve">
+    <value>アラーム履歴</value>
+  </data>
+  <data name="SettingsTab5_TabHeader" xml:space="preserve">
+    <value>生産管理パラメータ</value>
+  </data>
+  <data name="SettingsTab6_TabHeader" xml:space="preserve">
+    <value>バックアップエリア</value>
+  </data>
+  <data name="SettingsTab1_SkeletonBody" xml:space="preserve">
+    <value>Tab 1 — Knife safety thresholds (Phase 7 skeleton). See TODO_Phase7.md §7.5.1.</value>
+  </data>
+  <data name="SettingsTab2_SkeletonBody" xml:space="preserve">
+    <value>Tab 2 — Die cutter / box parameters (Phase 7 skeleton). See TODO_Phase7.md §7.5.2.</value>
+  </data>
+  <data name="SettingsTab3_SkeletonBody" xml:space="preserve">
+    <value>Tab 3 — Communication and department PLC parameters (Phase 7 skeleton). See TODO_Phase7.md §7.5.3.</value>
+  </data>
+  <data name="SettingsTab4_SkeletonBody" xml:space="preserve">
+    <value>Tab 4 — Alarm history UI is deferred; placeholder only.</value>
+  </data>
+  <data name="SettingsTab5_SkeletonBody" xml:space="preserve">
+    <value>Tab 5 — Production management UI is deferred; placeholder only.</value>
+  </data>
+  <data name="SettingsTab6_SkeletonBody" xml:space="preserve">
+    <value>Tab 6 — Empty backup area (placeholder).</value>
+  </data>
+  <data name="Settings_Footer_F1_Exit" xml:space="preserve">
+    <value>F1 終了</value>
+  </data>
+  <data name="Settings_Footer_F2_Save" xml:space="preserve">
+    <value>F2 保存</value>
+  </data>
+  <data name="Settings_Footer_F3_Cancel" xml:space="preserve">
+    <value>F3 変更破棄</value>
+  </data>
+  <data name="Settings_Footer_F5_MachineDimension" xml:space="preserve">
+    <value>F5 機器寸法</value>
+  </data>
+  <data name="Settings_Footer_F6_SpecialParams" xml:space="preserve">
+    <value>F6 特別パラメータ</value>
+  </data>
+  <data name="SettingsTab1_MaxE" xml:space="preserve">
+    <value>MAX E</value>
+  </data>
+  <data name="SettingsTab1_MinE" xml:space="preserve">
+    <value>MIN E</value>
+  </data>
+  <data name="SettingsTab1_MaxJ" xml:space="preserve">
+    <value>MAX J</value>
+  </data>
+  <data name="SettingsTab1_MinJ" xml:space="preserve">
+    <value>MIN J</value>
+  </data>
+  <data name="SettingsTab1_MaxK" xml:space="preserve">
+    <value>MAX K</value>
+  </data>
+  <data name="SettingsTab1_MinK" xml:space="preserve">
+    <value>MIN K</value>
+  </data>
+  <data name="SettingsTab1_MaxF" xml:space="preserve">
+    <value>MAX F</value>
+  </data>
+  <data name="SettingsTab1_MinF" xml:space="preserve">
+    <value>MIN F</value>
+  </data>
+  <data name="SettingsTab1_MaxA" xml:space="preserve">
+    <value>MAX A</value>
+  </data>
+  <data name="SettingsTab1_MinA" xml:space="preserve">
+    <value>MIN A</value>
+  </data>
+  <data name="SettingsTab1_MaxH" xml:space="preserve">
+    <value>MAX H</value>
+  </data>
+  <data name="SettingsTab1_MinH" xml:space="preserve">
+    <value>MIN H</value>
+  </data>
+  <data name="SettingsTab1_MaxI" xml:space="preserve">
+    <value>MAX I</value>
+  </data>
+  <data name="SettingsTab1_MinI" xml:space="preserve">
+    <value>MIN I</value>
+  </data>
+  <data name="SettingsTab1_MaxB" xml:space="preserve">
+    <value>MAX B</value>
+  </data>
+  <data name="SettingsTab1_MinB" xml:space="preserve">
+    <value>MIN B</value>
+  </data>
+  <data name="SettingsTab1_Validate_Number" xml:space="preserve">
+    <value>Please enter integers only (empty means unset).</value>
+  </data>
+  <data name="SettingsTab1_Validate_MinMax" xml:space="preserve">
+    <value>MIN must be less than or equal to MAX for each slot when both are set.</value>
+  </data>
+  <data name="SettingsTab1_SaveOk" xml:space="preserve">
+    <value>Settings: Tab1 knife safety values saved.</value>
+  </data>
+  <data name="SettingsTab1_SaveFailed" xml:space="preserve">
+    <value>Save failed.</value>
+  </data>
+  <data name="SettingsTab1_ReloadOk" xml:space="preserve">
+    <value>Settings: Tab1 reloaded from database.</value>
+  </data>
+  <data name="SettingsTab12_SaveOk" xml:space="preserve">
+    <value>Settings: Tab1 and Tab2 saved.</value>
+  </data>
+  <data name="SettingsTab12_ReloadOk" xml:space="preserve">
+    <value>Settings: Tab1 and Tab2 reloaded from database.</value>
+  </data>
+  <data name="SettingsTab2_Group_C_SelectKnife" xml:space="preserve">
+    <value>C型箱 - ナイフ選択</value>
+  </data>
+  <data name="SettingsTab2_Group_E_SelectKnife" xml:space="preserve">
+    <value>E型箱 - ナイフ選択</value>
+  </data>
+  <data name="SettingsTab2_Group_E_BoxSettings" xml:space="preserve">
+    <value>E型箱設定</value>
+  </data>
+  <data name="SettingsTab2_Group_DA7_SelectKnife" xml:space="preserve">
+    <value>D/A7型箱 - ナイフ選択</value>
+  </data>
+  <data name="SettingsTab2_Label_SlotBitePaperReturnKnife" xml:space="preserve">
+    <value>スロット噛み紙戻し（ナイフ）</value>
+  </data>
+  <data name="SettingsTab2_Check_UseDatabaseBlade" xml:space="preserve">
+    <value>データベースの刃選択を使用</value>
+  </data>
+  <data name="SettingsTab2_Check_UseFormula2" xml:space="preserve">
+    <value>公式2を使用</value>
+  </data>
+  <data name="SettingsTab2_Label_E_FrontKnifeRetract" xml:space="preserve">
+    <value>E型 前ナイフ引込み</value>
+  </data>
+  <data name="SettingsTab2_Label_E_RearKnifeRetract" xml:space="preserve">
+    <value>E型 後ナイフ引込み</value>
+  </data>
+  <data name="SettingsTab2_Subtitle_WithoutFormula2" xml:space="preserve">
+    <value>公式2が無効時</value>
+  </data>
+  <data name="SettingsTab2_Label_SlotFrontBackRetractEach" xml:space="preserve">
+    <value>スロット前後それぞれ引込み</value>
+  </data>
+  <data name="SettingsTab2_Check_AutoJudge" xml:space="preserve">
+    <value>自動判定</value>
+  </data>
+  <data name="SettingsTab2_Label_TrimValue" xml:space="preserve">
+    <value>トリム値</value>
+  </data>
+  <data name="SettingsTab2_Label_BackBaffleTightness" xml:space="preserve">
+    <value>後部バッフル締め付け</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedBackBaffleMax" xml:space="preserve">
+    <value>給紙後部バッフル最大値</value>
+  </data>
+  <data name="SettingsTab2_Label_DriveSideTightness" xml:space="preserve">
+    <value>駆動側締め付け</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedExtension" xml:space="preserve">
+    <value>給紙延長量</value>
+  </data>
+  <data name="SettingsTab2_Label_PaperFeedAirVolume" xml:space="preserve">
+    <value>給紙エア量</value>
+  </data>
+  <data name="SettingsTab2_Label_PrintingAirVolume" xml:space="preserve">
+    <value>印刷エア量</value>
+  </data>
+  <data name="SettingsTab2_Label_DestroyPhase2Offset" xml:space="preserve">
+    <value>破砕位相2オフセット</value>
+  </data>
+  <data name="SettingsTab2_Label_ServoPrintOffset" xml:space="preserve">
+    <value>サーボ印刷オフセット</value>
+  </data>
+  <data name="SettingsTab2_Label_SafetyBladeExtra" xml:space="preserve">
+    <value>安全刃余量</value>
+  </data>
+  <data name="SettingsTab2_Label_DropCollectCountDefault" xml:space="preserve">
+    <value>落下集積初期枚数</value>
+  </data>
+  <data name="SettingsTab2_Label_CarSpeedFormat" xml:space="preserve">
+    <value>台車速度</value>
+  </data>
+  <data name="SettingsTab2_CarSpeed_Option0" xml:space="preserve">
+    <value>0枚/分</value>
+  </data>
+  <data name="SettingsTab2_CarSpeed_Option1" xml:space="preserve">
+    <value>1枚/時</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_0" xml:space="preserve">
+    <value>0: ナイフ 2,3</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_1" xml:space="preserve">
+    <value>1: ナイフ 2,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_2" xml:space="preserve">
+    <value>2: ナイフ 3,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_3" xml:space="preserve">
+    <value>1: ナイフ 2,3,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_4" xml:space="preserve">
+    <value>3: ナイフ 3,4,5</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_5" xml:space="preserve">
+    <value>4: ナイフ 1,5</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_6" xml:space="preserve">
+    <value>0: ナイフ 1,2,3</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_7" xml:space="preserve">
+    <value>1: ナイフ 1,2,4</value>
+  </data>
+  <data name="SettingsTab2_KnifeCombo_8" xml:space="preserve">
+    <value>2: ナイフ 3,4,6</value>
+  </data>
+  <data name="SettingsTab2_Validate_Integer" xml:space="preserve">
+    <value>有効な整数を入力してください。</value>
+  </data>
+  <data name="SettingsTab2_Validate_Number" xml:space="preserve">
+    <value>有効な数値を入力してください。</value>
+  </data>
+  <data name="SettingsTab2_Validate_CarSpeed" xml:space="preserve">
+    <value>台車速度は0または1である必要があります。</value>
+  </data>
+  <data name="SettingsTab2_Validate_KnifeOption" xml:space="preserve">
+    <value>選択したナイフ組合せはこの箱型では使用できません。</value>
+  </data>
+  <data name="SettingsTab2_SaveFailed" xml:space="preserve">
+    <value>Tab2 の保存に失敗しました。</value>
+  </data>
+  <data name="SettingsTab123_SaveOk" xml:space="preserve">
+    <value>Tab1, Tab2, and Tab3 saved.</value>
+  </data>
+  <data name="SettingsTab123_ReloadOk" xml:space="preserve">
+    <value>Tab1, Tab2, and Tab3 reloaded.</value>
+  </data>
+  <data name="SettingsTab3_SaveFailed" xml:space="preserve">
+    <value>Tab3 save failed.</value>
+  </data>
+  <data name="SettingsTab3_Validate_Number" xml:space="preserve">
+    <value>Invalid number ({0}).</value>
+  </data>
+  <data name="SettingsTab3_Validate_MinMax" xml:space="preserve">
+    <value>Minimum must be less than or equal to maximum.</value>
+  </data>
+  <data name="SettingsTab3_Group_OtherCommPorts" xml:space="preserve">
+    <value>その他の通信ポート設定</value>
+  </data>
+  <data name="SettingsTab3_Group_GluePlc" xml:space="preserve">
+    <value>糊カートPLC</value>
+  </data>
+  <data name="SettingsTab3_Group_UserPasswordManagement" xml:space="preserve">
+    <value>ユーザーパスワード管理</value>
+  </data>
+  <data name="SettingsTab3_Label_PrinterPlcPort" xml:space="preserve">
+    <value>印刷PLCポート</value>
+  </data>
+  <data name="SettingsTab3_Label_PanelPort" xml:space="preserve">
+    <value>パネルポート</value>
+  </data>
+  <data name="SettingsTab3_Label_GluePlcPort" xml:space="preserve">
+    <value>糊カートPLCポート</value>
+  </data>
+  <data name="SettingsTab3_Label_BaudRate" xml:space="preserve">
+    <value>ボーレート</value>
+  </data>
+  <data name="SettingsTab3_Label_ByteSize" xml:space="preserve">
+    <value>データビット</value>
+  </data>
+  <data name="SettingsTab3_Label_Parity" xml:space="preserve">
+    <value>パリティ</value>
+  </data>
+  <data name="SettingsTab3_Label_StopBits" xml:space="preserve">
+    <value>ストップビット</value>
+  </data>
+  <data name="SettingsTab3_Column_ComponentName" xml:space="preserve">
+    <value>コンポーネント</value>
+  </data>
+  <data name="SettingsTab3_Column_Max" xml:space="preserve">
+    <value>最大値</value>
+  </data>
+  <data name="SettingsTab3_Column_Min" xml:space="preserve">
+    <value>最小値</value>
+  </data>
+  <data name="SettingsTab3_Column_Accurate" xml:space="preserve">
+    <value>精度</value>
+  </data>
+  <data name="SettingsTab3_Column_Department" xml:space="preserve">
+    <value>部門</value>
+  </data>
+  <data name="SettingsTab3_Column_UserName" xml:space="preserve">
+    <value>ユーザー</value>
+  </data>
+  <data name="SettingsTab3_Column_Password" xml:space="preserve">
+    <value>パスワード</value>
+  </data>
+  <data name="SettingsTab3_Dept_Feed" xml:space="preserve"><value>フィード</value></data>
+  <data name="SettingsTab3_Dept_Print1" xml:space="preserve"><value>印刷1</value></data>
+  <data name="SettingsTab3_Dept_Print2" xml:space="preserve"><value>印刷2</value></data>
+  <data name="SettingsTab3_Dept_Print3" xml:space="preserve"><value>印刷3</value></data>
+  <data name="SettingsTab3_Dept_Print4" xml:space="preserve"><value>印刷4</value></data>
+  <data name="SettingsTab3_Dept_Print5" xml:space="preserve"><value>印刷5</value></data>
+  <data name="SettingsTab3_Dept_Print6" xml:space="preserve"><value>印刷6</value></data>
+  <data name="SettingsTab3_Dept_Print7" xml:space="preserve"><value>印刷7</value></data>
+  <data name="SettingsTab3_Dept_Print8" xml:space="preserve"><value>印刷8</value></data>
+  <data name="SettingsTab3_Dept_Slotter" xml:space="preserve"><value>スロッター</value></data>
+  <data name="SettingsTab3_Dept_Knife" xml:space="preserve"><value>ナイフ</value></data>
+  <data name="SettingsTab3_Dept_DieCut" xml:space="preserve"><value>ダイカット</value></data>
+  <data name="SettingsTab3_Dept_Stack" xml:space="preserve"><value>スタック</value></data>
+  <data name="SettingsTab3_Dept_Inline" xml:space="preserve"><value>インライン</value></data>
+  <data name="SettingsTab3_Dept_KnifeII" xml:space="preserve"><value>ナイフII</value></data>
+  <data name="SettingsTab3_Dept_Other" xml:space="preserve"><value>その他</value></data>
+  <data name="SettingsTab3_Dept_All" xml:space="preserve"><value>全て</value></data>
+  <data name="SettingsTab3_Feed_Name_DriveSideBaffle" xml:space="preserve"><value>駆動側バッフル</value></data>
+  <data name="SettingsTab3_Feed_Name_OperatorSideBaffle" xml:space="preserve"><value>操作側バッフル</value></data>
+  <data name="SettingsTab3_Feed_Name_RearBaffle" xml:space="preserve"><value>後部バッフル</value></data>
+  <data name="SettingsTab3_Feed_Name_FeedRollerGap" xml:space="preserve"><value>フィードローラギャップ</value></data>
+  <data name="SettingsTab3_Feed_Name_FrontBaffleGap" xml:space="preserve"><value>前部バッフルギャップ</value></data>
+  <data name="SettingsTab3_Feed_Name_FeedPhase" xml:space="preserve"><value>送紙位相</value></data>
+  <data name="SettingsTab3_Feed_Name_CurrentSheetCount" xml:space="preserve"><value>現在枚数</value></data>
+  <data name="SettingsTab3_Feed_Name_OptimizationButton" xml:space="preserve"><value>最適化ボタン</value></data>
+  <data name="SettingsTab3_Other_Name_NumberOfPaper.Bundle" xml:space="preserve"><value>束あたりの枚数</value></data>
+  <data name="SettingsTab3_Other_Name_BellAlarm" xml:space="preserve"><value>ベルアラーム</value></data>
+  <data name="SettingsTab3_Other_Name_ContinueSubmittingPaper" xml:space="preserve"><value>連続給紙</value></data>
+  <data name="SettingsTab3_Other_Name_CTKMaximumSpeed" xml:space="preserve"><value>CTK 最大速度</value></data>
+  <data name="SettingsTab3_Other_Name_EarKnife" xml:space="preserve"><value>アームナイフ</value></data>
+  <data name="SettingsTab3_Other_Name_AlreadyProduced" xml:space="preserve"><value>今回生産枚数</value></data>
+  <data name="SettingsTab3_Print1_Name_Register" xml:space="preserve"><value>Register</value></data>
+  <data name="SettingsTab3_Print1_Name_PressAperture" xml:space="preserve"><value>Press gap</value></data>
+  <data name="SettingsTab3_Print1_Name_Phase" xml:space="preserve"><value>Phase</value></data>
+  <data name="SettingsTab3_Print1_Name_LateralGap2" xml:space="preserve"><value>Px1Gap2</value></data>
+  <data name="SettingsTab3_Print1_Name_ColorLateralShift" xml:space="preserve"><value>1-color lateral shift</value></data>
+  <data name="SettingsTab3_Print1_Name_LateralGap3" xml:space="preserve"><value>Px1Gap3</value></data>
+  <data name="SettingsTab3_Print2_Name_Register" xml:space="preserve"><value>Register</value></data>
+  <data name="SettingsTab3_Print2_Name_PressAperture" xml:space="preserve"><value>Press gap</value></data>
+  <data name="SettingsTab3_Print2_Name_Phase" xml:space="preserve"><value>Phase</value></data>
+  <data name="SettingsTab3_Print2_Name_LateralGap2" xml:space="preserve"><value>Px2Gap2</value></data>
+  <data name="SettingsTab3_Print2_Name_ColorLateralShift" xml:space="preserve"><value>2-color lateral shift</value></data>
+  <data name="SettingsTab3_Print2_Name_LateralGap3" xml:space="preserve"><value>Px2Gap3</value></data>
+  <data name="SettingsTab3_Print3_Name_Register" xml:space="preserve"><value>Register</value></data>
+  <data name="SettingsTab3_Print3_Name_PressAperture" xml:space="preserve"><value>Press gap</value></data>
+  <data name="SettingsTab3_Print3_Name_Phase" xml:space="preserve"><value>Phase</value></data>
+  <data name="SettingsTab3_Print3_Name_LateralGap2" xml:space="preserve"><value>Px3Gap2</value></data>
+  <data name="SettingsTab3_Print3_Name_ColorLateralShift" xml:space="preserve"><value>3-color lateral shift</value></data>
+  <data name="SettingsTab3_Print3_Name_LateralGap3" xml:space="preserve"><value>Px3Gap3</value></data>
+  <data name="SettingsTab3_Print7_Name_Register" xml:space="preserve"><value>Register</value></data>
+  <data name="SettingsTab3_Print7_Name_PressAperture" xml:space="preserve"><value>Press gap</value></data>
+  <data name="SettingsTab3_Print7_Name_Phase" xml:space="preserve"><value>Phase</value></data>
+  <data name="SettingsTab3_Print7_Name_LateralGap2" xml:space="preserve"><value>Px7Gap2</value></data>
+  <data name="SettingsTab3_Print7_Name_ColorLateralShift" xml:space="preserve"><value>7-color lateral shift</value></data>
+  <data name="SettingsTab3_Print7_Name_LateralGap3" xml:space="preserve"><value>Px7Gap3</value></data>
+  <data name="SettingsTab3_Print8_Name_Register" xml:space="preserve"><value>Register</value></data>
+  <data name="SettingsTab3_Print8_Name_PressAperture" xml:space="preserve"><value>Press gap</value></data>
+  <data name="SettingsTab3_Print8_Name_Phase" xml:space="preserve"><value>Phase</value></data>
+  <data name="SettingsTab3_Print8_Name_LateralGap2" xml:space="preserve"><value>Px8Gap2</value></data>
+  <data name="SettingsTab3_Print8_Name_ColorLateralShift" xml:space="preserve"><value>8-color lateral shift</value></data>
+  <data name="SettingsTab3_Print8_Name_LateralGap3" xml:space="preserve"><value>Px8Gap3</value></data>
+  <data name="SettingsTab3_Label_UserPassword" xml:space="preserve">
+    <value>ユーザーパスワード</value>
+  </data>
+  <data name="SettingsTab3_Label_AdminPassword" xml:space="preserve">
+    <value>パラメータ変更パスワード</value>
   </data>
 </root>

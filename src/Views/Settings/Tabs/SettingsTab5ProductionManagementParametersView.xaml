@@ -1,0 +1,7 @@
+<UserControl x:Class="CursorTestApp.Views.Settings.Tabs.SettingsTab5ProductionManagementParametersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="0">
+        <TextBlock Text="{Binding Tab5Body.Value}" Foreground="#1E293B" FontSize="14" TextWrapping="Wrap" />
+    </ScrollViewer>
+</UserControl>

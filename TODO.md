@@ -712,15 +712,15 @@ src/
 
 ---
 
-## Phase 7：整合與收尾
+## Phase 8：整合與收尾
 
-### 7.1 綁定與流程
+### 8.1 綁定與流程
 - [x] 將 `LoginView` 設為啟動畫面（ShellWindow 啟動後 `NavigateToLogin()` 顯示 LoginView）
 - [x] 確認 DataContext 正確綁定至 `LoginViewModel`（ShellWindow.CreateLoginView 設定）
 - [x] 測試流程：輸入密碼 → Enter → 比對資料庫 → 成功跳轉
 - [x] 測試 Cancel 清除密碼
 
-### 7.2 錯誤處理
+### 8.2 錯誤處理
 - [x] 資料庫連線失敗處理（App.OnStartup  try/catch，MessageBox 後 Shutdown）
 - [x] 密碼錯誤提示（LoginViewModel.LoginErrorMessage + RESX，LoginView 顯示）
 - [x] 輸入為空時的提示（RESX `LoginErrorEmptyPassword`，登入時檢查並顯示）
@@ -728,39 +728,39 @@ src/
 - [x] 登入後導航失敗（NavigateToLayout2 外層 try/catch，失敗時 MessageBox + LoginErrorMessage，見 `QandA/crashAfterLoginOnOtherPC.md`）
 - [x] 資料庫預設路徑改為 `%LocalAppData%\CursorTestApp\app.db`（單檔發佈在另一台電腦執行時避免 BaseDirectory 唯讀導致 crash）
 
-### 7.3 Log 服務整合
+### 8.3 Log 服務整合
 - [x] 確保 `ILogService` 於 App 啟動時初始化（ShellWindow 建構時建立並注入）
 - [x] 所有 View 共享同一 Log 實例（單例或 DI）（同一 _logService 傳入 LoginViewModel / MainViewModel）
 - [x] Log 格式建議：`[HH:mm:ss] 訊息內容`（LogService 已實作）
 - [x] LogListBox「ItemsControl 與其項目來源不一致」異機修正：LogService.Append 一律 `InvokeAsync(Loaded)`、LogListBox 關閉虛擬化、ScrollIntoView 延後至 Loaded；詳見 `LessonLearn/whyItemSourceNotConsistant.md`
 
-### 7.4 程式品質
+### 8.4 程式品質
 - [x] 移除不必要的 `Console.WriteLine`，改寫入 Log（專案內無 Console.WriteLine）
 - [x] 密碼以明文儲存於 SQLite（本專案為測試用）
 - [x] 基本程式碼整理與註解
 
-### 7.5 多國語系與字型
+### 8.5 多國語系與字型
 - [x] Login 畫面字串使用 RESX 綁定（`LocalizedString` 實現動態切換）
 - [x] 其餘 UI 字串使用 RESX 綁定（MainView 主畫面標題、返回 ToolTip；登入錯誤訊息 RESX）
 - [x] 預設字型設為 `Segoe UI, Meiryo UI, Microsoft JhengHei, Leelawadee UI`（App.xaml）
 - [x] 驗證五種語系（ja, zh-TW, pt, en, th）顯示正常（需手動驗證）
 
-### 7.6 應用程式圖示
+### 8.6 應用程式圖示
 - [x] 使用 `Resources/Icons/icons8-app-96.png` 作為應用程式圖示來源
 - [x] 設定視窗 Icon（pack URI 綁定 PNG）
 - [x] 設定發佈後 exe 圖示（Resources/Icons/icons8-app-96.ico）
 
-### 7.7 發佈與 Distribution 套件
+### 8.7 發佈與 Distribution 套件
 - [ ] 執行 `dotnet publish -c Release`
 - [ ] 撰寫安裝指引，列出使用者須安裝的套件（.NET 8 Desktop Runtime、VC++ Redistributable）
 - **建議**：Demo／測試優先使用**單一執行檔**（self-contained + PublishSingleFile），見 `QandA/howToPackApplication.md`；正式產品再考慮安裝程式（Inno Setup、WiX、MSIX）。
 - [ ] 使用 `scripts\publish.ps1` 產生單一 exe（可選）
 
-### 7.8 Windows 8.1 模擬測試
+### 8.8 Windows 8.1 模擬測試
 - [ ] 依上方「Windows 8.1 模擬測試」章節進行 VM 測試
 - [ ] 驗證在 Win 8.1 上安裝必要 Distribution 套件後可正常執行
 
-### 7.9 SQLite 資料庫檢視小工具
+### 8.9 SQLite 資料庫檢視小工具
 - [x] 使用 **Microsoft.Data.Sqlite** 撰寫小工具，可檢視資料庫內的資料
 - [x] 指定 `.db` 檔路徑後，瀏覽其表與資料（列出所有表、選取表後顯示內容）
 - [x] 程式碼放置於 `tools/` 資料夾
@@ -774,7 +774,7 @@ src/
 | .NET 8 SDK 安裝 | ⬜ |
 | 使用者端 Distribution 套件清單 | ⬜ |
 | 預設字型（Win 8.1 相容） | ⬜ |
-| 多國語系（ja, zh-TW, pt, en, th） | 🟨 結構完成，待 Phase 7.5 整合 |
+| 多國語系（ja, zh-TW, pt, en, th） | 🟨 結構完成，待 Phase 8.5 整合 |
 | WPF-UI（Fluent Design）套件 | ✅ |
 | SQLite 與資料表（明文密碼） | ✅ |
 | 專案建立（Phase 1.1） | ✅ |
@@ -803,7 +803,7 @@ src/
 5. **Phase 4**：實作導航與主畫面（含 Layout2）  
 6. **Phase 5**：排程管理子頁（Dialog）  
 7. **Phase 6**：訂單製作（F7，單一 Layout 含查詢／編輯／新增、Orders 表）  
-8. **Phase 7**：整合測試與收尾  
+8. **Phase 8**：整合測試與收尾  
 
 ---
 

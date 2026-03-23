@@ -1,0 +1,372 @@
+<UserControl x:Class="CursorTestApp.Views.Settings.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:settingsTabs="clr-namespace:CursorTestApp.Views.Settings.Tabs">
+    <UserControl.Resources>
+        <!-- 右側內容與底部列 -->
+        <SolidColorBrush x:Key="Settings.PageBg" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="Settings.ContentBg" Color="#FFFFFF" />
+        <SolidColorBrush x:Key="Settings.TextPrimary" Color="#1E293B" />
+
+        <!-- 頂部 Tab 列：深色飽和藍 + 亮字；選取較亮底 + 底緣亮條 -->
+        <SolidColorBrush x:Key="Settings.TabStripBg" Color="#1E3A8A" />
+        <SolidColorBrush x:Key="Settings.TabNormalBg" Color="#1E40AF" />
+        <SolidColorBrush x:Key="Settings.TabSelectedBg" Color="#2563EB" />
+        <SolidColorBrush x:Key="Settings.TabHoverBg" Color="#3B82F6" />
+        <SolidColorBrush x:Key="Settings.TabStripSeparator" Color="#93C5FD" />
+        <SolidColorBrush x:Key="Settings.TabItemDivider" Color="#312E81" />
+        <SolidColorBrush x:Key="Settings.TabTitleGlyph" Color="#F8FAFC" />
+        <SolidColorBrush x:Key="Settings.TabSelectedAccent" Color="#FDE047" />
+        <SolidColorBrush x:Key="Settings.FooterSeparator" Color="#C5D3E0" />
+
+        <!-- 頂部橫向六等分：水平文字置中 -->
+        <!-- 明確字色／不透明，避免 Fluent 主題將 ListBoxItem 內文設成與長條同色而「有控制項但看不到字」 -->
+        <Style x:Key="SettingsTopTabListBoxItem" TargetType="ListBoxItem">
+            <Setter Property="Padding" Value="6,10" />
+            <Setter Property="Margin" Value="0" />
+            <Setter Property="MinHeight" Value="46" />
+            <Setter Property="Opacity" Value="1" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Stretch" />
+            <Setter Property="Background" Value="{StaticResource Settings.TabNormalBg}" />
+            <Setter Property="Foreground" Value="{StaticResource Settings.TabTitleGlyph}" />
+            <Setter Property="BorderBrush" Value="{StaticResource Settings.TabItemDivider}" />
+            <Setter Property="BorderThickness" Value="0,0,1,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListBoxItem">
+                        <Grid>
+                            <Border x:Name="Bd"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    Padding="{TemplateBinding Padding}">
+                                <ContentPresenter HorizontalAlignment="Center"
+                                                  VerticalAlignment="Center" />
+                            </Border>
+                            <Border x:Name="BottomAccent"
+                                    Height="3"
+                                    VerticalAlignment="Bottom"
+                                    Background="Transparent" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Settings.TabSelectedBg}" />
+                                <Setter TargetName="BottomAccent" Property="Background" Value="{StaticResource Settings.TabSelectedAccent}" />
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsSelected" Value="False" />
+                                    <Condition Property="IsMouseOver" Value="True" />
+                                </MultiTrigger.Conditions>
+                                <Setter TargetName="Bd" Property="Background" Value="{StaticResource Settings.TabHoverBg}" />
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- 底部 F 鍵：圖示 + 文字（版面由外層 Grid 分左／中左／右） -->
+        <Style x:Key="SettingsFooterIconButtonStyle" TargetType="Button">
+            <Setter Property="MinWidth" Value="120" />
+            <Setter Property="Height" Value="48" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="bd" Background="Transparent" CornerRadius="6" Padding="8,4">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#D8E4F0" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="bd" Property="Background" Value="#B7D0EA" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource Settings.PageBg}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- 主內容：頂部 Tab（整列六等分等寬）+ 下方內容；水平文字置中 -->
+        <Grid Grid.Row="0"
+              Margin="0"
+              Background="{StaticResource Settings.ContentBg}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Border Grid.Row="0"
+                    MinHeight="46"
+                    Background="{StaticResource Settings.TabStripBg}"
+                    BorderBrush="{StaticResource Settings.TabStripSeparator}"
+                    BorderThickness="0,0,0,1">
+                <ListBox x:Name="SettingsTabList"
+                         BorderThickness="0"
+                         Background="Transparent"
+                         Foreground="{StaticResource Settings.TabTitleGlyph}"
+                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                         ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                         ScrollViewer.CanContentScroll="False"
+                         SelectedIndex="{Binding SelectedSettingsTabIndex, Mode=TwoWay}"
+                         ItemContainerStyle="{StaticResource SettingsTopTabListBoxItem}">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <UniformGrid Columns="6" Rows="1" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBoxItem ToolTip="{Binding Tab1Header.Value}">
+                        <TextBlock FontSize="14.3"
+                                   Foreground="{StaticResource Settings.TabTitleGlyph}"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Tab1Header.Value}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center" />
+                    </ListBoxItem>
+                    <ListBoxItem ToolTip="{Binding Tab2Header.Value}">
+                        <TextBlock FontSize="14.3"
+                                   Foreground="{StaticResource Settings.TabTitleGlyph}"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Tab2Header.Value}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center" />
+                    </ListBoxItem>
+                    <ListBoxItem ToolTip="{Binding Tab3Header.Value}">
+                        <TextBlock FontSize="14.3"
+                                   Foreground="{StaticResource Settings.TabTitleGlyph}"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Tab3Header.Value}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center" />
+                    </ListBoxItem>
+                    <ListBoxItem ToolTip="{Binding Tab4Header.Value}">
+                        <TextBlock FontSize="14.3"
+                                   Foreground="{StaticResource Settings.TabTitleGlyph}"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Tab4Header.Value}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center" />
+                    </ListBoxItem>
+                    <ListBoxItem ToolTip="{Binding Tab5Header.Value}">
+                        <TextBlock FontSize="14.3"
+                                   Foreground="{StaticResource Settings.TabTitleGlyph}"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Tab5Header.Value}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center" />
+                    </ListBoxItem>
+                    <ListBoxItem ToolTip="{Binding Tab6Header.Value}">
+                        <TextBlock FontSize="14.3"
+                                   Foreground="{StaticResource Settings.TabTitleGlyph}"
+                                   HorizontalAlignment="Center"
+                                   Text="{Binding Tab6Header.Value}"
+                                   TextAlignment="Center"
+                                   TextWrapping="Wrap"
+                                   VerticalAlignment="Center" />
+                    </ListBoxItem>
+                </ListBox>
+            </Border>
+
+            <Border Grid.Row="1"
+                    Padding="0"
+                    Background="{StaticResource Settings.ContentBg}">
+                    <Grid>
+                        <!-- Tab1 子頁 DataContext=Tab1Knife，不可在該 UserControl 上綁 SelectedSettingsTabIndex；改由外層 Border 繼承 Shell VM 並切換 Visibility -->
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedSettingsTabIndex}" Value="0">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <settingsTabs:SettingsTab1KnifeSafetyView DataContext="{Binding Tab1Knife}" />
+                        </Border>
+                        <!-- Tab2 子頁 DataContext=Tab2Box；外層 Border 綁父級 VM 以切換 Visibility -->
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedSettingsTabIndex}" Value="1">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <settingsTabs:SettingsTab2BoxParametersView DataContext="{Binding Tab2Box}" />
+                        </Border>
+                        <!-- Tab3：可見性與 DataContext 分離（見 LessonLearn/whyContetntNoShow.md）；外層 Border 繼承 SettingsViewModel 以綁 SelectedSettingsTabIndex -->
+                        <Border>
+                            <Border.Style>
+                                <Style TargetType="Border">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedSettingsTabIndex}" Value="2">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Border.Style>
+                            <settingsTabs:SettingsTab3OtherPlcParametersView DataContext="{Binding Tab3Other}" />
+                        </Border>
+                        <settingsTabs:SettingsTab4AlarmHistoryView DataContext="{Binding}">
+                            <settingsTabs:SettingsTab4AlarmHistoryView.Style>
+                                <Style TargetType="UserControl">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedSettingsTabIndex}" Value="3">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </settingsTabs:SettingsTab4AlarmHistoryView.Style>
+                        </settingsTabs:SettingsTab4AlarmHistoryView>
+                        <settingsTabs:SettingsTab5ProductionManagementParametersView DataContext="{Binding}">
+                            <settingsTabs:SettingsTab5ProductionManagementParametersView.Style>
+                                <Style TargetType="UserControl">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedSettingsTabIndex}" Value="4">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </settingsTabs:SettingsTab5ProductionManagementParametersView.Style>
+                        </settingsTabs:SettingsTab5ProductionManagementParametersView>
+                        <settingsTabs:SettingsTab6EmptyView DataContext="{Binding}">
+                            <settingsTabs:SettingsTab6EmptyView.Style>
+                                <Style TargetType="UserControl">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding SelectedSettingsTabIndex}" Value="5">
+                                            <Setter Property="Visibility" Value="Visible" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </settingsTabs:SettingsTab6EmptyView.Style>
+                        </settingsTabs:SettingsTab6EmptyView>
+                    </Grid>
+            </Border>
+        </Grid>
+
+        <!-- 底部 F 鍵：左 F2／F5 → 中左 F6 → 右 F3／F1（F1 最右）；字串見 RESX Settings_Footer_* -->
+        <Border Grid.Row="1"
+                Background="#E8EEF5"
+                BorderBrush="{StaticResource Settings.FooterSeparator}"
+                BorderThickness="0,1,0,0"
+                Padding="12,10">
+            <Grid VerticalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!-- 最左：F2 儲存；左：F5 機器尺寸 -->
+                <StackPanel Grid.Column="0"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource SettingsFooterIconButtonStyle}"
+                            Command="{Binding FooterF2SaveCommand}"
+                            Margin="0,0,8,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0"
+                                   Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-save-as-80.png" />
+                            <TextBlock Grid.Column="1" Text="{Binding FooterF2.Value}" Foreground="{StaticResource Settings.TextPrimary}" VerticalAlignment="Center" FontSize="13" />
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource SettingsFooterIconButtonStyle}"
+                            Command="{Binding FooterF5MachineDimensionCommand}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0"
+                                   Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-assembly-machine-80.png" />
+                            <TextBlock Grid.Column="1" Text="{Binding FooterF5.Value}" Foreground="{StaticResource Settings.TextPrimary}" VerticalAlignment="Center" FontSize="13" />
+                        </Grid>
+                    </Button>
+                </StackPanel>
+                <!-- 中左：F6 特殊參數區 -->
+                <StackPanel Grid.Column="1"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Margin="16,0,0,0">
+                    <Button Style="{StaticResource SettingsFooterIconButtonStyle}"
+                            Command="{Binding FooterF6SpecialParamsCommand}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0"
+                                   Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-open-end-wrench-96.png" />
+                            <TextBlock Grid.Column="1" Text="{Binding FooterF6.Value}" Foreground="{StaticResource Settings.TextPrimary}" VerticalAlignment="Center" FontSize="13" />
+                        </Grid>
+                    </Button>
+                </StackPanel>
+                <!-- 右：F3 放棄修改；最右：F1 離開 -->
+                <StackPanel Grid.Column="2"
+                            Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center">
+                    <Button Style="{StaticResource SettingsFooterIconButtonStyle}"
+                            Command="{Binding FooterF3CancelCommand}"
+                            Margin="0,0,8,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0"
+                                   Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-cancel-96.png" />
+                            <TextBlock Grid.Column="1" Text="{Binding FooterF3.Value}" Foreground="{StaticResource Settings.TextPrimary}" VerticalAlignment="Center" FontSize="13" />
+                        </Grid>
+                    </Button>
+                    <Button Style="{StaticResource SettingsFooterIconButtonStyle}"
+                            Command="{Binding FooterF1ExitCommand}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="0" Width="28" Height="28" VerticalAlignment="Center" Margin="0,0,6,0"
+                                   Source="pack://application:,,,/CursorTestApp;component/Resources/Icons/icons8-exit-96.png" />
+                            <TextBlock Grid.Column="1" Text="{Binding FooterF1.Value}" Foreground="{StaticResource Settings.TextPrimary}" VerticalAlignment="Center" FontSize="13" />
+                        </Grid>
+                    </Button>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

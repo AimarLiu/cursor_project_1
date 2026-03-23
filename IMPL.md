@@ -1,6 +1,6 @@
 # 實作摘要 (Implementation Summary)
 
-本文件記錄 Phase 1.2、Phase 1.3、Phase 2、Phase 3、Phase 4、Phase 4 (Layout2) 與 Phase 5.1–5.6 的完成實作，供後續開發參考。
+本文件記錄 Phase 1.2、Phase 1.3、Phase 2、Phase 3、Phase 4、Phase 4 (Layout2)、Phase 5.1–5.6 與 **Phase 7（Settings；Tab1 刀位安全已落地）** 的完成實作，供後續開發參考。
 
 ---
 
@@ -394,7 +394,7 @@ Views/
 ```csharp
 // ShellWindow 建立 IOrderRepository，NavigationService 註冊 CreateOrderMakingView
 _orderRepository = new OrderRepository(databaseService);
-_navigationService = new NavigationService(ContentHost, CreateMainView, CreateLoginView, CreateLayout2View, CreateOrderMakingView);
+_navigationService = new NavigationService(ContentHost, CreateMainView, CreateLoginView, CreateLayout2View, CreateOrderMakingView, CreateSettingsView);
 
 // F7 由 Layout2 導航至訂單製作（主內容區頁面）
 private UserControl CreateOrderMakingView()
@@ -515,6 +515,118 @@ src/
 
 ---
 
+## Phase 7：Settings（PLC／參數）頁 — **Tab1 刀位安全** + **Tab2 紙箱／DieCutter** + **Tab3 其他參數**
+
+> **規格**：`TODO_Phase7.md`、`TODO_Phase7_Layout.md`。  
+> **已完成**：`SettingsView`（6 分頁 + 底部 F 鍵）、Admin 分流、**Tab1** 16 鍵 **`KnifeSlot_*`**、**Tab2** 箱型刀選擇／`DieCutter.*`／車速、**Tab3** 通訊三列／部門 DataGrid／`Users` 密碼；**F2** 依序儲存 Tab1→Tab2→Tab3、**F3** 重載三者。  
+> **待辦**：§7.6 **F2** 全頁 **單一 transaction 合併 Tab1～Tab3**（目前實作為分開交易），以及 **Scripts/*.sql** 獨立建表／種子腳本檔（表仍先由程式內 `DatabaseService` 內建表／種子，先行遷移保留）。
+
+### 實作內容
+
+| 項目 | 說明 | 檔案路徑 |
+|------|------|----------|
+| 導航 | **`NavigateToSettings()`**；**Admin** 登入 → Settings，其餘 → Layout2 | `INavigationService.cs`、`NavigationService.cs`、`LoginViewModel.cs` |
+| Admin 種子 | **`EnsureAdminUserIfMissing`**：`0002`／`Admin`／`Admin` | `DatabaseService.cs` |
+| Settings 主頁 | 頂部 **6 分頁** + 內容區 + 底部 **F1～F6** | `SettingsView.xaml`、`SettingsViewModel.cs` |
+| Tab1 UI | 刀模 **PNG**、`ScrollViewer` **內容置中**；**E／J／K／F**、**A**、**H／I／B**；MAX／MIN **樣式**（藍／紅橘） | `Views/Settings/Tabs/SettingsTab1KnifeSafetyView.xaml` |
+| Tab1 VM | **`SettingsTab1KnifeViewModel`**：16 欄位、整數／空白、`Min≤Max` 驗證 | `ViewModels/SettingsTab1KnifeViewModel.cs` |
+| Tab1 資料 | **`PlcParameterValues`**；ProfileId=**1**；**`IKnifeSafetyParameterRepository`** | `DatabaseService.cs`、`KnifeSafetyParameterRepository.cs` |
+| Tab2 UI | 左 C／DA7、中 E、中右 `DieCutter.*` 1～9、右 `DieCutter.*` 10～12+車速；刀組合 Combo 依箱型篩選；Tab2 外層 **`Border` + `Tab2Box`** | `Views/Settings/Tabs/SettingsTab2BoxParametersView.xaml` |
+| Tab2 VM | **`SettingsTab2BoxViewModel`**：驗證、`TrySaveToDatabase`／`ReloadFromDatabase` | `ViewModels/SettingsTab2BoxViewModel.cs` |
+| Tab2 資料 | **`KnifeCombinedOptions`** 等參照表；**`BoxParameters.SelectedKnifeCombinedOption`**（Profile 2～4）、**`DieCutter.*`**（Profile **5** 共用） | `DatabaseService.cs`、`BoxDieCutterSettingsRepository.cs`、`IBoxDieCutterSettingsRepository.cs` |
+| Tab3 UI | 左部門 **`ListBox`**、中 **`DataGrid`**（元件名／Max／Min／Accurate；**All** 顯示部門欄）、右 **通訊**（印／看埠 + 糊車 PLC 串列參數）+ **`Users`** 密碼表 | `Views/Settings/Tabs/SettingsTab3OtherPlcParametersView.xaml` |
+| Tab3 VM | **`SettingsTab3ViewModel`**：**`Tab3PlcCatalog`** 列映射、**`TrySaveToDatabase`**／**`ReloadFromDatabase`** | `ViewModels/SettingsTab3ViewModel.cs`、`Models/Tab3/Tab3PlcCatalog.cs` |
+| Tab3 資料 | **`PlcCommChannelSettings`**；**`ComponentDisplayNameOverrides`**；**`PlcParameterValues`**（ProfileId=**6** **`OtherPlcGlobal`**，`OtherPlcParameters` 鍵）；**`Users`** | `DatabaseService.cs`（`Tab3DatabaseBootstrap`）、`PlcCommChannelRepository`、`ComponentDisplayNameRepository`、`OtherPlcParametersRepository`、`UserDirectoryRepository` |
+| 模型 | **`KnifeComboDisplayItem`**、**`CarSpeedOptionRow`**、**`BoxDieCutterSnapshot`**、**`PlcCommChannelDto`** 等 | `Models/*.cs`、`Models/Tab3/*` |
+| Shell | **`SettingsViewModel`** 注入 **Tab1／Tab2／Tab3** 所需 **Repository** | `ShellWindow.xaml.cs` |
+| RESX | **`SettingsTab1_*`**、**`SettingsTab2_*`**、**`SettingsTab3_*`**（部門、欄位、Feed／Print／Other 元件預設名）、**`SettingsTab123_SaveOk`／`ReloadOk`** | `Resources/Resources*.resx` |
+
+### 目錄結構示意（Phase 7 相關）
+
+```
+src/
+├── Services/
+│   ├── INavigationService.cs
+│   ├── NavigationService.cs
+│   ├── IKnifeSafetyParameterRepository.cs
+│   ├── KnifeSafetyParameterRepository.cs
+│   ├── IBoxDieCutterSettingsRepository.cs
+│   ├── BoxDieCutterSettingsRepository.cs
+│   ├── IPlcCommChannelRepository.cs
+│   ├── PlcCommChannelRepository.cs
+│   ├── IOtherPlcParametersRepository.cs
+│   ├── OtherPlcParametersRepository.cs
+│   ├── IComponentDisplayNameRepository.cs
+│   ├── ComponentDisplayNameRepository.cs
+│   ├── IUserDirectoryRepository.cs
+│   ├── UserDirectoryRepository.cs
+│   └── Tab3DatabaseBootstrap.cs
+├── Models/
+│   ├── KnifeSafetyParameterKeys.cs
+│   ├── BoxDieCutterDefinitionKeys.cs
+│   ├── BoxDieCutterSnapshot.cs
+│   ├── KnifeComboDisplayItem.cs
+│   ├── CarSpeedOptionRow.cs
+│   └── Tab3/
+│       ├── Tab3PlcCatalog.cs
+│       ├── OtherPlcParameterProfileId.cs
+│       └── PlcCommChannelDto.cs
+├── ViewModels/
+│   ├── LoginViewModel.cs
+│   ├── SettingsViewModel.cs              # Tab1Knife + Tab2Box + Tab3Other + Footer F2/F3
+│   ├── SettingsTab1KnifeViewModel.cs
+│   ├── SettingsTab2BoxViewModel.cs
+│   ├── SettingsTab3ViewModel.cs
+│   ├── Tab3GridRowViewModel.cs
+│   └── UserPasswordRowViewModel.cs
+├── Views/
+│   └── Settings/
+│       ├── SettingsView.xaml             # Tab1～Tab3 子 VM；Tab2 外層 Border
+│       └── Tabs/
+│           ├── SettingsTab1KnifeSafetyView.xaml(.cs)
+│           ├── SettingsTab2BoxParametersView.xaml(.cs)
+│           └── SettingsTab3OtherPlcParametersView.xaml(.cs)
+└── Resources/
+    ├── Icons/Box_Measurement_3-removebg-preview.png
+    └── Resources*.resx
+```
+
+### 程式碼要點
+
+- **Tab1 置中**：外層 **`ScrollViewer`** 設 **`VerticalContentAlignment="Center"`**，內層 **`Border`** **`MaxWidth="1080"`**、**`HorizontalAlignment="Center"`**，避免寬螢幕時內容靠左。
+- **F2／F3**：**F2** 使用 **同一個** `SqliteConnection + BeginTransaction()`，並呼叫 **`Tab1Knife.TrySaveToDatabase(connection, tx)`** → **`Tab2Box.TrySaveToDatabase(connection, tx)`** → **`Tab3Other.TrySaveToDatabase(connection, tx)`**；任一頁失敗則整體 rollback。**F3** 同時 **`Tab1Knife`／`Tab2Box`／`Tab3Other`** **`ReloadFromDatabase()`**。**F5／F6** 仍為 Log 占位。
+- **Tab2 可見性**：與 Tab1 相同，子頁 **`DataContext`** 為子 VM，**`Visibility`** 由外層 **`Border`** 綁 **`SettingsViewModel.SelectedSettingsTabIndex`**，避免子 VM 無 **`SelectedSettingsTabIndex`** 導致不顯示。
+- **Tab2 F3 刀組合**：**`RebuildComboLists`** 會 **`Clear`** 刀組合 **`ObservableCollection`**；若重載後選中 **`OptionId`** 與先前相同，**`ObservableProperty`** 可能不觸發，ComboBox 顯示空白。**`RefreshKnifeComboDisplayAfterItemsSourceRebuild`** 在對齊合法 Id 後，若有另一筆選項則短暫改選再還原，並 **`OnPropertyChanged`** 刀組合與車速。
+- **PLC 表**：與 §7.5.5 對齊；日後可抽成 `Scripts/*.sql` 或擴充欄位。
+- **Tab3**：**`Tab3PlcCatalog`** 定義 Feed／Print1～3／7／8／Other 列與 **`PlcParameterDefinitions.Key`** 前綴；**`ComponentDisplayNameOverrides.ReplaceAll`** 儲存覆寫；切換部門前 **`MergeGridIntoMaster`** 將 **`DataGrid`** 寫回記憶體字典。
+- **Tab3 多國語 root cause（日文）**：`Resources.ja.resx` 內 Tab3 相關 key（分頁標題／欄位標題／GroupBox 標題／Feed 與部門元件名稱等）先前是英文佔位，導致切到日文時看起來像永遠走到 fallback；同時移除 `SettingsTab3OtherPlcParametersView.xaml` header/password TextBlock 的 `FallbackValue/TargetNullValue` workaround，回到純 RESX/`LocalizedString.Value`。
+- **後續**：**`IPlcSettingsService.SaveSettingsShell`**、Tab4／5 — 見 **`TODO_Phase7.md`**。
+
+### 使用範例（Tab1 資料）
+
+```csharp
+IKnifeSafetyParameterRepository repo = new KnifeSafetyParameterRepository(databaseService);
+IReadOnlyDictionary<string, int?> values = repo.LoadAll();
+// Key 如 KnifeSafetyParameterKeys.KnifeSlot_A_Min
+```
+
+### 使用範例（Tab2 資料）
+
+```csharp
+IBoxDieCutterSettingsRepository box = new BoxDieCutterSettingsRepository(databaseService);
+BoxDieCutterSnapshot snap = box.Load();
+box.Save(snap);
+```
+
+### 規格對照（尚未程式化之定案）
+
+| 項目 | 說明 | 檔案路徑 |
+|------|------|----------|
+| 全頁 F2 單一 transaction、獨立 SQL 腳本 | 仍依主規 | `TODO_Phase7.md` §7.5～§7.7 |
+| Tab4／5 內容 | 本階段留白 | `TODO_Phase7_Layout.md` |
+
+---
+
 ## 後續 Phase 整合提示
 
 - **Phase 4 主畫面**：已完成，MainView 共用 `ILocalizationService`，返回按鈕 ToolTip 已綁定 RESX
@@ -531,4 +643,4 @@ src/
 ---
 
 *建立日期：2025-02-22*
-*更新：Phase 5 排程管理子頁改為 DataGrid；Phase 6 整合與收尾；LogListBox 異機修正（2026-02-26）；Phase 6 訂單製作（F7）實作（2026-03-01）；Phase 6 重大修改（2026-02-28）：4.4 不分頁+捲軸、GetAll、上/下箭頭同版號導航、雙擊列帶出、F1 最右、版號/版號查詢定位選取並捲動至中央、RequestScrollToSelected 僅程式觸發、右側欄位 RESX 與建檔日期含時間、4.5 相位標籤上下排列、頂部輸入框焦點樣式與備註高度、LessonLearn whyTextBoxIsGrayonFocus / whyMoveWhenMouseClick*
+*更新：Phase 5 排程管理子頁改為 DataGrid；Phase 6 整合與收尾；LogListBox 異機修正（2026-02-26）；Phase 6 訂單製作（F7）實作（2026-03-01）；Phase 6 重大修改（2026-02-28）：4.4 不分頁+捲軸、GetAll、上/下箭頭同版號導航、雙擊列帶出、F1 最右、版號/版號查詢定位選取並捲動至中央、RequestScrollToSelected 僅程式觸發、右側欄位 RESX 與建檔日期含時間、4.5 相位標籤上下排列、頂部輸入框焦點樣式與備註高度、LessonLearn whyTextBoxIsGrayonFocus / whyMoveWhenMouseClick；Phase 7 文件定案：`CorrugatedTypes`/Profile(0)、Tab3 RESX 附錄（2026-03-19）；Phase 7 Print 鍵名統一＋廢止對照＋盲點檢查表（2026-03-19）；**Phase 7 Settings 骨架**（SettingsView、Admin 分流、Admin 種子、底部 F 鍵 RESX+Icons，2026-03-22）；**Settings 左側垂直分頁 + 淡色配色**（2026-03-22）；**Settings 改為左窄 ListBox + 右大面積內容**（取代 TabControl 版面，2026-03-22）；**左欄貼齊無外框 + 直向 Tab 標題**（2026-03-22）；**主內容滿版留白移除、Tab 標題深藍直排一字一列（1.2× 字級）**（2026-03-22）；**Phase 7 Tab1 刀位安全**（`PlcParameter*`、`IKnifeSafetyParameterRepository`、置中版面、`SettingsTab1KnifeViewModel`、F2 儲存／F3 重載，2026-03-23）；**Phase 7 Tab2 紙箱參數**（`IBoxDieCutterSettingsRepository`、`SettingsTab2BoxViewModel`、三欄版面、`SettingsTab2_*` RESX、F2／F3 含 Tab1+Tab2，2026-03-23）；**Phase 7 Tab3 日文 RESX 修正（並移除 XAML fallback）**（2026-03-23）*

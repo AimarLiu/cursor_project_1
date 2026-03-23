@@ -3,3 +3,6 @@ bin/
 obj/
 publish/
 exception_messages/
+artifacts/
+exception_messages/
+

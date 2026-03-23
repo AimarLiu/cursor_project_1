@@ -2,6 +2,8 @@
 bin/
 obj/
 publish/
+artifacts/
+exception_messages/
 
 # 建置時由 PNG 產生的 ICO（單一來源為 PNG）
 **/Resources/icons8-app-48.ico
